@@ -35,7 +35,7 @@ const bt = {
   // Social Media Links
   socials: [
     {
-      name: "x (twitter)",
+      name: "x.com",
       url: "https://www.x.com/bridgertower",
     },
     {
@@ -47,20 +47,8 @@ const bt = {
       url: "https://www.youtube.com/@bridgertower",
     },
     {
-      name: "instagram",
-      url: "https://www.instagram.com/bridgertower",
-    },
-    {
       name: "linkedin",
       url: "https://www.linkedin.com/in/brdgr",
-    },
-    {
-      name: "resume",
-      url: "https://read.cv/brijr",
-    },
-    {
-      name: "layers.to",
-      url: "https://layers.to/brijr",
     },
   ],
 
