@@ -120,6 +120,35 @@ const bt = {
       link: "https://zion.surf",
     },
   ],
+
+  // websites
+  websites: [
+    {
+      title: "pandium.com",
+      description: "in progress",
+      link: "https://pandium.com",
+    },
+    {
+      title: "travelmellow.com",
+      description: "travel blog and website",
+      link: "https://travelmellow.com",
+    },
+    {
+      title: "autobyte.dev",
+      description: "software development studio",
+      link: "https://autobyte.dev",
+    },
+    {
+      title: "modelofconfidence.com",
+      description: "model and confidence training",
+      link: "https://modelofconfidence.com",
+    },
+    {
+      title: "ampry.com",
+      description: "performance marketing and customer acquisition",
+      link: "https://ampry.com",
+    },
+  ],
 };
 
 export default bt;
