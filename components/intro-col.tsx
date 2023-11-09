@@ -21,31 +21,12 @@ const IntroCol = () => {
           <span className="inline group-hover:hidden">Bridger Tower</span>{" "}
           <span className="hidden group-hover:inline">bridger.to</span>
         </p>
-        {/* Social Links */}
-        <div className="text-sm mt-6">
-          {bt.socials.map((social) => (
-            <a
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center opacity-70 gap-2 w-full space-y-2 hover:opacity-70 hover:ml-1 hover:-mr-1 transition-all"
-              key={social.name}
-            >
-              <Link1Icon />
-              {social.name}
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* Description etc. */}
-      <div className="flex flex-col gap-4">
-        <h2 className="text-xl">
+        <h2 className="text-lg mt-12">
           Designer, Developer, and Marketer from Salt Lake City, UT. Crafting
           software and websites. Using Next.js, Figma, Tailwind CSS, Typscript,
           Webflow, Wordpress, Laravel, and more.
         </h2>
-        <h3 className="opacity-70">
+        <h3 className="opacity-70 mt-6">
           As a creative technologist, I combine my passion for design and code
           to create{" "}
           <a
@@ -63,7 +44,25 @@ const IntroCol = () => {
           </a>
           , and captivating websites.
         </h3>
+      </div>
 
+      {/* Description etc. */}
+      <div className="flex flex-col gap-4">
+        {/* Social Links */}
+        <div className="text-sm mt-6">
+          {bt.socials.map((social) => (
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center opacity-70 gap-2 w-full space-y-2 hover:opacity-70 hover:ml-1 hover:-mr-1 transition-all"
+              key={social.name}
+            >
+              <Link1Icon />
+              {social.name}
+            </a>
+          ))}
+        </div>
         <p className="text-xs opacity-50">
           © <a href="https://x.com/bridgertower">Bridger Tower</a>, All rights
           reserved.
