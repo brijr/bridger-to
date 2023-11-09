@@ -1,8 +1,10 @@
 import Image from "next/image";
+import bt from "@/bt.config";
 
-const IntroColumn = () => {
+const IntroCol = () => {
   return (
     <>
+      {/* top element */}
       <h1 className="sr-only">Bridger Tower | Designer and Developer</h1>
       <p className="group flex gap-3 cursor-default items-center text-3xl lowercase transition-all">
         <span className="block md:inline">
@@ -17,7 +19,24 @@ const IntroColumn = () => {
         <span className="inline group-hover:hidden">Bridger Tower</span>{" "}
         <span className="hidden group-hover:inline">bridger.to</span>
       </p>
-      <div className="flex flex-col gap-2">
+
+      {/* Social Links */}
+      <div>
+        {bt.socials.map((social) => (
+          <a
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex justify-between items-baseline w-full space-y-2"
+            key={social.name}
+          >
+            {social.name}
+          </a>
+        ))}
+      </div>
+
+      {/* Description etc. */}
+      <div className="flex flex-col gap-4">
         <h2 className="text-lg">
           Designer, Developer, and Marketer from Salt Lake City, UT. Crafting
           software and websites. Using Next.js, Figma, Tailwind CSS, Typscript,
@@ -41,9 +60,19 @@ const IntroColumn = () => {
           </a>
           , and captivating websites.
         </h3>
+        {/* <Image
+          src="/bt.png"
+          width={72}
+          height={72}
+          alt="bridger tower as pixel guy"
+        ></Image> */}
+        <p className="text-xs opacity-50">
+          © <a href="https://x.com/bridgertower">Bridger Tower</a>, All rights
+          reserved.
+        </p>
       </div>
     </>
   );
 };
 
-export default IntroColumn;
+export default IntroCol;

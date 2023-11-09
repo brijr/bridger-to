@@ -1,22 +1,23 @@
 import Grid from "@/components/grid";
-import GridColumn from "@/components/grid-column";
-import IntroColumn from "@/components/intro-column";
+import GridCol from "@/components/grid-col";
+import IntroCol from "@/components/intro-col";
+import WorkCol from "@/components/work-col";
 
 export default function Home() {
   return (
     <Grid>
-      <GridColumn>
-        <IntroColumn />
-      </GridColumn>
-      <GridColumn>
+      <GridCol>
+        <IntroCol />
+      </GridCol>
+      <GridCol>
+        <WorkCol />
+      </GridCol>
+      <GridCol>
         <p>Hello World</p>
-      </GridColumn>
-      <GridColumn>
+      </GridCol>
+      <GridCol>
         <p>Hello World</p>
-      </GridColumn>
-      <GridColumn>
-        <p>Hello World</p>
-      </GridColumn>
+      </GridCol>
     </Grid>
   );
 }
