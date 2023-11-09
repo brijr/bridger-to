@@ -40,7 +40,7 @@ const IntroCol = () => {
 
       {/* Description etc. */}
       <div className="flex flex-col gap-4">
-        <h2 className="text-lg">
+        <h2 className="text-xl">
           Designer, Developer, and Marketer from Salt Lake City, UT. Crafting
           software and websites. Using Next.js, Figma, Tailwind CSS, Typscript,
           Webflow, Wordpress, Laravel, and more.
@@ -63,12 +63,7 @@ const IntroCol = () => {
           </a>
           , and captivating websites.
         </h3>
-        {/* <Image
-          src="/bt.png"
-          width={72}
-          height={72}
-          alt="bridger tower as pixel guy"
-        ></Image> */}
+
         <p className="text-xs opacity-50">
           © <a href="https://x.com/bridgertower">Bridger Tower</a>, All rights
           reserved.
