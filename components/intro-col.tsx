@@ -27,7 +27,7 @@ const IntroCol = () => {
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex justify-between items-baseline w-full space-y-2"
+            className="flex justify-between items-baseline w-full space-y-2 hover:opacity-70 hover:ml-1 hover:-mr-1 transition-all"
             key={social.name}
           >
             {social.name}
