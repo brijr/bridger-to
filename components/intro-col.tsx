@@ -1,38 +1,41 @@
 import Image from "next/image";
 import bt from "@/bt.config";
+import { Link1Icon } from "@radix-ui/react-icons";
 
 const IntroCol = () => {
   return (
     <>
-      {/* top element */}
-      <h1 className="sr-only">Bridger Tower | Designer and Developer</h1>
-      <p className="group flex gap-3 cursor-default items-center text-3xl lowercase transition-all">
-        <span className="block md:inline">
-          <Image
-            className="spin w-8"
-            width={24}
-            height={24}
-            src="/x.svg"
-            alt="a little x thing"
-          />
-        </span>
-        <span className="inline group-hover:hidden">Bridger Tower</span>{" "}
-        <span className="hidden group-hover:inline">bridger.to</span>
-      </p>
-
-      {/* Social Links */}
-      <div className="text-sm">
-        {bt.socials.map((social) => (
-          <a
-            href={social.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex justify-between items-baseline w-full space-y-2 hover:opacity-70 hover:ml-1 hover:-mr-1 transition-all"
-            key={social.name}
-          >
-            {social.name}
-          </a>
-        ))}
+      <div>
+        {/* top element */}
+        <h1 className="sr-only">Bridger Tower | Designer and Developer</h1>
+        <p className="group flex gap-3 cursor-default items-center text-3xl lowercase transition-all">
+          <span className="block md:inline">
+            <Image
+              className="spin w-8"
+              width={24}
+              height={24}
+              src="/x.svg"
+              alt="a little x thing"
+            />
+          </span>
+          <span className="inline group-hover:hidden">Bridger Tower</span>{" "}
+          <span className="hidden group-hover:inline">bridger.to</span>
+        </p>
+        {/* Social Links */}
+        <div className="text-sm mt-6">
+          {bt.socials.map((social) => (
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center opacity-70 gap-2 w-full space-y-2 hover:opacity-70 hover:ml-1 hover:-mr-1 transition-all"
+              key={social.name}
+            >
+              <Link1Icon />
+              {social.name}
+            </a>
+          ))}
+        </div>
       </div>
 
       {/* Description etc. */}
