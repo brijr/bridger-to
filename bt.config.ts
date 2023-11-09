@@ -1,4 +1,5 @@
 const bt = {
+  // Software Projects
   projects: [
     {
       title: "Router.so",
@@ -57,13 +58,13 @@ const bt = {
     {
       title: "Alpine Codex",
       year: "2023",
-      description: "applied artificial intelligence",
+      description: "marketing software and ai",
       link: "https://alpinecodex.com",
     },
     {
       title: "9d8",
       year: "2023",
-      description: "developer partnership and studio with @youngbloodcyb",
+      description: "software development studio",
       link: "https://9d8.dev",
     },
     {
@@ -75,18 +76,18 @@ const bt = {
     {
       title: "flowhouse",
       year: "2022",
-      description: "design and development agency.",
+      description: "no-code development agency",
       link: "https://flowhouse.io",
     },
     {
       title: "Zion Design",
       year: "2018",
-      description: "investing in innovative brands through design and code. ",
+      description: "holding company",
       link: "https://zion.surf",
     },
   ],
 
-  // work and Resume
+  // Work and Resume
   work: [
     {
       title: "Product Developer at Alpine Codex",
