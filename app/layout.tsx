@@ -5,6 +5,7 @@ import "./globals.css";
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL("https://bridger.to"),
   title: "Bridger Tower | Designer and Developer",
   description:
     "Bridger Tower is a designer, developer, and marketer from Salt Lake City, UT. Crafting software and websites using Next.js, Tailwind, and Vercel.",
