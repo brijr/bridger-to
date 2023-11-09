@@ -21,7 +21,7 @@ const IntroCol = () => {
       </p>
 
       {/* Social Links */}
-      <div>
+      <div className="text-sm">
         {bt.socials.map((social) => (
           <a
             href={social.url}
