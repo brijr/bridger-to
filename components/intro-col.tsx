@@ -1,6 +1,4 @@
 import Image from "next/image";
-import bt from "@/bt.config";
-import { Link1Icon } from "@radix-ui/react-icons";
 
 const IntroCol = () => {
   return (
@@ -48,22 +46,7 @@ const IntroCol = () => {
 
       {/* Description etc. */}
       <div className="flex flex-col gap-4">
-        {/* Social Links */}
-        <div className="text-sm mt-6">
-          {bt.socials.map((social) => (
-            <a
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center opacity-70 gap-2 w-full space-y-2 hover:opacity-70 hover:ml-1 hover:-mr-1 transition-all"
-              key={social.name}
-            >
-              <Link1Icon />
-              {social.name}
-            </a>
-          ))}
-        </div>
-        <p className="text-xs opacity-50">
+        <p className="text-xs opacity-50 hidden md:block">
           © <a href="https://x.com/bridgertower">Bridger Tower</a>, All rights
           reserved.
         </p>

@@ -16,9 +16,6 @@ export default function Home() {
       <GridCol>
         <ProjectCol />
       </GridCol>
-      <GridCol>
-        <p>Hello World</p>
-      </GridCol>
     </Grid>
   );
 }

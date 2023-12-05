@@ -17,9 +17,9 @@ const bt = {
       link: "https://builderkit.io",
     },
     {
-      title: "Mach1",
-      description: "programmatic seo and content marketing",
-      link: "#",
+      title: "Outr.io",
+      description: "sales outreach with ai",
+      link: "https://outr.io",
     },
     {
       title: "Fjord",
@@ -38,18 +38,22 @@ const bt = {
     {
       name: "x.com",
       url: "https://www.x.com/bridgertower",
+      username: "bridgertower",
     },
     {
       name: "github",
       url: "https://github.com/brijr",
+      username: "brijr",
     },
     {
       name: "youtube",
       url: "https://www.youtube.com/@bridgertower",
+      username: "bridgertower",
     },
     {
       name: "linkedin",
       url: "https://www.linkedin.com/in/brdgr",
+      username: "brdgr",
     },
   ],
 
@@ -68,13 +72,7 @@ const bt = {
       link: "https://9d8.dev",
     },
     {
-      title: "Poolhouse Studio",
-      year: "2023",
-      description: "design studio (coming soon)",
-      link: "https://poolhouse.studio",
-    },
-    {
-      title: "flowhouse",
+      title: "flow house",
       year: "2022",
       description: "no-code development agency",
       link: "https://flowhouse.io",
@@ -82,7 +80,7 @@ const bt = {
     {
       title: "Zion Design",
       year: "2018",
-      description: "holding company",
+      description: "design studio",
       link: "https://zion.surf",
     },
   ],
@@ -126,7 +124,7 @@ const bt = {
   websites: [
     {
       title: "pandium.com",
-      description: "in progress",
+      description: "integration software",
       link: "https://pandium.com",
     },
     {
