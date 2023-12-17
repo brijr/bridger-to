@@ -88,17 +88,17 @@ const bt = {
   // Work and Resume
   work: [
     {
-      title: "Product Developer at Alpine Codex",
+      title: "Software Developer at Alpine Codex",
       year: "2023",
       link: "https://alpinecodex.com",
     },
     {
-      title: "Design Engineer at 9D8",
+      title: "Software Developer at 9D8",
       year: "2023",
       link: "https://9d8.dev",
     },
     {
-      title: "Frontend Developer at Ampry",
+      title: "Software Developer at Ampry",
       year: "2022",
       link: "https://ampry.com",
     },
@@ -128,6 +128,11 @@ const bt = {
       link: "https://pandium.com",
     },
     {
+      title: "ampry.com",
+      description: "customer acquisition",
+      link: "https://ampry.com",
+    },
+    {
       title: "travelmellow.com",
       description: "travel blog and website",
       link: "https://travelmellow.com",
@@ -141,11 +146,6 @@ const bt = {
       title: "modelofconfidence.com",
       description: "model and confidence training",
       link: "https://modelofconfidence.com",
-    },
-    {
-      title: "ampry.com",
-      description: "customer acquisition",
-      link: "https://ampry.com",
     },
   ],
 };
