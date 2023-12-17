@@ -8,7 +8,7 @@ const ProjectCol = () => {
         <h3 className="my-4">
           <span className="opacity-70 text-sm">#</span> Ventures
         </h3>
-        <hr className="opacity-25 my-6" />
+        <hr className="opacity-25 my-2" />
 
         {bt.ventures.map((project) => (
           <DetailLink
@@ -22,7 +22,7 @@ const ProjectCol = () => {
         <h3 className="mt-8">
           <span className="opacity-70 text-sm">#</span> Websites
         </h3>
-        <hr className="opacity-25 my-6" />
+        <hr className="opacity-25 my-2" />
 
         {bt.websites.map((project) => (
           <DetailLink
@@ -33,10 +33,10 @@ const ProjectCol = () => {
           ></DetailLink>
         ))}
 
-        <h3 className="my-4">
+        <h3 className="mt-8">
           <span className="opacity-70 text-sm">#</span> Socials
         </h3>
-        <hr className="opacity-25 my-6" />
+        <hr className="opacity-25 my-2" />
 
         {bt.socials.map((project) => (
           <DetailLink

@@ -144,7 +144,7 @@ const bt = {
     },
     {
       title: "ampry.com",
-      description: "performance marketing and customer acquisition",
+      description: "customer acquisition",
       link: "https://ampry.com",
     },
   ],
