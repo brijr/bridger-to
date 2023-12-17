@@ -4,7 +4,7 @@ import DetailLink from "./detail-link";
 const ProjectCol = () => {
   return (
     <>
-      <div className="w-full">
+      <div className="mb-8 w-full md:mb-0">
         <h3 className="my-4">
           <span className="text-base opacity-70">#</span> Ventures
         </h3>
