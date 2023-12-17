@@ -6,9 +6,9 @@ const WorkCol = () => {
     <>
       <div className="w-full">
         <h3 className="my-4">
-          <span className="opacity-70 text-sm">#</span> Software
+          <span className="text-base opacity-70">#</span> Software
         </h3>
-        <hr className="opacity-25 my-2" />
+        <hr className="my-2 opacity-25" />
 
         {bt.projects.map((project) => (
           <DetailLink
@@ -20,9 +20,9 @@ const WorkCol = () => {
         ))}
 
         <h3 className="mt-8">
-          <span className="opacity-70 text-sm">#</span> Work
+          <span className="text-base opacity-70">#</span> Work
         </h3>
-        <hr className="opacity-25 my-2" />
+        <hr className="my-2 opacity-25" />
 
         {bt.work.map((work) => (
           <DetailLink

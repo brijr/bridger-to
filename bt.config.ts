@@ -144,7 +144,7 @@ const bt = {
     },
     {
       title: "modelofconfidence.com",
-      description: "model and confidence training",
+      description: "model training",
       link: "https://modelofconfidence.com",
     },
   ],

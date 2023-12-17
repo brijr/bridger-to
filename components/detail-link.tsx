@@ -17,13 +17,13 @@ const DetailLink: React.FC<DetailLinkProps> = ({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex justify-between items-baseline w-full group space-y-3 hover:opacity-70 transition-all"
+      className="group flex w-full items-baseline justify-between space-y-3 transition-all hover:opacity-70"
     >
-      <p className="text-sm group-hover:pl-1 transition-all w-fit flex gap-1 items-center">
+      <p className="flex w-fit items-center gap-1 text-base transition-all group-hover:pl-1">
         {title}{" "}
-        <ExternalLinkIcon className="w-3 h-3 transition-all opacity-0 group-hover:opacity-100" />
+        <ExternalLinkIcon className="h-3 w-3 opacity-0 transition-all group-hover:opacity-100" />
       </p>
-      <p className="w-fit text-xs block opacity-70 text-right">{description}</p>
+      <p className="block w-fit text-right text-xs opacity-70">{description}</p>
     </a>
   );
 };
