@@ -6,8 +6,8 @@ const IntroCol = () => {
       <div>
         {/* top element */}
         <h1 className="sr-only">Bridger Tower | Designer and Developer</h1>
-        <p className="group flex gap-3 cursor-default items-center text-3xl lowercase transition-all">
-          <span className="block md:inline">
+        <p className="group mt-6 flex cursor-default items-center gap-3 text-3xl lowercase transition-all">
+          <span className="block group-hover:invert md:inline">
             <Image
               className="spin w-8"
               width={24}
@@ -19,26 +19,25 @@ const IntroCol = () => {
           <span className="inline group-hover:hidden">Bridger Tower</span>{" "}
           <span className="hidden group-hover:inline">bridger.to</span>
         </p>
-        <h2 className="text-lg mt-12">
+        <h2 className="mt-12 text-xl">
           Designer, Developer, and Marketer from Salt Lake City, UT. Crafting
-          software and websites. Using Next.js, Figma, Tailwind CSS, Typscript,
-          Webflow, Wordpress, Laravel, and more.
+          innovative software and websites using AI and modern technologies.
         </h2>
-        <h3 className="opacity-70 mt-6">
+        <h3 className="mt-6 opacity-70">
           As a creative technologist, I combine my passion for design and code
           to create{" "}
           <a
-            className="border-b hover:border-orange-300 border-orange-500"
+            className="border-b border-orange-500 hover:border-orange-300"
             href="https://design.bridger.to"
           >
             timeless brands
           </a>
           , comprehensive design systems,{" "}
           <a
-            className="border-b hover:border-orange-300 border-orange-500"
+            className="border-b border-orange-500 hover:border-orange-300"
             href="https://product.bridger.to"
           >
-            impactful digital products
+            impactful digital software
           </a>
           , and captivating websites.
         </h3>
@@ -46,7 +45,7 @@ const IntroCol = () => {
 
       {/* Description etc. */}
       <div className="flex flex-col gap-4">
-        <p className="text-xs opacity-50 hidden md:block">
+        <p className="hidden text-xs opacity-50 md:block">
           © <a href="https://x.com/bridgertower">Bridger Tower</a>, All rights
           reserved.
         </p>

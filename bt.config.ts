@@ -8,7 +8,7 @@ const bt = {
     },
     {
       title: "Wavefinder",
-      description: "ai marketing software for customer acquisition",
+      description: "ai marketing software",
       link: "https://wavefinder.io",
     },
     {

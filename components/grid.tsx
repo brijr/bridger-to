@@ -1,6 +1,6 @@
 const Grid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="flex flex-col flex-grow font-light w-full md:h-screen md:grid lg:grid-cols-3">
+    <main className="flex w-full flex-grow flex-col font-light md:grid md:h-screen lg:grid-cols-3">
       {children}
     </main>
   );
