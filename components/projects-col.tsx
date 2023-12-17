@@ -12,19 +12,21 @@ const ProjectCol = () => {
 
         {bt.ventures.map((project) => (
           <DetailLink
+            key={project.title}
             link={project.link}
             title={project.title}
             description={project.description}
           ></DetailLink>
         ))}
 
-        <h3 className="my-4">
+        <h3 className="mt-8">
           <span className="opacity-70 text-sm">#</span> Websites
         </h3>
         <hr className="opacity-25 my-6" />
 
         {bt.websites.map((project) => (
           <DetailLink
+            key={project.title}
             link={project.link}
             title={project.title}
             description={project.description}
@@ -38,6 +40,7 @@ const ProjectCol = () => {
 
         {bt.socials.map((project) => (
           <DetailLink
+            key={project.name}
             link={project.url}
             title={project.name}
             description={project.username}
