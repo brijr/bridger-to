@@ -7,7 +7,7 @@ const IntroCol = () => {
         {/* top element */}
         <h1 className="sr-only">Bridger Tower | Designer and Developer</h1>
         <p className="group mt-6 flex cursor-default items-center gap-3 text-3xl lowercase transition-all">
-          <span className="block group-hover:invert md:inline">
+          <span className="block md:group-hover:invert md:inline">
             <Image
               className="spin w-8"
               width={24}
