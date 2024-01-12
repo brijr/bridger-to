@@ -20,6 +20,20 @@ const WorkCol = () => {
         ))}
 
         <h3 className="mt-8">
+          <span className="text-base opacity-70">#</span> Software
+        </h3>
+        <hr className="my-2 opacity-25" />
+
+        {bt.os.map((project) => (
+          <DetailLink
+            key={project.title}
+            link={project.link}
+            title={project.title}
+            description={project.description}
+          ></DetailLink>
+        ))}
+
+        <h3 className="mt-8">
           <span className="text-base opacity-70">#</span> Work
         </h3>
         <hr className="my-2 opacity-25" />

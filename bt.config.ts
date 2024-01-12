@@ -21,15 +21,29 @@ const bt = {
       description: "sales outreach with ai",
       link: "https://outr.io",
     },
+  ],
+
+  // open source projects
+  os: [
     {
       title: "Fjord",
       description: "headless next.js and wordpress",
       link: "https://fjord.dev",
     },
     {
-      title: "CraftUI",
-      description: "next.js components for marketing devs",
+      title: "Craft UI",
+      description: "next.js components for marketing",
       link: "https://craftui.org",
+    },
+    {
+      title: "WindPress",
+      description: "high performance wordpress theme",
+      link: "https://github.com/alpinecodex/windpress",
+    },
+    {
+      title: "9d8 Starter",
+      description: "next js starter for fullstack applications",
+      link: "https://github.com/9d8dev/starter",
     },
   ],
 
