@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Link1Icon } from "@radix-ui/react-icons";
 
 const IntroCol = () => {
   return (
@@ -25,22 +27,33 @@ const IntroCol = () => {
         </h2>
         <h3 className="mt-6 opacity-70">
           As a creative technologist, I combine my passion for design and code
-          to create{" "}
-          <a
-            className="border-b border-orange-500 hover:border-orange-300"
-            href="https://design.bridger.to"
+          to create timeless brands, comprehensive design systems, impactful
+          digital software, and captivating websites.
+        </h3>
+
+        <div className="grid gap-4 my-12">
+          <Link
+            className="hover:ml-1 transition-all w-fit items-center flex gap-2"
+            href="https://components.bridger.to"
           >
-            timeless brands
-          </a>
-          , comprehensive design systems,{" "}
-          <a
-            className="border-b border-orange-500 hover:border-orange-300"
+            <Link1Icon />
+            components.bridger.to
+          </Link>
+          <Link
+            className="hover:ml-1 transition-all w-fit items-center flex gap-2"
             href="https://product.bridger.to"
           >
-            impactful digital software
-          </a>
-          , and captivating websites.
-        </h3>
+            <Link1Icon />
+            product.bridger.to
+          </Link>
+          <Link
+            className="hover:ml-1 transition-all w-fit items-center flex gap-2"
+            href="https://design.bridger.to"
+          >
+            <Link1Icon />
+            design.bridger.to
+          </Link>
+        </div>
       </div>
 
       {/* Description etc. */}
