@@ -74,7 +74,7 @@ export function Media({ src, alt = "", className, fill = false }: MediaProps) {
             "border",
             "block w-full",
             (fill || (!isStaticImport && !imageWidth && !imageHeight)) &&
-              "aspect-4/3",
+              "aspect-4/3 my-4",
             className
           )}
           style={

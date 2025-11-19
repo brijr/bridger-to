@@ -146,13 +146,13 @@ const proseInteractiveClasses = [
 ];
 
 const proseSpacedClasses = [
-  "space-y-2",
-  "[&_h1:not(:first-child)]:mt-8 [&_h1]:mb-4",
-  "[&_h2:not(:first-child)]:mt-8 [&_h2]:mb-4",
-  "[&_h3:not(:first-child)]:mt-6 [&_h3]:mb-3",
-  "[&_h4:not(:first-child)]:mt-6 [&_h4]:mb-3",
-  "[&_h5:not(:first-child)]:mt-6 [&_h5]:mb-2",
-  "[&_h6:not(:first-child)]:mt-4 [&_h6]:mb-2",
+  "space-y-1",
+  "[&_h1:not(:first-child)]:mt-4 [&_h1]:mb-2",
+  "[&_h2:not(:first-child)]:mt-4 [&_h2]:mb-2",
+  "[&_h3:not(:first-child)]:mt-3 [&_h3]:mb-1",
+  "[&_h4:not(:first-child)]:mt-3 [&_h4]:mb-1",
+  "[&_h5:not(:first-child)]:mt-3 [&_h5]:mb-1",
+  "[&_h6:not(:first-child)]:mt-2 [&_h6]:mb-1",
 ];
 
 export const Prose = ({
