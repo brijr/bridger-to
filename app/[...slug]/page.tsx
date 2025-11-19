@@ -52,7 +52,12 @@ export default async function Page(props: PageProps) {
     <Main>
       <Section>
         <Container className="space-y-8">
-          <Hero path={post.title} pathHref={`/${post.slug}`} />
+          <Hero
+            paths={[
+              { label: "Posts", href: "/posts" },
+              { label: post.title, href: `/${post.slug}` },
+            ]}
+          />
           <Meta title={post.title} date={post.date} author={post.author} />
           <Prose isArticle isSpaced>
             <MDXContent code={post.body} />

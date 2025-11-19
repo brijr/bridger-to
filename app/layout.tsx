@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Layout, Main, Section, Container } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Logo } from "@/components/site/logo";
+import { EmailCopyButton } from "@/components/site/email-copy-button";
 import { Toaster } from "@/components/ui/sonner";
 
 import type { Metadata } from "next";
@@ -45,6 +46,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Logo className="block fixed top-6 left-6" />
+          <EmailCopyButton className="fixed top-6 right-6" />
           <Main className="flex-1">{children}</Main>
           <ThemeToggle className="fixed bottom-6 right-6" />
           <Footer />
