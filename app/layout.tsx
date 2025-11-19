@@ -1,22 +1,28 @@
+import "./globals.css";
+
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Layout, Main } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/site/footer";
+import { Inter_Tight as FontSans } from "next/font/google";
 
 import type { Metadata } from "next";
 
-import "./globals.css";
-
 import { cn } from "@/lib/utils";
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: {
-    default: "MDX Starter Template for Building Websites",
-    template: "%s | MDX Starter",
+    default: "Bridger Tower / Designer and Software Engineer",
+    template: "%s | Bridger Tower",
   },
   description:
-    "MDX and Next.js Starter made by Bridger Tower at 9d8 and WIP / AC",
+    "Bridger is a Design Engineer exploring user interface design, applied artificial intelligence, and human computer interaction.",
 };
 
 export default function RootLayout({
@@ -28,7 +34,8 @@ export default function RootLayout({
     <Layout>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased w-screen flex flex-col",
+          "min-h-screen bg-background font-sans antialiased w-screen flex flex-col text-lg",
+          fontSans.variable
         )}
       >
         <ThemeProvider

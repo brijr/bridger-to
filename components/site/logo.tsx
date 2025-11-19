@@ -6,7 +6,7 @@ import LogoDark from "@/public/logo-dark.svg";
 
 export const Logo = ({
   href = "/",
-  width = 72,
+  width = 24,
   height,
   className,
 }: {
@@ -21,14 +21,14 @@ export const Logo = ({
         width={width}
         height={height}
         src={LogoLight}
-        alt="Italy Vita Logo"
-        className="block dark:hidden invert"
+        alt="Bridger Tower Logo"
+        className="block dark:hidden"
       />
       <Image
         width={width}
         height={height}
         src={LogoDark}
-        alt="Italy Vita Logo"
+        alt="Bridger Tower Logo"
         className="hidden dark:block"
       />
     </Link>

@@ -1,5 +1,6 @@
+import { Main, Section, Container } from "@/components/ds";
+import { Hero } from "@/components/site/hero";
 import { List } from "@/components/posts/list";
-import { Main } from "@/components/ds";
 
 import { getAllPosts } from "@/lib/posts";
 
@@ -8,7 +9,12 @@ export default function PostsPage() {
 
   return (
     <Main>
-      <List posts={posts} />
+      <Section>
+        <Container className="space-y-8">
+          <Hero path="Posts" pathHref="/posts" />
+          <List posts={posts} />
+        </Container>
+      </Section>
     </Main>
   );
 }

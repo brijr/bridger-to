@@ -1,31 +1,27 @@
-import { Section, Container } from "@/components/ds";
 import { Item } from "@/components/posts/item";
 
 import type { Post } from "#site/content";
 
 export const List = ({ posts }: { posts: Post[] }) => {
   return (
-    <Section>
-      <Container className="space-y-6">
-        <h2 className="text-2xl font-semibold tracking-tight">Recent Posts</h2>
-        {posts.length > 0 ? (
-          <ul className="border divide-y rounded-lg">
+    <div>
+      {posts.length > 0 ? (
+        <div className="grid grid-cols-1 gap-1 max-w-2xl bg-muted/50 p-1 rounded">
+          <div className="grid gap-1">
             {posts.map((post) => (
               <Item
                 key={post.slug}
                 slug={post.slug}
                 title={post.title}
                 date={post.date}
-                excerpt={post.description}
-                tags={post.tags}
               />
             ))}
-          </ul>
-        ) : (
-          <NoPosts />
-        )}
-      </Container>
-    </Section>
+          </div>
+        </div>
+      ) : (
+        <NoPosts />
+      )}
+    </div>
   );
 };
 
