@@ -43,7 +43,7 @@ The latest Lenis version includes an `autoRaf` option that automatically handles
 // components/providers/lenis-provider.tsx
 "use client";
 
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import Lenis from "lenis";
 
 import type { LenisOptions } from "lenis";
@@ -57,31 +57,36 @@ export function LenisProvider({
   children: React.ReactNode;
   options?: LenisOptions;
 }) {
-  const lenisRef = useRef<Lenis | null>(null);
+  const [lenis, setLenis] = useState<Lenis | null>(null);
+  const optionsRef = useRef(options);
+
+  // Update ref when options change
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   useEffect(() => {
-    const lenis = new Lenis({
+    const lenisInstance = new Lenis({
       autoRaf: true,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       touchMultiplier: 2,
       infinite: false,
       anchors: true,
-      ...options,
+      smoothTouch: false, // Better mobile performance
+      ...optionsRef.current,
     });
 
-    lenisRef.current = lenis;
+    setLenis(lenisInstance);
 
     return () => {
-      lenis.destroy();
-      lenisRef.current = null;
+      lenisInstance.destroy();
+      setLenis(null);
     };
-  }, [options]);
+  }, []); // Empty dependency array - only initialize once
 
   return (
-    <LenisContext.Provider value={lenisRef.current}>
-      {children}
-    </LenisContext.Provider>
+    <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>
   );
 }
 
@@ -507,6 +512,8 @@ export default function ConditionalLenisProvider({
 5. **React 19 compatibility**: Some third-party libraries may need updates for React 19 compatibility. Use the latest Lenis version which supports React 19.
 
 6. **Scroll conflicts in modals**: Use `data-lenis-prevent` attribute or the `prevent` function to disable smooth scrolling on specific elements.
+
+7. **Maximum update depth exceeded error**: If you see "Maximum update depth exceeded", ensure you're not including `options` directly in the `useEffect` dependency array. Use `useRef` to store options and an empty dependency array `[]` for the Lenis initialization effect. This prevents infinite re-renders caused by object reference changes.
 
 ### Debugging Tips
 
