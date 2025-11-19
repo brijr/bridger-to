@@ -1,10 +1,11 @@
 "use client";
 
 import { Mail, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 import { useState } from "react";
 import { toast } from "sonner";
-
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const EMAIL = "bt@wip.ac";
 
@@ -27,8 +28,8 @@ export function EmailCopyButton({ className }: { className?: string }) {
       variant="outline"
       size="icon"
       onClick={copyEmail}
-      className={className}
       aria-label="Copy email address"
+      className={cn(className, "z-50")}
     >
       {copied ? (
         <Check className="h-[1.2rem] w-[1.2rem]" />

@@ -59,7 +59,7 @@ export const Layout = ({ children, className, style }: DSProps) => (
 );
 
 export const Main = ({ children, className, id, style }: DSProps) => (
-  <main className={cn(className, "py-12 px-2")} id={id} style={style}>
+  <main className={cn(className, "py-18 sm:py-12 px-2")} id={id} style={style}>
     {children}
   </main>
 );
