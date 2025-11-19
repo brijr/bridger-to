@@ -12,18 +12,13 @@ interface PostItemProps {
 
 const PostDate = ({ date }: { date: string }) => {
   return (
-    <time dateTime={date} className="text-xs text-muted-foreground">
+    <time dateTime={date} className="text-muted-foreground text-sm pr-1">
       {formatDate(date)}
     </time>
   );
 };
 
-export const Item = ({
-  slug,
-  title,
-  date,
-  className,
-}: PostItemProps) => {
+export const Item = ({ slug, title, date, className }: PostItemProps) => {
   return (
     <Link
       href={`/${slug}`}
@@ -32,13 +27,13 @@ export const Item = ({
         className
       )}
     >
-      <div className="flex items-center gap-2">
+      <h3 className="flex items-center gap-2">
         <ArrowDownRight
           strokeWidth={1.5}
           className="group-hover:-rotate-45 transition-transform"
         />
-        <span className="font-medium">{title}</span>
-      </div>
+        {title}
+      </h3>
 
       <PostDate date={date} />
     </Link>

@@ -6,8 +6,8 @@ export const List = ({ posts }: { posts: Post[] }) => {
   return (
     <div>
       {posts.length > 0 ? (
-        <div className="grid grid-cols-1 gap-1 max-w-2xl bg-muted/50 p-1 rounded">
-          <div className="grid gap-1">
+        <div className="grid grid-cols-1 gap-0.5 max-w-2xl bg-muted/50 p-0.5 rounded">
+          <div className="grid gap-0.5">
             {posts.map((post) => (
               <Item
                 key={post.slug}

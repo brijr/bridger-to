@@ -47,8 +47,8 @@ const Info = () => {
 
 const Links = () => {
   return (
-    <div className="grid grid-cols-2 gap-1 max-w-2xl bg-muted/50 p-1 rounded">
-      <div className="grid gap-1">
+    <div className="grid grid-cols-2 gap-0.5 max-w-2xl bg-muted/50 p-0.5 rounded">
+      <div className="grid gap-0.5">
         {internalLinks.map((link) => (
           <Link
             key={link.href}
@@ -63,7 +63,7 @@ const Links = () => {
           </Link>
         ))}
       </div>
-      <div className="grid gap-1">
+      <div className="grid gap-0.5">
         {externalLinks.map((link) => (
           <Link
             key={link.href}
