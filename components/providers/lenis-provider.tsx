@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import Lenis from "lenis";
 
 import type { LenisOptions } from "lenis";
@@ -15,6 +15,12 @@ export function LenisProvider({
   options?: LenisOptions;
 }) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
+  const optionsRef = useRef(options);
+
+  // Update ref when options change
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   useEffect(() => {
     const lenisInstance = new Lenis({
@@ -25,7 +31,7 @@ export function LenisProvider({
       infinite: false,
       anchors: true,
       smoothTouch: false, // Better mobile performance
-      ...options,
+      ...optionsRef.current,
     });
 
     setLenis(lenisInstance);
@@ -34,7 +40,7 @@ export function LenisProvider({
       lenisInstance.destroy();
       setLenis(null);
     };
-  }, [options]);
+  }, []); // Empty dependency array - only initialize once
 
   return (
     <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>
