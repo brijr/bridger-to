@@ -114,8 +114,22 @@
     @apply border-border outline-ring/50;
   }
 
+  /* Apply transitions to root elements */
+  html,
   body {
-    @apply bg-background text-foreground;
+    transition: background-color 700ms ease, color 700ms ease;
+  }
+
+  /* Apply transitions to all elements for smooth theme changes */
+  * {
+    transition: background-color 700ms ease, color 700ms ease, border-color 700ms ease;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+    }
   }
 }
 

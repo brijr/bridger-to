@@ -44,7 +44,6 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
         >
           <LenisProvider>
             <Logo className="block fixed top-6 left-6" />
