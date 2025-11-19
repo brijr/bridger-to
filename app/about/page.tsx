@@ -1,26 +1,22 @@
-import { Main, Section, Container } from "@/components/ds";
+import { Section, Container } from "@/components/ds";
 import { AnimatedContent } from "@/components/site/animated-content";
 import { FeatImage } from "@/components/site/feat-image";
-import { Hero } from "@/components/site/hero";
 
 import Dolomite from "@/public/dolomite.webp";
 
 export default function AboutPage() {
   return (
-    <Main>
-      <Section>
-        <Container className="space-y-8">
-          <Hero path="About" pathHref="/about" />
-          <AnimatedContent>
-            <AboutContent />
-            <FeatImage
-              src={Dolomite}
-              alt="A photo I took while visiting the Dolomites in Italy"
-            />
-          </AnimatedContent>
-        </Container>
-      </Section>
-    </Main>
+    <Section>
+      <Container className="space-y-8">
+        <AnimatedContent>
+          <AboutContent />
+          <FeatImage
+            src={Dolomite}
+            alt="A photo I took while visiting the Dolomites in Italy"
+          />
+        </AnimatedContent>
+      </Container>
+    </Section>
   );
 }
 

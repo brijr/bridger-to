@@ -4,11 +4,12 @@ import { Inter_Tight as FontSans } from "next/font/google";
 import { EmailCopyButton } from "@/components/site/email-copy-button";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
-import { Layout, Main } from "@/components/ds";
+import { Layout, Main, Section, Container } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Logo } from "@/components/site/logo";
+import { HeroWrapper } from "@/components/site/hero-wrapper";
 
 import type { Metadata } from "next";
 
@@ -56,7 +57,14 @@ export default function RootLayout({
           <LenisProvider>
             <Logo className="block fixed top-6 left-6" />
             <EmailCopyButton className="fixed top-6 right-6" />
-            <Main className="flex-1">{children}</Main>
+            <Main className="flex-1">
+              <Section>
+                <Container className="space-y-8">
+                  <HeroWrapper />
+                </Container>
+              </Section>
+              {children}
+            </Main>
             <ThemeToggle className="fixed bottom-6 right-6" />
             <Footer />
             <Toaster position="top-center" />

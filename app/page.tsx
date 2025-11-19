@@ -1,8 +1,7 @@
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { Main, Section, Container } from "@/components/ds";
+import { Section, Container } from "@/components/ds";
 import { AnimatedContent } from "@/components/site/animated-content";
 import { FeatImage } from "@/components/site/feat-image";
-import { Hero } from "@/components/site/hero";
 
 import Salt from "@/public/salt.webp";
 import Link from "next/link";
@@ -23,22 +22,19 @@ const externalLinks = [
 
 export default function HomePage() {
   return (
-    <Main>
-      <Section>
-        <Container className="space-y-8">
-          <Hero />
-          <AnimatedContent>
-            <Info />
-            <Links />
-            <FeatImage
-              src={Salt}
-              alt="A photo I took at the Salt Flats in Utah"
-            />
-            <p className="text-muted-foreground">"I love to make websites"</p>
-          </AnimatedContent>
-        </Container>
-      </Section>
-    </Main>
+    <Section>
+      <Container className="space-y-8">
+        <AnimatedContent>
+          <Info />
+          <Links />
+          <FeatImage
+            src={Salt}
+            alt="A photo I took at the Salt Flats in Utah"
+          />
+          <p className="text-muted-foreground">"I love to make websites"</p>
+        </AnimatedContent>
+      </Container>
+    </Section>
   );
 }
 

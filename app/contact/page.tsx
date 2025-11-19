@@ -1,8 +1,7 @@
-import { Main, Section, Container } from "@/components/ds";
+import { Section, Container } from "@/components/ds";
 import { AnimatedContent } from "@/components/site/animated-content";
 import { FeatImage } from "@/components/site/feat-image";
 import { ArrowUpRight } from "lucide-react";
-import { Hero } from "@/components/site/hero";
 
 import Beach from "@/public/beach.webp";
 import Link from "next/link";
@@ -14,21 +13,18 @@ const externalLinks = [
 
 export default function ContactPage() {
   return (
-    <Main>
-      <Section>
-        <Container className="space-y-8">
-          <Hero path="Contact" pathHref="/contact" />
-          <AnimatedContent>
-            <ContactContent />
-            <Links />
-            <FeatImage
-              src={Beach}
-              alt="A photo I took at the beach in Oceanside, California"
-            />
-          </AnimatedContent>
-        </Container>
-      </Section>
-    </Main>
+    <Section>
+      <Container className="space-y-8">
+        <AnimatedContent>
+          <ContactContent />
+          <Links />
+          <FeatImage
+            src={Beach}
+            alt="A photo I took at the beach in Oceanside, California"
+          />
+        </AnimatedContent>
+      </Container>
+    </Section>
   );
 }
 

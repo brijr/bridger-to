@@ -1,8 +1,7 @@
 import { ArrowUpRight, Github } from "lucide-react";
-import { Main, Section, Container } from "@/components/ds";
+import { Section, Container } from "@/components/ds";
 import { AnimatedContent } from "@/components/site/animated-content";
 import { Circle } from "lucide-react";
-import { Hero } from "@/components/site/hero";
 
 import Link from "next/link";
 
@@ -125,21 +124,18 @@ const content: WorkItem[] = [
 
 export default function WorkPage() {
   return (
-    <Main>
-      <Section>
-        <Container className="space-y-8">
-          <Hero path="Work" pathHref="/work" />
-          <AnimatedContent>
-            <WorkSection title="Software" items={software} />
-            <WorkSection title="Clients" items={previousClients} />
-            <WorkSection title="Open Source" items={openSourceProjects} />
-            <WorkSection title="Websites" items={websites} />
-            <WorkSection title="Ventures" items={ventures} />
-            <WorkSection title="Content" items={content} />
-          </AnimatedContent>
-        </Container>
-      </Section>
-    </Main>
+    <Section>
+      <Container className="space-y-8">
+        <AnimatedContent>
+          <WorkSection title="Software" items={software} />
+          <WorkSection title="Clients" items={previousClients} />
+          <WorkSection title="Open Source" items={openSourceProjects} />
+          <WorkSection title="Websites" items={websites} />
+          <WorkSection title="Ventures" items={ventures} />
+          <WorkSection title="Content" items={content} />
+        </AnimatedContent>
+      </Container>
+    </Section>
   );
 }
 
