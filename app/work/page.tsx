@@ -15,16 +15,6 @@ const openSourceProjects = [
     github: "https://github.com/brijr/payload-saas-starter",
   },
   {
-    href: "https://router.so",
-    label: "Router.so",
-    github: "https://github.com/routerso/router",
-  },
-  {
-    href: "https://wrk.so",
-    label: "Wrk.so",
-    github: "https://github.com/9d8dev/wrk-so",
-  },
-  {
     href: "https://mdx.bridger.to",
     label: "MDX Starter",
     github: "https://github.com/brijr/mdx",
@@ -38,16 +28,6 @@ const openSourceProjects = [
     href: "https://components.work",
     label: "Components",
     github: "https://github.com/brijr/components",
-  },
-  {
-    href: "https://designbooks.org",
-    label: "Design Books",
-    github: "https://github.com/brijr/designbooks",
-  },
-  {
-    href: "https://studiomojave.com/",
-    label: "Studio Mojave",
-    github: "https://github.com/brijr/mojave",
   },
   {
     href: "https://deploy.bridger.to",
@@ -77,21 +57,49 @@ const previousClients = [
   { href: "https://tackle.io", label: "Tackle.io" },
 ];
 
-const ventures = [
+const software = [
+  { href: "https://flysuper.com", label: "Fly Super" },
+  { href: "https://offerarc.com", label: "Offer Arc" },
   {
-    href: "https://wip.ac",
-    label: "Work In Progress",
-    github: "https://github.com/brijr/wip",
+    href: "https://router.so",
+    label: "Router.so",
+    github: "https://github.com/routerso/router",
+  },
+  {
+    href: "https://wrk.so",
+    label: "Wrk.so",
+    github: "https://github.com/9d8dev/wrk-so",
+  },
+];
+
+const websites = [
+  {
+    href: "https://designbooks.org",
+    label: "Design Books",
+    github: "https://github.com/brijr/designbooks",
+  },
+  {
+    href: "https://studiomojave.com/",
+    label: "Studio Mojave",
+    github: "https://github.com/brijr/mojave",
+  },
+  {
+    href: "https://www.zion.surf/",
+    label: "Zion",
+    github: "https://github.com/brijr/zion",
   },
   {
     href: "https://alpinecodex.com",
     label: "Alpine Codex",
     github: "https://github.com/alpinecodex/home",
   },
+];
+
+const ventures = [
   {
-    href: "https://www.zion.surf/",
-    label: "Zion",
-    github: "https://github.com/brijr/zion",
+    href: "https://wip.ac",
+    label: "Work In Progress",
+    github: "https://github.com/brijr/wip",
   },
   {
     href: "https://9d8.dev",
@@ -120,8 +128,10 @@ export default function WorkPage() {
               engineer.
             </p>
           </div>
-          <WorkSection title="Previous Clients" items={previousClients} />
-          <WorkSection title="OS Projects" items={openSourceProjects} />
+          <WorkSection title="Software" items={software} />
+          <WorkSection title="Clients" items={previousClients} />
+          <WorkSection title="Open Source" items={openSourceProjects} />
+          <WorkSection title="Websites" items={websites} />
           <WorkSection title="Ventures" items={ventures} />
           <WorkSection title="Content" items={content} />
         </Container>
@@ -160,7 +170,7 @@ function WorkSection({
                 <Link
                   href={item.github}
                   target="_blank"
-                  className="flex items-center justify-center hover:text-primary group bg-background p-2.5 rounded aspect-square transition-colors"
+                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2.5 rounded aspect-square transition-colors"
                   aria-label={`${item.label} GitHub`}
                 >
                   <Github strokeWidth={1.5} size={20} />
