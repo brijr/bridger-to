@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import { motion, AnimatePresence } from "motion/react";
+import { cn } from "@/lib/utils";
 
 const labels = [
   {
@@ -18,7 +20,7 @@ const labels = [
   },
 ];
 
-export function Subtitle() {
+export function Subtitle({ className }: { className?: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function Subtitle() {
   }, []);
 
   return (
-    <h3 className="text-muted-foreground relative">
+    <h3 className={cn("text-muted-foreground relative", className)}>
       <AnimatePresence mode="wait">
         <motion.span
           key={currentIndex}

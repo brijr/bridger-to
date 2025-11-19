@@ -1,7 +1,6 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import { Main, Section, Container } from "@/components/ds";
 import { Hero } from "@/components/site/hero";
-import { Subtitle } from "@/components/site/subtitle";
 import { AnimatedContent } from "@/components/site/animated-content";
 import Link from "next/link";
 
@@ -120,10 +119,7 @@ export default function WorkPage() {
     <Main>
       <Section>
         <Container className="space-y-8">
-          <div className="flex items-center justify-between gap-2">
-            <Hero path="Work" pathHref="/work" />
-            <Subtitle />
-          </div>
+          <Hero path="Work" pathHref="/work" />
           <AnimatedContent>
             <WorkSection title="Software" items={software} />
             <WorkSection title="Clients" items={previousClients} />
@@ -147,6 +143,7 @@ function WorkSection({
 }) {
   return (
     <div className="space-y-2">
+      <h3 className="text-muted-foreground text-[0.8rem]">{title}</h3>
       <div className="grid gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5">
           {items.map((item) => (
@@ -177,7 +174,6 @@ function WorkSection({
           ))}
         </div>
       </div>
-      <h2 className="text-muted-foreground text-[0.8rem]">{title}</h2>
     </div>
   );
 }

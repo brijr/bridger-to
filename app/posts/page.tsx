@@ -1,7 +1,6 @@
 import { Main, Section, Container } from "@/components/ds";
 import { List } from "@/components/posts/list";
 import { Hero } from "@/components/site/hero";
-import { Subtitle } from "@/components/site/subtitle";
 import { AnimatedContent } from "@/components/site/animated-content";
 
 import { getAllPosts } from "@/lib/posts";
@@ -13,10 +12,7 @@ export default function PostsPage() {
     <Main>
       <Section>
         <Container className="space-y-8">
-          <div className="flex items-center justify-between gap-2">
-            <Hero path="Posts" pathHref="/posts" />
-            <Subtitle />
-          </div>
+          <Hero path="Posts" pathHref="/posts" />
           <AnimatedContent>
             <List posts={posts} />
           </AnimatedContent>

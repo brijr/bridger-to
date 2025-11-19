@@ -120,15 +120,57 @@
   }
 
   /* SVG elements should not transition colors */
-  svg,
-  svg * {
-    transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease !important;
+
+
+  /* Blur entrance animation matching subtitle */
+  @keyframes blur-entrance {
+    from {
+      filter: blur(3px);
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    to {
+      filter: blur(0px);
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .blur-entrance {
+    filter: blur(3px);
+    opacity: 0;
+    transform: translateY(-8px);
+    animation: blur-entrance 1.2s ease-in-out forwards;
+  }
+
+  /* Blur entrance animation for content items (smaller y offset) */
+  @keyframes blur-entrance-content {
+    from {
+      filter: blur(3px);
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    to {
+      filter: blur(0px);
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .blur-entrance-content {
+    filter: blur(3px);
+    opacity: 0;
+    transform: translateY(-8px);
+    animation: blur-entrance-content 1.2s ease-in-out forwards;
   }
 
   /* Respect reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
     * {
       transition: none !important;
+      animation: none !important;
     }
   }
 }
