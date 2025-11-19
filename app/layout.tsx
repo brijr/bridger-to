@@ -35,7 +35,7 @@ export default function RootLayout({
     <Layout>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased w-screen flex flex-col",
+          "min-h-screen bg-background font-sans antialiased w-screen flex flex-col leading-tight",
           fontSans.variable
         )}
       >

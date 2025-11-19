@@ -119,15 +119,6 @@ export default function WorkPage() {
       <Section>
         <Container className="space-y-8">
           <Hero path="Work" pathHref="/work" />
-          <div className="text-balance">
-            <p className="text-muted-foreground">
-              A link is worth a thousand words
-            </p>
-            <p className="mt-4">
-              Below are some of what I have worked on as a designer and software
-              engineer.
-            </p>
-          </div>
           <WorkSection title="Software" items={software} />
           <WorkSection title="Clients" items={previousClients} />
           <WorkSection title="Open Source" items={openSourceProjects} />
@@ -170,7 +161,7 @@ function WorkSection({
                 <Link
                   href={item.github}
                   target="_blank"
-                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2.5 rounded aspect-square transition-colors"
+                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2 rounded aspect-square transition-colors"
                   aria-label={`${item.label} GitHub`}
                 >
                   <Github strokeWidth={1.5} size={20} />
