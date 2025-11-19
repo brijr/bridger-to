@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 
-const EMAIL = "bridger@wip.ac";
+const EMAIL = "bt@wip.ac";
 
 export function EmailCopyButton({ className }: { className?: string }) {
   const [copied, setCopied] = useState(false);

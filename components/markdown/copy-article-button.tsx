@@ -42,11 +42,7 @@ export function CopyArticleButton() {
       onClick={copyArticleText}
       aria-label="Copy article text"
     >
-      {hasCopied ? (
-        <Check className="h-4 w-4" />
-      ) : (
-        <Copy className="h-4 w-4" />
-      )}
+      {hasCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
     </Button>
   );
 }

@@ -114,15 +114,15 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Apply transitions to root elements */
-  html,
-  body {
-    transition: background-color 700ms ease, color 700ms ease;
-  }
-
   /* Apply transitions to all elements for smooth theme changes */
   * {
     transition: background-color 700ms ease, color 700ms ease, border-color 700ms ease;
+  }
+
+  /* SVG elements should not transition colors */
+  svg,
+  svg * {
+    transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease !important;
   }
 
   /* Respect reduced motion preference */
