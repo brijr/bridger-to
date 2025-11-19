@@ -30,7 +30,6 @@ export function LenisProvider({
       touchMultiplier: 2,
       infinite: false,
       anchors: true,
-      smoothTouch: false, // Better mobile performance
       ...optionsRef.current,
     });
 

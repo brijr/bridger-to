@@ -1,13 +1,13 @@
 import "./globals.css";
 
 import { Inter_Tight as FontSans } from "next/font/google";
-import { ThemeProvider } from "@/components/theme/theme-provider";
-import { Layout, Main, Section, Container } from "@/components/ds";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Logo } from "@/components/site/logo";
 import { EmailCopyButton } from "@/components/site/email-copy-button";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
+import { Layout, Main } from "@/components/ds";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
+import { Logo } from "@/components/site/logo";
 
 import type { Metadata } from "next";
 
@@ -19,12 +19,23 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://bridger.to"
+  ),
   title: {
     default: "Bridger Tower / Designer and Software Engineer",
     template: "%s | Bridger Tower",
   },
   description:
     "Bridger is a Design Engineer exploring user interface design, applied artificial intelligence, and human computer interaction.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Bridger Tower",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
