@@ -2,8 +2,9 @@ import "./globals.css";
 
 import { Inter_Tight as FontSans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { Layout, Main } from "@/components/ds";
+import { Layout, Main, Section, Container } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Logo } from "@/components/site/logo";
 import { Toaster } from "@/components/ui/sonner";
 
 import type { Metadata } from "next";
@@ -43,7 +44,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Main className="flex-1">{children}</Main>
+          <Main className="flex-1">
+            <Section>
+              <Container>
+                <Logo className="block" />
+              </Container>
+            </Section>
+            {children}
+          </Main>
           <ThemeToggle className="fixed bottom-6 right-6" />
           <Footer />
           <Toaster position="top-center" />

@@ -1,6 +1,5 @@
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { Main, Section, Container } from "@/components/ds";
-import { Logo } from "@/components/site/logo";
 import { Hero } from "@/components/site/hero";
 
 import Link from "next/link";
@@ -24,7 +23,6 @@ export default function HomePage() {
     <Main>
       <Section>
         <Container className="space-y-8">
-          <Logo className="block" />
           <Hero />
           <Links />
           <Info />

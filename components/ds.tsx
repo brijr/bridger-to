@@ -68,12 +68,12 @@ export const Main = ({ children, className, id, style }: DSProps) => (
 const proseBaseClasses = "antialiased text-base leading-7";
 
 const proseHeadingClasses = [
-  "[&_h1]:text-4xl sm:[&_h1]:text-5xl [&_h1]:font-medium [&_h1]:tracking-tight [&_h1]:text-balance",
-  "[&_h2]:text-3xl sm:[&_h2]:text-4xl [&_h2]:font-medium [&_h2]:tracking-tight [&_h2]:text-balance",
-  "[&_h3]:text-2xl sm:[&_h3]:text-3xl [&_h3]:font-medium [&_h3]:tracking-tight [&_h3]:text-balance",
-  "[&_h4]:text-xl sm:[&_h4]:text-2xl [&_h4]:tracking-tight [&_h4]:text-balance",
-  "[&_h5]:text-lg sm:[&_h5]:text-xl [&_h5]:tracking-tight [&_h5]:text-balance",
-  "[&_h6]:text-base sm:[&_h6]:text-lg [&_h6]:tracking-tight [&_h6]:text-balance",
+  "[&_h1]:font-medium [&_h1]:tracking-tight [&_h1]:text-balance",
+  "[&_h2]:font-medium [&_h2]:tracking-tight [&_h2]:text-balance",
+  "[&_h3]:font-medium [&_h3]:tracking-tight [&_h3]:text-balance",
+  "[&_h4]:tracking-tight [&_h4]:text-balance",
+  "[&_h5]:tracking-tight [&_h5]:text-balance",
+  "sm:[&_h6]:text-lg [&_h6]:tracking-tight [&_h6]:text-balance",
 ];
 
 const proseTextClasses = [
@@ -146,7 +146,7 @@ const proseInteractiveClasses = [
 ];
 
 const proseSpacedClasses = [
-  "space-y-6",
+  "space-y-2",
   "[&_h1:not(:first-child)]:mt-8 [&_h1]:mb-4",
   "[&_h2:not(:first-child)]:mt-8 [&_h2]:mb-4",
   "[&_h3:not(:first-child)]:mt-6 [&_h3]:mb-3",

@@ -21,7 +21,7 @@ export const Hero = ({
           </>
         )}
       </h1>
-      <h2 className="text-muted-foreground">Designer and Software Engineer</h2>
+      <h2 className="text-muted-foreground">Design Engineer</h2>
     </div>
   );
 };
