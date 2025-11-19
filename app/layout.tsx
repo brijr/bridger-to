@@ -1,11 +1,10 @@
 import "./globals.css";
 
+import { Inter_Tight as FontSans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Layout, Main } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
-import { Footer } from "@/components/site/footer";
-import { Inter_Tight as FontSans } from "next/font/google";
 
 import type { Metadata } from "next";
 
@@ -45,13 +44,19 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Main className="flex-1">{children}</Main>
+          <ThemeToggle className="fixed bottom-6 right-6" />
           <Footer />
-          <div className="fixed bottom-6 right-6">
-            <ThemeToggle />
-          </div>
           <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </Layout>
   );
 }
+
+const Footer = () => {
+  return (
+    <footer className="fixed bottom-6 left-6 text-muted-foreground text-sm">
+      &copy; {new Date().getFullYear()}
+    </footer>
+  );
+};

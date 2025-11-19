@@ -8,7 +8,7 @@ export const Hero = ({
   pathHref?: string;
 }) => {
   return (
-    <div className="max-w-2xl">
+    <div className="flex items-center justify-between gap-2">
       <h1 className="flex items-center gap-2">
         <Link href="/" className={path && "text-muted-foreground"}>
           Bridger Tower

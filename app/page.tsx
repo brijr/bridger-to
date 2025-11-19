@@ -26,8 +26,8 @@ export default function HomePage() {
         <Container className="space-y-8">
           <Logo className="block" />
           <Hero />
-          <Info />
           <Links />
+          <Info />
         </Container>
       </Section>
     </Main>
@@ -36,7 +36,7 @@ export default function HomePage() {
 
 const Info = () => {
   return (
-    <div className="max-w-2xl text-balance">
+    <div className="text-balance">
       <h3>
         UI design, applied artificial intelligence, and human-computer
         interaction. Background in marketing and advertising.
@@ -47,16 +47,17 @@ const Info = () => {
 
 const Links = () => {
   return (
-    <div className="grid grid-cols-2 gap-0.5 max-w-2xl bg-muted/50 p-0.5 rounded">
+    <div className="grid grid-cols-2 gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
       <div className="grid gap-0.5">
         {internalLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className="flex items-center gap-2 hover:text-primary group bg-background p-2 rounded"
+            className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
           >
             <ArrowDownRight
               strokeWidth={1.5}
+              size={20}
               className="group-hover:-rotate-45 transition-transform"
             />
             {link.label}
@@ -68,10 +69,11 @@ const Links = () => {
           <Link
             key={link.href}
             href={link.href}
-            className="flex items-center gap-2 hover:text-primary group bg-background p-2 rounded"
+            className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
           >
             <ArrowUpRight
               strokeWidth={1.5}
+              size={20}
               className="group-hover:rotate-45 transition-transform"
             />
             {link.label}
