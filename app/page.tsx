@@ -1,6 +1,8 @@
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { Main, Section, Container } from "@/components/ds";
 import { Hero } from "@/components/site/hero";
+import { Subtitle } from "@/components/site/subtitle";
+import { AnimatedContent } from "@/components/site/animated-content";
 
 import Link from "next/link";
 
@@ -23,9 +25,14 @@ export default function HomePage() {
     <Main>
       <Section>
         <Container className="space-y-8">
-          <Hero />
-          <Links />
-          <Info />
+          <div className="flex items-center justify-between gap-2">
+            <Hero />
+            <Subtitle />
+          </div>
+          <AnimatedContent>
+            <Links />
+            <Info />
+          </AnimatedContent>
         </Container>
       </Section>
     </Main>
@@ -34,10 +41,16 @@ export default function HomePage() {
 
 const Info = () => {
   return (
-    <div className="text-balance">
+    <div className="text-pretty space-y-3">
+      <h2>
+        Design engineer specializing in UI, applied AI, and human-computer
+        interaction. I bring a marketing and advertising background to building
+        software that solves real problems.
+      </h2>
       <h3>
-        UI design, applied artificial intelligence, and human-computer
-        interaction. Background in marketing and advertising.
+        My focus is on closing the gap between what AI can do and what people
+        need it to do. Designing systems that feel intuitive while leveraging
+        sophisticated technology under the hood."
       </h3>
     </div>
   );

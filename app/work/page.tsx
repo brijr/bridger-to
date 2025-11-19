@@ -1,6 +1,8 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import { Main, Section, Container } from "@/components/ds";
 import { Hero } from "@/components/site/hero";
+import { Subtitle } from "@/components/site/subtitle";
+import { AnimatedContent } from "@/components/site/animated-content";
 import Link from "next/link";
 
 const openSourceProjects = [
@@ -118,13 +120,18 @@ export default function WorkPage() {
     <Main>
       <Section>
         <Container className="space-y-8">
-          <Hero path="Work" pathHref="/work" />
-          <WorkSection title="Software" items={software} />
-          <WorkSection title="Clients" items={previousClients} />
-          <WorkSection title="Open Source" items={openSourceProjects} />
-          <WorkSection title="Websites" items={websites} />
-          <WorkSection title="Ventures" items={ventures} />
-          <WorkSection title="Content" items={content} />
+          <div className="flex items-center justify-between gap-2">
+            <Hero path="Work" pathHref="/work" />
+            <Subtitle />
+          </div>
+          <AnimatedContent>
+            <WorkSection title="Software" items={software} />
+            <WorkSection title="Clients" items={previousClients} />
+            <WorkSection title="Open Source" items={openSourceProjects} />
+            <WorkSection title="Websites" items={websites} />
+            <WorkSection title="Ventures" items={ventures} />
+            <WorkSection title="Content" items={content} />
+          </AnimatedContent>
         </Container>
       </Section>
     </Main>
