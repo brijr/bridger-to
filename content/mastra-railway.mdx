@@ -1,0 +1,428 @@
+---
+title: "Deploying Mastra to Railway"
+description: "A step by step guide to deploying Mastra to Railway."
+date: "2025-01-10"
+published: true
+---
+
+This guide will walk you through deploying your Mastra application to [Railway](https://railway.app/?referralCode=AJtQpy), a modern deployment platform that makes it easy to deploy Node.js applications.
+
+## Prerequisites
+
+Before starting, ensure you have:
+
+- A Mastra.ai project set up locally
+- Node.js 18.x or later installed
+- A [Railway account](https://railway.app/new?referralCode=AJtQpy) (sign up with GitHub for easier integration)
+- A GitHub account (for GitHub deployment method)
+- [Railway CLI](https://docs.railway.com/guides/cli?referralCode=AJtQpy) installed (for CLI deployment method)
+
+## Understanding Mastra Deployment
+
+Mastra uses Hono as its underlying HTTP server framework. When you build a Mastra application using `mastra build`, it generates a production-ready Hono-based HTTP server in the `.mastra/output` directory. This makes it compatible with any Node.js hosting platform, including Railway.
+
+**Key Points:**
+
+- Development server (`mastra dev`) runs on port 3000
+- Production server defaults to port 4111 (configurable)
+- Build output is generated in `.mastra/output/`
+- The built server is a standard Node.js application
+
+## Step 1: Prepare Your Mastra Application
+
+### 1.1 Configure Your Mastra Instance
+
+First, ensure your Mastra instance is properly configured for production. In your main Mastra configuration file (typically `src/mastra/index.ts`):
+
+```typescript
+import { Mastra } from "@mastra/core";
+
+export const mastra = new Mastra({
+  // Configure server settings
+  server: {
+    port: process.env.PORT || 4111, // Railway sets PORT automatically
+    timeout: 30000, // 30 seconds
+  },
+  // Add your agents, workflows, and other configurations
+  agents: {
+    // your agents here
+  },
+  // Add any logging configuration
+  logger: {
+    level: process.env.NODE_ENV === "production" ? "info" : "debug",
+  },
+});
+```
+
+### 1.2 Update package.json
+
+Ensure your `package.json` includes the necessary scripts and Node.js version:
+
+```json
+{
+  "name": "your-mastra-app",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "mastra dev",
+    "build": "mastra build",
+    "start": "node .mastra/output/index.js",
+    "postinstall": "mastra build"
+  },
+  "dependencies": {
+    "@mastra/core": "latest"
+    // your other dependencies
+  },
+  "devDependencies": {
+    "mastra": "latest",
+    "typescript": "^5.0.0",
+    "@types/node": "^18.0.0"
+  }
+}
+```
+
+**Important Notes**:
+
+- The `postinstall` script ensures Mastra builds automatically after Railway installs dependencies
+- The `start` script runs the built Hono server from `.mastra/output/index.js`
+- `mastra` CLI is a devDependency, while `@mastra/core` is a regular dependency
+
+### 1.3 Environment Variables
+
+Create a `.env.example` file to document required environment variables:
+
+```bash
+# LLM API Keys
+OPENAI_API_KEY=your_openai_key
+ANTHROPIC_API_KEY=your_anthropic_key
+GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_key
+
+# Database (if using)
+DATABASE_URL=your_database_url
+
+# Other configuration
+NODE_ENV=production
+```
+
+**Note**: Never commit your actual `.env` file to Git. Add it to `.gitignore`.
+
+### 1.4 Update .gitignore
+
+Ensure your `.gitignore` includes:
+
+```
+# Environment variables
+.env
+.env.local
+
+# Mastra build output
+.mastra/
+
+# Node modules
+node_modules/
+
+# TypeScript build info
+*.tsbuildinfo
+```
+
+## Step 2: Build Your Application Locally
+
+Before deploying, test the production build locally:
+
+```bash
+# Build the application
+npm run build
+
+# This creates the production server in .mastra/output/
+
+# Test the production server
+NODE_ENV=production npm start
+# Or run directly:
+NODE_ENV=production node .mastra/output/index.js
+```
+
+This should start your Mastra server on the configured port (default 4111).
+
+## Step 3: Deploy to Railway
+
+You have three options for deploying to Railway:
+
+### Option A: Deploy from GitHub (Recommended)
+
+1. **Push your code to GitHub**:
+
+   ```bash
+   git add .
+   git commit -m "Prepare for Railway deployment"
+   git push origin main
+   ```
+
+2. **Create a new Railway project**:
+
+   - Go to [Railway Dashboard](https://railway.app/dashboard?referralCode=AJtQpy)
+   - Click "New Project"
+   - Select "Deploy from GitHub repo"
+   - Authorize Railway to access your GitHub (if not already done)
+   - Select your Mastra repository
+   - Choose the branch to deploy (usually `main`)
+
+3. **Configure environment variables**:
+
+   - In the Railway project dashboard, click on your service
+   - Go to the "Variables" tab
+   - Click "Add Variable" and add all your environment variables:
+     - `OPENAI_API_KEY`
+     - `ANTHROPIC_API_KEY`
+     - `DATABASE_URL` (if applicable)
+     - Any other required variables
+
+4. **Deploy**:
+   - Railway will automatically detect it's a Node.js app
+   - It will run `npm install` followed by `npm run build` (via postinstall)
+   - Then it will run `npm start` to start your server
+
+### Option B: Deploy with Railway CLI
+
+1. **Install Railway CLI**:
+
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+2. **Login to Railway**:
+
+   ```bash
+   railway login
+   ```
+
+3. **Initialize a new project**:
+
+   ```bash
+   railway init
+   ```
+
+   Follow the prompts to name your project.
+
+4. **Set environment variables**:
+
+   ```bash
+   railway variables set OPENAI_API_KEY=your_key
+   railway variables set ANTHROPIC_API_KEY=your_key
+   # Set other variables as needed
+   ```
+
+5. **Deploy**:
+   ```bash
+   railway up
+   ```
+
+### Option C: Deploy with Dockerfile
+
+If you prefer more control, create a `Dockerfile`:
+
+```dockerfile
+# Use Node.js LTS
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies (including devDependencies for build)
+RUN npm ci
+
+# Copy application files
+COPY . .
+
+# Build Mastra application
+RUN npm run build
+
+# Remove devDependencies after build
+RUN npm prune --production
+
+# Expose port (Railway sets PORT automatically)
+EXPOSE 4111
+
+# Start the application
+CMD ["node", ".mastra/output/index.js"]
+```
+
+Then deploy using either GitHub or CLI method above.
+
+## Step 4: Generate a Public Domain
+
+Once deployment is complete:
+
+1. In your Railway project dashboard, click on your service
+2. Go to the "Settings" tab
+3. Under "Networking", click "Generate Domain"
+4. Railway will provide a URL like `your-app.up.railway.app`
+
+## Step 5: Configure Client Applications
+
+Update your client applications to use the Railway URL:
+
+```typescript
+import { MastraClient } from "@mastra/client-js";
+
+const client = new MastraClient({
+  baseUrl:
+    process.env.NODE_ENV === "production"
+      ? "https://your-app.up.railway.app"
+      : "http://localhost:4111",
+});
+```
+
+## Deployment Best Practices
+
+### 1. Use Environment-Specific Configuration
+
+```typescript
+const isDevelopment = process.env.NODE_ENV !== "production";
+
+export const mastra = new Mastra({
+  server: {
+    port: process.env.PORT || 4111,
+    cors: {
+      origin: isDevelopment
+        ? ["http://localhost:3000"]
+        : ["https://your-frontend.com"],
+    },
+  },
+});
+```
+
+### 2. Set Up Health Checks
+
+Add a health check endpoint to monitor your application:
+
+```typescript
+mastra.route({
+  method: "GET",
+  path: "/health",
+  handler: async (req) => {
+    return new Response(
+      JSON.stringify({
+        status: "healthy",
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  },
+});
+```
+
+### 3. Configure Logging
+
+Use appropriate logging levels for production:
+
+```typescript
+import { PinoLogger } from "@mastra/loggers";
+
+export const mastra = new Mastra({
+  logger: new PinoLogger({
+    name: "mastra-app",
+    level: process.env.LOG_LEVEL || "info",
+  }),
+});
+```
+
+### 4. Database Considerations
+
+If using a database with Mastra:
+
+- Railway provides PostgreSQL databases that work well with Mastra
+- The `DATABASE_URL` will be automatically set when you provision a database
+- **Important**: Railway uses an ephemeral file system, so avoid file-based storage
+- For SQLite/LibSQL, use remote URLs instead of file-based storage (e.g., Turso)
+- Never use `file:./database.db` or similar file paths on Railway
+
+## Monitoring and Debugging
+
+### View Logs
+
+In [Railway dashboard](https://railway.app/dashboard?referralCode=AJtQpy):
+
+1. Click on your service
+2. Go to the "Logs" tab to see real-time logs
+3. Use filters to search for specific log entries
+
+### Using Railway CLI for logs:
+
+```bash
+railway logs
+```
+
+### Check Deployment Status
+
+Monitor your deployment:
+
+- Build logs show compilation and dependency installation
+- Deploy logs show the running application
+- Look for "Server running on port XXXX" or similar message to confirm successful start
+- The built Hono server will log when it's ready to accept connections
+
+## Common Issues and Solutions
+
+### Issue: Build fails with "mastra: command not found"
+
+**Solution**: Ensure `mastra` is in your devDependencies:
+
+```json
+{
+  "devDependencies": {
+    "mastra": "latest"
+  }
+}
+```
+
+### Issue: Server starts but can't be accessed
+
+**Solution**: Ensure your server binds to `0.0.0.0` and uses Railway's PORT:
+
+```typescript
+server: {
+  port: process.env.PORT || 4111,
+  hostname: '0.0.0.0'
+}
+```
+
+### Issue: Environment variables not working
+
+**Solution**:
+
+- Check Railway's Variables tab for typos
+- Restart the service after adding variables
+- Use `railway variables` CLI command to verify
+
+### Issue: Memory or timeout errors
+
+**Solution**: Railway's free tier has limits. For production:
+
+- Upgrade to a paid plan for more resources
+- Optimize your Mastra workflows
+- Implement proper error handling and timeouts
+
+## Next Steps
+
+1. **Set up CI/CD**: Railway automatically deploys on push to your connected branch
+2. **Configure custom domain**: Add your own domain in Railway's settings
+3. **Set up monitoring**: Use Railway's metrics or integrate external monitoring
+4. **Scale your application**: Railway supports both vertical and horizontal scaling
+
+## Additional Resources
+
+- [Mastra Documentation](https://mastra.ai/docs)
+- [Railway Documentation](https://docs.railway.com/?referralCode=AJtQpy)
+- [Mastra Discord Community](https://discord.gg/mastra)
+- [Railway Discord Community](https://discord.gg/railway)
+
+## Conclusion
+
+Deploying Mastra.ai to [Railway](https://railway.app/?referralCode=AJtQpy) is straightforward since Mastra builds to a standard Node.js server. Railway's automatic detection of Node.js applications and simple deployment process make it an excellent choice for hosting Mastra applications. Remember to properly configure environment variables, monitor your application logs, and follow production best practices for optimal performance.

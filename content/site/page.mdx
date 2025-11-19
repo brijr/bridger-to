@@ -1,0 +1,82 @@
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { PostWrapper } from "@/components/mdx/post-wrapper";
+import { Meta } from "@/components/mdx/meta";
+
+export const metadata = {
+  title: "Making my portfolio site",
+  description: "A deep dive into the design and implementation of bridger.to",
+};
+
+<Meta {...metadata} />
+
+<PostWrapper>
+This website represents a modern interpretation of classic grid system design principles, drawing inspiration from [Josef Müller-Brockmann](https://en.wikipedia.org/wiki/Josef_M%C3%BCller-Brockmann)'s seminal work [Grid Systems in Graphic Design](https://designbooks.org/grid-system-in-graphic-design). The site combines timeless design theory with cutting-edge web technologies to create a responsive, accessible, and performant digital experience.
+
+## Design Philosophy
+
+The layout is built on a four-column grid system that adapts seamlessly across different viewport sizes. This approach provides:
+
+- Visual harmony and balance
+- Consistent spacing and alignment
+- Flexible content organization
+- Improved readability and hierarchy
+
+## Technical Implementation
+
+### Core Technologies
+
+- **Framework**: Built with Next.js 15 using the App Router for optimal performance and SEO
+- **Styling**: Combines Tailwind CSS for utility-first styling with shadcn/ui for beautiful, accessible components
+- **Typography**: Uses Inter, a modern sans-serif typeface designed for screens
+- **Content**: Powered by MDX for rich, interactive content authoring
+
+### Grid System
+
+The site implements a custom grid component system that provides:
+
+```typescript
+<Grid>
+  <Row>
+    <Child className="col-span-2"></Child> // Content spans two columns
+    <Child></Child> // Single column content
+  </Row>
+</Grid>
+```
+
+This system allows for flexible layouts while maintaining consistent spacing and alignment across all pages.
+
+### Performance Optimizations
+
+- Server Components for reduced client-side JavaScript
+- Optimized font loading with `next/font`
+- Responsive images and lazy loading
+- Edge-optimized deployments via Vercel
+
+## Development Workflow
+
+The site is built using modern development practices:
+
+- Version control with Git
+- Automated deployments through Vercel
+- Type safety with TypeScript
+- Component-driven development
+- MDX for content management
+
+## Open Source
+
+This site is built on top of my [MDX Starter](https://github.com/brijr/mdx), which is freely available on GitHub. Feel free to use it as a starting point for your own projects.
+
+## Acknowledgments
+
+- [Grid Systems in Graphic Design](https://designbooks.org/grid-system-in-graphic-design) by Josef Mueller-Brockmann
+- [Inter](https://rsms.me/inter/) by Rasmus Andersson
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) for the beautiful component system
+- [Next.js](https://nextjs.org/) for the React framework
+- [Vercel](https://vercel.com) for hosting and deployment
+
+## Get in Touch
+
+If you're interested in discussing design systems, web development, or have any questions about this site, feel free to reach out via [email](mailto:bridger@wip.ac) or connect with me on [GitHub](https://github.com/brijr).
+
+</PostWrapper>

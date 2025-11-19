@@ -1,0 +1,642 @@
+---
+title: "How to implement Lenis in Next.js"
+description: "This guide covers implementing Lenis in Next.js 15 with React 19 support and the latest best practices."
+date: "2025-01-10"
+published: true
+---
+
+[Lenis](https://lenis.darkroom.engineering) is a lightweight, robust, and performant smooth scroll library designed by [@darkroom.engineering](https://darkroom.engineering) to be simple to use and easy to integrate into your projects. This guide covers implementing Lenis in [Next.js 15](https://nextjs.org/blog/next-15) with [React 19](https://react.dev/blog/2024/04/25/react-19) support and the latest best practices.
+
+## What is Lenis?
+
+[Lenis](https://lenis.darkroom.engineering) ("smooth" in latin) is a lightweight, robust, and performant smooth scroll library. It's designed by [@darkroom.engineering](https://darkroom.engineering) to be simple to use and easy to integrate into your projects. It's built with performance in mind and is optimized for modern browsers. Key features include:
+
+- Smooth momentum-based scrolling
+- Touch device support
+- Horizontal scrolling capabilities
+- Scroll snapping support
+- Performance optimization
+- Easy integration with animation libraries
+- Lightweight (~2Kb gzipped)
+
+## Installation
+
+The package has been renamed from `@studio-freight/lenis` to `lenis`. Install the latest version:
+
+```bash
+npm install lenis
+# or
+yarn add lenis
+# or
+pnpm add lenis
+```
+
+**Important:** The old `@studio-freight/lenis` and `@studio-freight/react-lenis` packages have been deprecated. Use the new [`lenis`](https://www.npmjs.com/package/lenis) package instead.
+
+## Basic Implementation with autoRaf
+
+### Step 1: Create a Lenis Provider Component
+
+The latest Lenis version includes an `autoRaf` option that automatically handles the requestAnimationFrame loop:
+
+```tsx
+// components/providers/lenis-provider.tsx
+"use client";
+
+import { createContext, useContext, useEffect, useRef } from "react";
+import Lenis from "lenis";
+
+import type { LenisOptions } from "lenis";
+
+const LenisContext = createContext<Lenis | null>(null);
+
+export function LenisProvider({
+  children,
+  options = {},
+}: {
+  children: React.ReactNode;
+  options?: LenisOptions;
+}) {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 2,
+      infinite: false,
+      anchors: true,
+      ...options,
+    });
+
+    lenisRef.current = lenis;
+
+    return () => {
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, [options]);
+
+  return (
+    <LenisContext.Provider value={lenisRef.current}>
+      {children}
+    </LenisContext.Provider>
+  );
+}
+
+export function useLenis() {
+  const context = useContext(LenisContext);
+  if (context === undefined) {
+    throw new Error("useLenis must be used within a LenisProvider");
+  }
+  return context;
+}
+```
+
+### Step 2: Required CSS
+
+Lenis requires specific CSS for proper functionality. You can include it in two ways:
+
+**Option 1: Import via JavaScript (recommended for bundlers):**
+
+```tsx
+// Import in your main component or layout
+import "lenis/dist/lenis.css";
+```
+
+**Option 2: Add to your global CSS:**
+
+```css
+/* Add to your global CSS */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+```
+
+### Step 3: Integration with Next.js 15
+
+For **App Router** ([Next.js 13+](https://nextjs.org/docs/app)):
+
+```tsx
+// app/layout.tsx
+import { LenisProvider } from "@/components/providers/lenis-provider";
+import "./globals.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <LenisProvider>{children}</LenisProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+For **Pages Router** (legacy):
+
+```tsx
+// pages/_app.tsx
+import type { AppProps } from "next/app";
+import { LenisProvider } from "@/components/providers/lenis-provider";
+import "../styles/globals.css";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <LenisProvider>
+      <Component {...pageProps} />
+    </LenisProvider>
+  );
+}
+```
+
+## Enhanced Configuration Options
+
+Recent Lenis versions include new configuration options:
+
+```tsx
+import type { LenisOptions } from "lenis";
+
+const lenisOptions: LenisOptions = {
+  // Core options
+  autoRaf: true, // New: automatic RAF handling
+  duration: 1.2,
+  easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+
+  // Direction and gesture
+  direction: "vertical", // 'vertical', 'horizontal'
+  gestureDirection: "vertical", // 'vertical', 'horizontal', 'both'
+
+  // Smoothing
+  smooth: true,
+  smoothTouch: false, // Recommended: false for mobile performance
+
+  // Multipliers
+  mouseMultiplier: 1,
+  touchMultiplier: 2,
+
+  // Advanced options
+  infinite: false,
+  syncTouch: false, // New: sync touch events
+  syncTouchLerp: 0.075, // New: touch lerp value
+  touchInertiaMultiplier: 35, // New: touch inertia
+
+  // Anchor links support
+  anchors: true, // New: automatic anchor link handling
+
+  // Custom elements
+  wrapper: typeof window !== "undefined" ? window : undefined, // Scroll container
+  content:
+    typeof document !== "undefined" ? document.documentElement : undefined, // Content element
+  eventsTarget: typeof window !== "undefined" ? window : undefined, // Events target
+
+  // Overscroll behavior
+  overscroll: true, // New: CSS overscroll-behavior support
+
+  // Modifiers
+  modifierKey: false, // New: modifier key requirement
+
+  // Prevent smooth scrolling on specific elements
+  prevent: (node: Element) => node.id === "modal", // Function to prevent scroll on specific elements
+};
+
+const lenis = new Lenis(lenisOptions);
+```
+
+## Preventing Scroll on Elements
+
+Lenis provides multiple ways to prevent smooth scrolling on specific elements:
+
+### Method 1: Using the prevent function
+
+```tsx
+const lenis = new Lenis({
+  prevent: (node: Element) => {
+    // Prevent smooth scrolling on elements with specific IDs or classes
+    return node.id === "modal" || node.classList.contains("no-smooth-scroll");
+  },
+});
+```
+
+### Method 2: Using data attributes
+
+Use these data attributes directly on HTML elements:
+
+```tsx
+// components/ScrollableSection.tsx
+interface ScrollableSectionProps {
+  children: React.ReactNode;
+  height?: string;
+}
+
+export default function ScrollableSection({
+  children,
+  height = "200px",
+}: ScrollableSectionProps) {
+  return (
+    <div>
+      {/* Prevent all smooth scrolling */}
+      <div data-lenis-prevent style={{ height, overflow: "auto" }}>
+        {children}
+      </div>
+
+      {/* Prevent only wheel events */}
+      <div data-lenis-prevent-wheel style={{ height, overflow: "auto" }}>
+        {children}
+      </div>
+
+      {/* Prevent only touch events */}
+      <div data-lenis-prevent-touch style={{ height, overflow: "auto" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+```
+
+## Scroll-to Functionality
+
+### Modern Scroll-to Implementation
+
+Recent versions handle anchor links automatically when `anchors: true` is set:
+
+```tsx
+// components/ScrollToButton.tsx
+"use client";
+
+import { useLenis } from "@/components/providers/lenis-provider";
+import type { LenisOptions } from "lenis";
+
+interface ScrollToButtonProps {
+  target: string;
+  children: React.ReactNode;
+  options?: Partial<LenisOptions>;
+}
+
+export default function ScrollToButton({
+  target,
+  children,
+  options = {},
+}: ScrollToButtonProps) {
+  const lenis = useLenis();
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo(target, {
+        duration: 2,
+        easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        ...options,
+      });
+    }
+  };
+
+  return <button onClick={handleClick}>{children}</button>;
+}
+```
+
+### Anchor Links Configuration
+
+For automatic anchor link handling with custom options:
+
+```tsx
+import type { LenisOptions } from "lenis";
+
+const lenisConfig: LenisOptions = {
+  anchors: {
+    offset: 100, // Offset from target
+    onComplete: () => {
+      console.log("Scrolled to anchor");
+    },
+  },
+};
+
+const lenis = new Lenis(lenisConfig);
+```
+
+## Integration with GSAP (Updated)
+
+The recommended [GSAP ScrollTrigger](https://greensock.com/scrolltrigger/) integration has been updated for the latest versions:
+
+```tsx
+// components/ScrollAnimations.tsx
+"use client";
+
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLenis } from "@/components/providers/lenis-provider";
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface ScrollAnimationsProps {
+  children: React.ReactNode;
+}
+
+export default function ScrollAnimations({ children }: ScrollAnimationsProps) {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (lenis) {
+      // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+      lenis.on("scroll", ScrollTrigger.update);
+
+      // Add Lenis's requestAnimationFrame method to GSAP's ticker
+      gsap.ticker.add((time: number) => {
+        lenis.raf(time * 1000); // Convert time from seconds to milliseconds
+      });
+
+      // Disable lag smoothing in GSAP to prevent any delay in scroll animations
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    return () => {
+      if (lenis) {
+        lenis.off("scroll", ScrollTrigger.update);
+        gsap.ticker.remove(lenis.raf);
+      }
+    };
+  }, [lenis]);
+
+  return <>{children}</>;
+}
+```
+
+## Manual RAF Implementation (Alternative)
+
+If you prefer manual control over the animation loop:
+
+```tsx
+// components/LenisProviderManual.tsx
+"use client";
+
+import { useEffect, useRef } from "react";
+import Lenis from "lenis";
+import type { LenisOptions } from "lenis";
+
+interface LenisProviderManualProps {
+  children: React.ReactNode;
+  options?: LenisOptions;
+}
+
+export default function LenisProviderManual({
+  children,
+  options = {},
+}: LenisProviderManualProps) {
+  const rafRef = useRef<number>();
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: false, // Disable automatic RAF
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      ...options,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      rafRef.current = requestAnimationFrame(raf);
+    }
+
+    rafRef.current = requestAnimationFrame(raf);
+
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      lenis.destroy();
+    };
+  }, [options]);
+
+  return <>{children}</>;
+}
+```
+
+## Performance Optimizations
+
+### Respect User Preferences
+
+```tsx
+import type { LenisOptions } from "lenis";
+
+const getResponsiveLenisOptions = (): LenisOptions => {
+  const prefersReducedMotion =
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false;
+
+  return {
+    duration: prefersReducedMotion ? 0 : 1.2,
+    smooth: !prefersReducedMotion,
+    autoRaf: true,
+  };
+};
+
+const lenis = new Lenis(getResponsiveLenisOptions());
+```
+
+### Conditional Loading for Mobile
+
+```tsx
+// components/ConditionalLenisProvider.tsx
+"use client";
+
+import { useEffect, useState } from "react";
+import { LenisProvider } from "@/components/providers/lenis-provider";
+import type { LenisOptions } from "lenis";
+
+interface ConditionalLenisProviderProps {
+  children: React.ReactNode;
+  options?: LenisOptions;
+}
+
+export default function ConditionalLenisProvider({
+  children,
+  options = {},
+}: ConditionalLenisProviderProps) {
+  const [shouldEnableLenis, setShouldEnableLenis] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Only initialize on devices that benefit from smooth scroll
+    const shouldInit = window.innerWidth > 1024 && !("ontouchstart" in window);
+    setShouldEnableLenis(shouldInit);
+  }, []);
+
+  if (!shouldEnableLenis) {
+    return <>{children}</>;
+  }
+
+  return <LenisProvider options={options}>{children}</LenisProvider>;
+}
+```
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+1. **Smooth scrolling not working**: Ensure `autoRaf: true` is set or implement manual RAF loop.
+
+2. **Performance issues on mobile**: Set `smoothTouch: false` for better mobile performance.
+
+3. **Anchor links not working**: Set `anchors: true` in Lenis configuration or implement custom click handlers.
+
+4. **Next.js hydration errors**: Always use `'use client'` directive and check for `window` object availability.
+
+5. **React 19 compatibility**: Some third-party libraries may need updates for React 19 compatibility. Use the latest Lenis version which supports React 19.
+
+6. **Scroll conflicts in modals**: Use `data-lenis-prevent` attribute or the `prevent` function to disable smooth scrolling on specific elements.
+
+### Debugging Tips
+
+```tsx
+// Add debugging to your Lenis instance
+import type { ScrollData } from "lenis";
+
+const lenis = new Lenis({
+  autoRaf: true,
+  // ... other options
+});
+
+lenis.on("scroll", (data: ScrollData) => {
+  console.log("Lenis scroll event:", data);
+});
+```
+
+## Complete Example (Next.js 15 + React 19)
+
+```tsx
+// app/layout.tsx
+import { LenisProvider } from "@/components/providers/lenis-provider";
+import "lenis/dist/lenis.css"; // Import Lenis CSS
+import "./globals.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <LenisProvider>{children}</LenisProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```tsx
+// app/page.tsx
+"use client";
+
+import { useLenis } from "@/components/providers/lenis-provider";
+
+const sections = [
+  { id: "hero", title: "Hero", color: "lightblue" },
+  { id: "about", title: "About", color: "lightgreen" },
+  { id: "contact", title: "Contact", color: "lightcoral" },
+] as const;
+
+export default function HomePage() {
+  const lenis = useLenis();
+
+  const scrollToSection = (target: string) => {
+    if (lenis) {
+      lenis.scrollTo(target, { duration: 1.5 });
+    }
+  };
+
+  return (
+    <div>
+      <nav style={{ position: "fixed", top: 0, zIndex: 1000 }}>
+        {sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => scrollToSection(`#${section.id}`)}
+          >
+            {section.title}
+          </button>
+        ))}
+      </nav>
+
+      {sections.map((section) => (
+        <section
+          key={section.id}
+          id={section.id}
+          style={{ height: "100vh", background: section.color }}
+        >
+          <h1>{section.title} Section</h1>
+
+          {/* Example of preventing smooth scroll on specific content */}
+          {section.id === "contact" && (
+            <div
+              data-lenis-prevent
+              style={{
+                height: "200px",
+                overflow: "auto",
+                background: "white",
+                margin: "20px",
+              }}
+            >
+              <p>This content uses native scrolling</p>
+              <p>Scroll here won't be smooth</p>
+              {/* Add more content to make it scrollable */}
+              {Array.from({ length: 20 }, (_, i) => (
+                <p key={i}>Line {i + 1}</p>
+              ))}
+            </div>
+          )}
+        </section>
+      ))}
+    </div>
+  );
+}
+```
+
+## Migration from Old Versions
+
+If upgrading from `@studio-freight/lenis`:
+
+1. **Update package**: Replace `@studio-freight/lenis` with [`lenis`](https://www.npmjs.com/package/lenis)
+2. **Update imports**: Change import paths to use the new package
+3. **Use autoRaf**: Take advantage of the new `autoRaf: true` option
+4. **Enable anchors**: Set `anchors: true` for automatic anchor link handling
+5. **Update CSS**: Ensure you have the latest required CSS classes or import via JS
+6. **Add TypeScript types**: Import and use proper types from the package
+7. **Implement prevent logic**: Use the new `prevent` function or data attributes for better control
+
+## Best Practices for 2025
+
+1. **Use autoRaf**: Take advantage of the new `autoRaf` option for simpler setup
+2. **Enable anchor support**: Set `anchors: true` for better UX
+3. **Respect user preferences**: Check for [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+4. **Optimize for mobile**: Use `smoothTouch: false` for better performance
+5. **Leverage React 19 features**: Take advantage of React 19's improvements in [Next.js 15.1+](https://nextjs.org/blog/next-15-1)
+6. **Use TypeScript**: Add proper type definitions for better DX
+7. **Implement proper error boundaries**: Handle cases where Lenis fails to initialize
+8. **Use prevent mechanisms**: Implement proper scroll prevention for modals and nested scrollable areas
+9. **Import CSS efficiently**: Use JavaScript imports for better bundling when possible
+
+This implementation provides smooth, performant scrolling throughout your [Next.js 15](https://nextjs.org/blog/next-15) application while maintaining compatibility with [React 19](https://nextjs.org/blog/next-15-1) and following current best practices with full TypeScript support.

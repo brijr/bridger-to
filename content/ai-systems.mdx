@@ -1,0 +1,52 @@
+---
+title: "Creating AI Systems"
+description: "Lessons learned from building and designing flexible and testable AI systems."
+date: "2025-01-10"
+published: true
+---
+
+Build systems where you can plug in any LLM and test fast.
+
+Your work is testing prompts and ideas—not fighting infrastructure.
+
+I've shipped AI agents to production for marketing tech over the past few years. What works:
+
+- ✅ Model switching takes one line of code
+- ✅ Prompt editing is instant
+- ✅ Zero adapter layers or vendor lock-in
+- ✅ Testing happens in minutes, not hours
+
+## The Principles
+
+### Design for model flexibility
+
+Flagship models drop constantly. Your system should plug in any LLM without rewiring. Switch providers to test. Swap models to compare. Infrastructure stays invisible.
+
+### Optimize for prompt iteration
+
+Your velocity comes from rapid prompt testing. Combine evals with real-world usage. Iterate fast. Test rigorously.
+
+### Keep everything else out of the way
+
+No abstraction layers. No framework overhead. Direct LLM integration. You should spend your time on prompts and ideas, not plumbing.
+
+## Stack I Use
+
+### Model Routing & Testing
+
+- **[AI Gateway](https://vercel.com/docs/ai-gateway)** — Switch providers without touching application code. Built for Vercel Stack.
+- **[OpenRouter](https://openrouter.ai)** — Access hundreds of LLMs through a single API. Great for rapid comparison. I use this with n8n.
+
+### Workflow & Orchestration
+
+- **[AI SDK](https://sdk.vercel.ai)** — Core workflow orchestration and agentic systems. Clean abstractions without sacrificing control.
+- **[Workflow](https://vercel.com/docs/workflows)** — Long-running, durable workflows on Vercel.
+- **[Trigger.dev](https://trigger.dev)** — Background jobs with retries, observability, and task chains.
+- **[n8n](https://n8n.io)** — Visual automation that non-technical team members can modify. Great for prototyping before going to production. Self-host it on [Railway](https://railway.app) to scale to millions of actions per month.
+
+### Agent Tools and Frameworks
+
+- **[MCP](https://modelcontextprotocol.io)** — Provides tools to agents. Not perfect, but best we've got.
+- **[Mastra](https://mastra.ai)** — Production-grade agent framework. Handles coordination so you focus on logic.
+
+This stack ships agents that work.

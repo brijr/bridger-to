@@ -1,0 +1,246 @@
+---
+title: "Mac for Web Development (2025)"
+description: "A very opinionated guide on setting up a mac for web development, design, and productivity."
+date: "2025-01-10"
+published: true
+---
+
+A curated, opinionated checklist for spinning up a fresh macOS machine in 2025.
+
+**Goal**: Be fully productive (coding, design, comms) in ~30 minutes with repeatable commands and sensible defaults.
+
+### 🔧 System & UX Setup
+
+### 1. Update macOS
+
+Ensures the latest security patches, Xcode SDKs, and firmware.
+
+1. Open **System Settings → General → Software Update**.
+2. Install any pending updates, then reboot before continuing.
+
+### 2. Install Homebrew
+
+The package manager for everything that isn't on the Mac App Store.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"   # add to ~/.zprofile
+```
+
+### 3. System Apps
+
+Core utilities that shape the desktop experience.
+
+```bash
+brew install --cask ghostty raycast shottr rectangle maccy monitorcontrol
+```
+
+- **Raycast** - Spotlight-replacement launcher for faster search, powerful extensions, and clipboard history
+- **Ghostty** - Minimal GPU-accelerated terminal with blazing-fast, TTY-style text rendering
+- **Rectangle** - Window manager for quick ⌥⌘→ tiling, multi-display-aware
+- **Shottr** - Screenshot utility with instant markup, redaction, and auto-copy to clipboard
+- **Maccy** - Clipboard manager with plain-text history synced across apps
+
+Ghostty config (`~/.config/ghostty/config.toml`):
+
+```toml
+font-family='Menlo'
+theme='flexoki-dark'
+font-size=16
+window-padding-balance=true
+mouse-hide-while-typing=true
+```
+
+---
+
+### 🛠️ Development Environment
+
+### 4. Developer Tooling
+
+```bash
+xcode-select --install
+brew install git nvm gh vercel-cli wget miniconda nvim
+```
+
+- **git** - version control
+- **nvm** - per-project Node versions
+- **gh** - GitHub CLI for PRs & issues
+- **vercel-cli** - instant Next.js deploys
+- **wget** - classic download tool
+- **miniconda** - lightweight Python env manager
+
+### 5. Install Node via NVM
+
+```bash
+nvm install --lts
+nvm use --lts
+nvm alias default lts/*
+```
+
+### 6. Development Apps
+
+```bash
+brew install --cask cursor zed httpie linear-linear
+```
+
+- **Cursor** - AI-pair-programmer built on VS Code
+- **Zed** - ultra-fast collaborative editor by Atom's creators
+- **HTTPie Desktop** - delightful REST & GraphQL client
+- **Linear** - native macOS wrapper for Linear issue tracker
+
+### 7. Oh My Zsh (+ Plugins)
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Plugins:
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+  ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting \
+  ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+```
+
+.zshrc snippet:
+
+```txt
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+```
+
+### 8. Install pnpm
+
+```bash
+npm install -g pnpm@latest-10
+```
+
+### 9. Install Bun
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+### 10. Neovim via Kickstart
+
+```bash
+git clone https://github.com/nvim-lua/kickstart.nvim.git \
+  "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+```
+
+### 11. Handy Aliases (in .zshrc)
+
+```txt
+# PNPM
+alias p='pnpm'
+alias pb='pnpm build'
+alias pd='pnpm dev'
+
+# Git
+alias gs='git send'
+
+# Bun
+alias b='bun'
+alias bb='bun build'
+alias bd='bun dev'
+```
+
+### 12. Global Git Config
+
+```txt
+[alias]
+    send = "!f() { git add . && git commit -m \"${1:-wip}\" && git push; }; f"
+[user]
+    name  = Bridger Tower
+    email = bridgertower@gmail.com
+[init]
+    defaultBranch = main
+```
+
+---
+
+### 📡 Productivity & Collaboration
+
+### 13. Messaging Apps
+
+```bash
+brew install --cask discord slack whatsapp
+```
+
+### 14. Productivity Apps
+
+```bash
+brew install --cask notion obsidian notion-calendar ticktick spotify
+```
+
+### 15. Design Apps
+
+```bash
+brew install --cask adobe-creative-cloud figma imageoptim fontbase
+```
+
+#### Other Apps to install via Apple App Store
+
+- Bear: Markdown editor for macOS
+- Davinci Resolve: Video editing software for macOS
+
+---
+
+### 🤖 AI & Automation
+
+### 16. AI / Local LLM Apps
+
+```bash
+brew install --cask claude chatgpt ollama
+```
+
+### 17. Claude Code CLI
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+---
+
+### ⚙️ macOS Customization
+
+### Automated macOS Defaults Script
+
+Use the following script to set macOS defaults for a cleaner and more developer-friendly experience.
+
+Run each command individually, or save them in a shell script (e.g., `macos-defaults.sh`) and execute it with `bash macos-defaults.sh`.
+
+```bash
+# Show all filename extensions in Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Set Finder view to Column by default
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+
+# Show Path Bar in Finder
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Set fast key repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+# Disable auto-correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Always expand save and print panels by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+
+# Prevent Photos from opening automatically when devices are plugged in
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
+# Set screenshot location to ~/Desktop/Screenshots
+mkdir -p ~/Desktop/Screenshots
+defaults write com.apple.screencapture location ~/Desktop/Screenshots
+
+# Save screenshots in PNG format
+defaults write com.apple.screencapture type -string "png"
+
+# Restart Finder to apply changes
+killall Finder
+
+```
+
+These defaults help streamline Finder, boost typing responsiveness, and reduce distractions. Customize further as needed!
