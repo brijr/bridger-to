@@ -26,8 +26,8 @@ export default function HomePage() {
         <Container className="space-y-8">
           <Hero />
           <AnimatedContent>
-            <Links />
             <Info />
+            <Links />
           </AnimatedContent>
         </Container>
       </Section>

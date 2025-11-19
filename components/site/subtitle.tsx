@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 
 const labels = [
   {
-    label: "Design Engineer",
+    label: "Design Generalist",
   },
   {
     label: "Software Engineer",
   },
   {
-    label: "Design Generalist",
+    label: "Technical Entrepreneur",
   },
   {
     label: "Marketing Developer",
