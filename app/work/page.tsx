@@ -151,7 +151,7 @@ function WorkSection({
     <div className="space-y-2">
       <h2 className="font-medium">{title}</h2>
       <div className="grid gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
-        <div className="grid grid-cols-2 gap-0.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5">
           {items.map((item) => (
             <div key={item.href} className="flex items-center gap-0.5">
               <Link

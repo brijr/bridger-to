@@ -45,7 +45,7 @@ const Info = () => {
 
 const Links = () => {
   return (
-    <div className="grid grid-cols-2 gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
       <div className="grid gap-0.5">
         {internalLinks.map((link) => (
           <Link
@@ -67,6 +67,7 @@ const Links = () => {
           <Link
             key={link.href}
             href={link.href}
+            target="_blank"
             className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
           >
             <ArrowUpRight
