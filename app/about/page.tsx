@@ -1,6 +1,9 @@
 import { Main, Section, Container } from "@/components/ds";
-import { Hero } from "@/components/site/hero";
 import { AnimatedContent } from "@/components/site/animated-content";
+import { FeatImage } from "@/components/site/feat-image";
+import { Hero } from "@/components/site/hero";
+
+import Dolomite from "@/public/dolomite.webp";
 
 export default function AboutPage() {
   return (
@@ -10,6 +13,10 @@ export default function AboutPage() {
           <Hero path="About" pathHref="/about" />
           <AnimatedContent>
             <AboutContent />
+            <FeatImage
+              src={Dolomite}
+              alt="A photo I took while visiting the Dolomites in Italy"
+            />
           </AnimatedContent>
         </Container>
       </Section>
@@ -49,9 +56,7 @@ const AboutContent = () => {
         How do you build software that actually solves problems instead of
         creating new ones?
       </h3>
-      <h3>
-        If you're working on similar questions, let's talk.
-      </h3>
+      <h3>If you're working on similar questions, let's talk.</h3>
     </div>
   );
 };

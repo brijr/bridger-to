@@ -1,8 +1,10 @@
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { Main, Section, Container } from "@/components/ds";
-import { Hero } from "@/components/site/hero";
 import { AnimatedContent } from "@/components/site/animated-content";
+import { FeatImage } from "@/components/site/feat-image";
+import { Hero } from "@/components/site/hero";
 
+import Salt from "@/public/salt.webp";
 import Link from "next/link";
 
 const internalLinks = [
@@ -28,6 +30,10 @@ export default function HomePage() {
           <AnimatedContent>
             <Info />
             <Links />
+            <FeatImage
+              src={Salt}
+              alt="A photo I took at the Salt Flats in Utah"
+            />
           </AnimatedContent>
         </Container>
       </Section>
