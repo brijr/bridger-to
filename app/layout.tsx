@@ -40,11 +40,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <LenisProvider>
             <Logo className="block fixed top-6 left-6" />
             <EmailCopyButton className="fixed top-6 right-6" />

@@ -10,7 +10,7 @@ export function AnimatedContent({ children }: { children: React.ReactNode }) {
               key={index}
               className="blur-entrance-content"
               style={{
-                animationDelay: `${0.25 + index * 0.25}s`,
+                animationDelay: `${300 + index * 300}ms`,
               }}
             >
               {child}

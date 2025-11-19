@@ -1,10 +1,19 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import { Main, Section, Container } from "@/components/ds";
-import { Hero } from "@/components/site/hero";
 import { AnimatedContent } from "@/components/site/animated-content";
+import { Circle } from "lucide-react";
+import { Hero } from "@/components/site/hero";
+
 import Link from "next/link";
 
-const openSourceProjects = [
+type WorkItem = {
+  href: string;
+  label: string;
+  github?: string;
+  wip?: boolean;
+};
+
+const openSourceProjects: WorkItem[] = [
   {
     href: "https://next-wp.com",
     label: "Next WP",
@@ -47,7 +56,7 @@ const openSourceProjects = [
   },
 ];
 
-const previousClients = [
+const previousClients: WorkItem[] = [
   { href: "https://vercel.com", label: "Vercel" },
   { href: "https://browserbase.com", label: "Browserbase" },
   { href: "https://julius.ai", label: "Julius" },
@@ -58,9 +67,9 @@ const previousClients = [
   { href: "https://tackle.io", label: "Tackle.io" },
 ];
 
-const software = [
-  { href: "https://flysuper.com", label: "Fly Super" },
-  { href: "https://offerarc.com", label: "Offer Arc" },
+const software: WorkItem[] = [
+  { href: "https://flysuper.com", label: "Fly Super", wip: true },
+  { href: "https://offerarc.com", label: "Offer Arc", wip: true },
   {
     href: "https://router.so",
     label: "Router.so",
@@ -73,7 +82,7 @@ const software = [
   },
 ];
 
-const websites = [
+const websites: WorkItem[] = [
   {
     href: "https://designbooks.org",
     label: "Design Books",
@@ -96,7 +105,7 @@ const websites = [
   },
 ];
 
-const ventures = [
+const ventures: WorkItem[] = [
   {
     href: "https://wip.ac",
     label: "Work In Progress",
@@ -109,7 +118,7 @@ const ventures = [
   },
 ];
 
-const content = [
+const content: WorkItem[] = [
   { href: "https://youtube.com/@bridgertower", label: "Videos" },
   { href: "https://youtube.com/@asapeng", label: "Podcasts" },
 ];
@@ -134,13 +143,7 @@ export default function WorkPage() {
   );
 }
 
-function WorkSection({
-  title,
-  items,
-}: {
-  title: string;
-  items: Array<{ href: string; label: string; github?: string }>;
-}) {
+function WorkSection({ title, items }: { title: string; items: WorkItem[] }) {
   return (
     <div className="space-y-2">
       <h3 className="text-muted-foreground text-[0.8rem]">{title}</h3>
@@ -159,6 +162,11 @@ function WorkSection({
                   className="group-hover:rotate-45 transition-transform"
                 />
                 {item.label}
+                {item.wip && (
+                  <span className="ml-auto mr-0.5 text-xs text-muted-foreground flex items-center gap-1.5">
+                    <Circle size={6} /> WIP
+                  </span>
+                )}
               </Link>
               {item.github && (
                 <Link

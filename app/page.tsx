@@ -34,6 +34,7 @@ export default function HomePage() {
               src={Salt}
               alt="A photo I took at the Salt Flats in Utah"
             />
+            <p className="text-muted-foreground">"I love to make websites"</p>
           </AnimatedContent>
         </Container>
       </Section>
@@ -45,7 +46,7 @@ const Info = () => {
   return (
     <div className="text-pretty space-y-3">
       <h2>
-        Software engineer and technical entrepreneur specializing in UI design,
+        Software engineer and technical entrepreneur specializing in design,
         applied AI, and human-computer interaction. I bring a marketing and
         advertising background to building software that solves real problems.
       </h2>
