@@ -44,14 +44,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Main className="flex-1">
-            <Section>
-              <Container>
-                <Logo className="block" />
-              </Container>
-            </Section>
-            {children}
-          </Main>
+          <Logo className="block fixed top-6 left-6" />
+          <Main className="flex-1">{children}</Main>
           <ThemeToggle className="fixed bottom-6 right-6" />
           <Footer />
           <Toaster position="top-center" />

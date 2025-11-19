@@ -12,7 +12,10 @@ interface PostItemProps {
 
 const PostDate = ({ date }: { date: string }) => {
   return (
-    <time dateTime={date} className="text-muted-foreground text-sm pr-1">
+    <time
+      dateTime={date}
+      className="text-muted-foreground text-sm pr-1 hidden sm:block"
+    >
       {formatDate(date)}
     </time>
   );
@@ -31,7 +34,7 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
         <ArrowDownRight
           strokeWidth={1.5}
           size={20}
-          className="group-hover:-rotate-45 transition-transform"
+          className="group-hover:-rotate-45 transition-transform line-clamp-1"
         />
         {title}
       </h3>

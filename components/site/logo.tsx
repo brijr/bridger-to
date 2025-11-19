@@ -6,7 +6,7 @@ import LogoDark from "@/public/logo-dark.svg";
 
 export const Logo = ({
   href = "/",
-  width = 24,
+  width = 18,
   height,
   className,
 }: {
