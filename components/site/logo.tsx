@@ -23,14 +23,14 @@ export const Logo = ({
           height={height}
           src={LogoLight}
           alt="Bridger Tower Logo"
-          className="opacity-100 dark:opacity-0 transition-opacity duration-700 ease"
+          className="opacity-100 dark:opacity-0 transition-opacity duration-[400ms] ease"
         />
         <Image
           width={width}
           height={height}
           src={LogoDark}
           alt="Bridger Tower Logo"
-          className="absolute top-0 left-0 opacity-0 dark:opacity-100 transition-opacity duration-700 ease"
+          className="absolute top-0 left-0 opacity-0 dark:opacity-100 transition-opacity duration-[400ms] ease"
         />
       </div>
     </Link>

@@ -20,6 +20,7 @@ export function Code({
 }: CodeProps) {
   const [hasCopied, setHasCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
@@ -29,6 +30,15 @@ export function Code({
   // Use a default theme during SSR to prevent hydration mismatch
   // After mount, use the resolved theme
   const isDark = mounted ? resolvedTheme === "dark" : false;
+
+  // Add fade effect when theme changes
+  useEffect(() => {
+    if (!mounted) return;
+
+    setIsTransitioning(true);
+    const timer = setTimeout(() => setIsTransitioning(false), 200);
+    return () => clearTimeout(timer);
+  }, [resolvedTheme, mounted]);
 
   const copyToClipboard = async () => {
     try {
@@ -46,7 +56,7 @@ export function Code({
     <div className="relative group">
       <button
         onClick={copyToClipboard}
-        className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-accent"
+        className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-accent z-10"
         aria-label="Copy code"
       >
         {hasCopied ? (
@@ -55,6 +65,7 @@ export function Code({
           <Copy className="h-3.5 w-3.5" />
         )}
       </button>
+      <div className={cn("transition-opacity duration-200", isTransitioning && "opacity-50")}>
 
       {!mounted ? (
         <Highlight
@@ -109,6 +120,7 @@ export function Code({
           )}
         </Highlight>
       )}
+      </div>
     </div>
   );
 }

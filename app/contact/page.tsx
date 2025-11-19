@@ -61,7 +61,7 @@ const Links = () => {
           <ArrowUpRight
             strokeWidth={1.5}
             size={20}
-            className="group-hover:rotate-45 transition-transform"
+            className="group-hover:rotate-45 transition-transform duration-[400ms]"
           />
           {link.label}
         </Link>

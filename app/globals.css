@@ -116,10 +116,21 @@
 
   /* Apply transitions to all elements for smooth theme changes */
   * {
-    transition: background-color 700ms ease, color 700ms ease, border-color 700ms ease;
+    transition: background-color 400ms ease, color 400ms ease, border-color 400ms ease;
+  }
+
+  /* Apply transitions to pseudo-elements (bullets, markers, etc.) */
+  *::before,
+  *::after,
+  *::marker {
+    transition: background-color 400ms ease, color 400ms ease, border-color 400ms ease;
   }
 
   /* SVG elements should not transition colors */
+  svg,
+  svg * {
+    transition: none !important;
+  }
 
 
   /* Blur entrance animation matching subtitle */

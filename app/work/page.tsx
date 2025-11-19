@@ -159,7 +159,7 @@ function WorkSection({ title, items }: { title: string; items: WorkItem[] }) {
                 <ArrowUpRight
                   strokeWidth={1.5}
                   size={20}
-                  className="group-hover:rotate-45 transition-transform"
+                  className="group-hover:rotate-45 transition-transform duration-[400ms]"
                 />
                 {item.label}
                 {item.wip && (
@@ -172,7 +172,7 @@ function WorkSection({ title, items }: { title: string; items: WorkItem[] }) {
                 <Link
                   href={item.github}
                   target="_blank"
-                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2 rounded aspect-square transition-colors"
+                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2 rounded aspect-square transition-colors duration-[400ms]"
                   aria-label={`${item.label} GitHub`}
                 >
                   <Github strokeWidth={1.5} size={20} />
