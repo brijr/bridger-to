@@ -20,7 +20,7 @@ export const Hero = ({
     <div className="flex items-start justify-between gap-2">
       <div className="flex flex-col gap-2 flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <Link href="/" className={cn(hasSegments && "text-muted-foreground")}>
+          <Link href="/" className="text-muted-foreground">
             Bridger Tower
           </Link>
           <Subtitle className="sm:hidden shrink-0" />
@@ -39,7 +39,7 @@ export const Hero = ({
                 <Link
                   href={segment.href}
                   className={cn(
-                    index < segments.length - 1 && "text-muted-foreground"
+                    index < segments.length - 1 && "text-muted-foreground",
                   )}
                 >
                   {segment.label}

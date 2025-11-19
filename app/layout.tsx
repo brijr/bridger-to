@@ -22,7 +22,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://bridger.to"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://bridger.to",
   ),
   title: {
     default: "Bridger Tower / Designer and Software Engineer",
@@ -50,7 +50,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased w-screen flex flex-col leading-tight",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>

@@ -41,7 +41,12 @@ export function HeroWrapper() {
 
   // Check if it's a static route
   if (pathname && routeMap[pathname]) {
-    return <Hero path={routeMap[pathname].label} pathHref={routeMap[pathname].href} />;
+    return (
+      <Hero
+        path={routeMap[pathname].label}
+        pathHref={routeMap[pathname].href}
+      />
+    );
   }
 
   // Check if it's a post route
