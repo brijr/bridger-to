@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Layout, Main } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Logo } from "@/components/site/logo";
 
@@ -61,6 +62,7 @@ export default function RootLayout({
             <Toaster position="top-center" />
           </LenisProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </Layout>
   );
