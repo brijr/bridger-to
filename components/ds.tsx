@@ -77,7 +77,7 @@ const proseHeadingClasses = [
 ];
 
 const proseTextClasses = [
-  "[&_p]:text-pretty [&_p]:text-base",
+  "[&_p]:text-pretty [&_p]:text-base [&_p:not(:last-child)]:mb-4",
   "[&_strong]:font-semibold",
   "[&_muted]:text-muted-foreground",
   "[&_em]:italic",
