@@ -127,9 +127,9 @@ export default function WorkPage() {
     <Section>
       <Container className="space-y-8">
         <AnimatedContent>
-          <WorkSection title="Software" items={software} />
           <WorkSection title="Clients" items={previousClients} />
           <WorkSection title="Open Source" items={openSourceProjects} />
+          <WorkSection title="Software" items={software} />
           <WorkSection title="Websites" items={websites} />
           <WorkSection title="Ventures" items={ventures} />
           <WorkSection title="Content" items={content} />
