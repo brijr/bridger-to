@@ -29,6 +29,11 @@ const openSourceProjects: WorkItem[] = [
     github: "https://github.com/brijr/mdx",
   },
   {
+    href: "https://forms.bridger.to",
+    label: "Form Builder",
+    github: "https://github.com/brijr/forms",
+  },
+  {
     href: "https://craft-ds.com",
     label: "Craft Design System",
     github: "https://github.com/brijr/craft",
@@ -39,18 +44,13 @@ const openSourceProjects: WorkItem[] = [
     github: "https://github.com/brijr/components",
   },
   {
-    href: "https://deploy.bridger.to",
-    label: "deploy.bridger.to",
-    github: "https://github.com/brijr/deploy-button",
-  },
-  {
     href: "https://favicon.bridger.to",
-    label: "favicon.bridger.to",
+    label: "Emoji to Favicon",
     github: "https://github.com/brijr/favicon",
   },
   {
     href: "https://resume.bridger.to",
-    label: "resume.bridger.to",
+    label: "Resume Builder",
     github: "https://github.com/brijr/resume",
   },
 ];
@@ -118,8 +118,8 @@ const ventures: WorkItem[] = [
 ];
 
 const content: WorkItem[] = [
-  { href: "https://youtube.com/@bridgertower", label: "Videos" },
-  { href: "https://youtube.com/@asapeng", label: "Podcasts" },
+  { href: "https://youtube.com/@bridgertower", label: "YouTube" },
+  { href: "https://youtube.com/@asapeng", label: "Ship GTM" },
 ];
 
 export default function WorkPage() {
@@ -129,10 +129,10 @@ export default function WorkPage() {
         <AnimatedContent>
           <WorkSection title="Clients" items={previousClients} />
           <WorkSection title="Open Source" items={openSourceProjects} />
+          <WorkSection title="Content" items={content} />
           <WorkSection title="Software" items={software} />
           <WorkSection title="Websites" items={websites} />
           <WorkSection title="Ventures" items={ventures} />
-          <WorkSection title="Content" items={content} />
         </AnimatedContent>
       </Container>
     </Section>
