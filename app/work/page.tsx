@@ -171,7 +171,7 @@ function WorkSection({ title, items }: { title: string; items: WorkItem[] }) {
                   className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2.5 rounded aspect-square transition-colors duration-400"
                   aria-label={`${item.label} GitHub`}
                 >
-                  <Github strokeWidth={1.5} size={16} />
+                  <Github strokeWidth={1.75} size={16} />
                 </Link>
               )}
             </div>
