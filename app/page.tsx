@@ -68,7 +68,7 @@ const Links = () => {
             <ArrowDownRight
               strokeWidth={1.5}
               size={20}
-              className="group-hover:-rotate-45 transition-transform duration-[400ms]"
+              className="group-hover:-rotate-45 transition-transform duration-400"
             />
             {link.label}
           </Link>
@@ -85,7 +85,7 @@ const Links = () => {
             <ArrowUpRight
               strokeWidth={1.5}
               size={20}
-              className="group-hover:rotate-45 transition-transform duration-[400ms]"
+              className="group-hover:rotate-45 transition-transform duration-400"
             />
             {link.label}
           </Link>

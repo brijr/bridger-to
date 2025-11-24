@@ -27,14 +27,14 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
       href={`/${slug}`}
       className={cn(
         "flex items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded",
-        className
+        className,
       )}
     >
       <h3 className="flex items-center gap-1.5">
         <ArrowDownRight
           strokeWidth={1.5}
           size={20}
-          className="group-hover:-rotate-45 transition-transform duration-[400ms] line-clamp-1"
+          className="group-hover:-rotate-45 transition-transform duration-400 line-clamp-1"
         />
         {title}
       </h3>
