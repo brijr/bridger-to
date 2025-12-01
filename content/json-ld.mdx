@@ -1,0 +1,48 @@
+---
+title: "What is JSON-LD?"
+description: "Structured data that tells Google exactly what your page is about. Rich results, higher click-through rates, easy wins."
+date: "2025-12-01"
+published: true
+---
+
+If you're building websites and not using JSON-LD, you're leaving easy wins on the table.
+
+Here's the deal: Google is smart, but it's not that smart. It can read your content, sure. But JSON-LD lets you tell Google exactly what your page is about in a language it understands perfectly.
+
+## What is JSON-LD?
+
+It's structured data. A little block of code (usually in your `<head>`) that describes your content in a standardized way. Think of it as metadata on steroids.
+
+```json
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "JSON-LD: The SEO Cheat Code",
+  "author": {
+    "@type": "Person",
+    "name": "Bridger Tower"
+  }
+}
+</script>
+```
+
+That's it. You're telling Google: "This is an article. Here's the title. Here's who wrote it."
+
+## Why Should You Care?
+
+Rich results. Those fancy search listings with stars, images, FAQs, prices—that's all powered by structured data. More visibility. Higher click-through rates.
+
+## The Types That Matter Most
+
+- **Article** or **BlogPosting** for content
+- **Product** for e-commerce
+- **FAQPage** for... FAQ pages
+- **Organization** for your business
+- **Person** for personal brands
+
+## The Practical Move
+
+If you're in Next.js, just drop a `<script>` tag in your layout or use `next/head`. There are libraries that help, but honestly? Copy-paste from schema.org and customize. Don't overthink it.
+
+Start with one page. Test it in Google's Rich Results Test. Ship it.
