@@ -1,24 +1,22 @@
 ---
 title: "What is JSON-LD?"
-description: "Structured data that tells Google exactly what your page is about. Rich results, higher click-through rates, easy wins."
+description: "Structured data that tells search engines and AI systems exactly what your page is about."
 date: "2025-11-24"
 published: true
 ---
 
-If you're building websites and not using JSON-LD, you're leaving easy wins on the table.
-
-Here's the deal: Google is smart, but it's not that smart. It can read your content, sure. But JSON-LD lets you tell Google exactly what your page is about in a language it understands perfectly.
+Search engines can read your content, but they can't always understand it. A page about "Apple" might be about fruit, a company, or a record label. JSON-LD removes that ambiguity.
 
 ## What is JSON-LD?
 
-It's structured data. A little block of code (usually in your `<head>`) that describes your content in a standardized way. Think of it as metadata on steroids.
+JSON-LD is structured data—a block of code, typically placed in your page's `<head>`, that describes your content using a standardized vocabulary. It tells machines not just what words appear on your page, but what those words mean.
 
 ```json
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "JSON-LD: The SEO Cheat Code",
+  "headline": "What is JSON-LD?",
   "author": {
     "@type": "Person",
     "name": "Bridger Tower"
@@ -27,22 +25,38 @@ It's structured data. A little block of code (usually in your `<head>`) that des
 </script>
 ```
 
-That's it. You're telling Google: "This is an article. Here's the title. Here's who wrote it."
+This snippet tells Google: this page is an article, this is its title, and this person wrote it. No guessing required.
 
-## Why Should You Care?
+## Why It Matters
 
-Rich results. Those fancy search listings with stars, images, FAQs, prices—that's all powered by structured data. More visibility. Higher click-through rates.
+When search engines understand your content precisely, they can display it more usefully. Rich results—those search listings with star ratings, images, FAQ dropdowns, and prices—are powered by structured data. Pages with rich results tend to get higher click-through rates because they answer questions before the user even clicks.
 
-## The Types That Matter Most
+## Common Schema Types
 
-- **Article** or **BlogPosting** for content
-- **Product** for e-commerce
-- **FAQPage** for... FAQ pages
-- **Organization** for your business
-- **Person** for personal brands
+Different content calls for different schemas:
 
-## The Practical Move
+- **Article** or **BlogPosting** for written content
+- **Product** for items you sell
+- **FAQPage** for question-and-answer formats
+- **Organization** for company information
+- **Person** for individual profiles
 
-If you're in Next.js, just drop a `<script>` tag in your layout or use `next/head`. There are libraries that help, but honestly? Copy-paste from schema.org and customize. Don't overthink it.
+## Implementation
 
-Start with one page. Test it in Google's Rich Results Test. Ship it.
+In Next.js, you can add JSON-LD through a `<script>` tag in your layout or via `next/head`. The [Schema.org](https://schema.org) documentation provides templates for every content type. Start with one page, validate it using Google's [Rich Results Test](https://search.google.com/test/rich-results), and expand from there.
+
+## Structured Data in the Age of AI
+
+The value of structured data extends beyond traditional search. AI systems—ChatGPT, Perplexity, Claude, and others—increasingly scrape and synthesize web content to answer questions. When these systems encounter well-structured data, they can extract and attribute information more accurately.
+
+This shift has given rise to two related concepts: GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization). Both recognize that visibility now means more than ranking on a results page. It means being cited when an AI constructs an answer.
+
+Structured data serves both goals. It helps traditional search engines display your content richly, and it helps AI systems understand and reference your content correctly. When a model answers a question about your product or expertise, clear schema markup increases the likelihood that it draws from your page—and credits you for it.
+
+## Learn More
+
+- [Schema.org](https://schema.org) — The official vocabulary for structured data
+- [Google's Structured Data Documentation](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) — Implementation guides and requirements
+- [Rich Results Test](https://search.google.com/test/rich-results) — Validate your JSON-LD
+- [Schema Markup Validator](https://validator.schema.org) — Debug your structured data
+- Ask AI
