@@ -119,7 +119,7 @@ const ventures: WorkItem[] = [
 
 const content: WorkItem[] = [
   { href: "https://youtube.com/@bridgertower", label: "YouTube" },
-  { href: "https://youtube.com/@asapeng", label: "Ship GTM" },
+  { href: "https://shipgtm.com", label: "Ship GTM" },
 ];
 
 export default function WorkPage() {
