@@ -1,71 +1,36 @@
-# MDX Starter
+# bridger.to
 
-A modern MDX starter template with Next.js, Velite, and Tailwind CSS.
+Personal website of Bridger Tower. Built with Next.js, Velite, and Tailwind CSS.
 
-## Features
+## Articles
 
-- [Next.js](https://nextjs.org/docs/app) App Router with React Server Components
+- [Go-to-Market for Technical Founders](https://bridger.to/gtm-technical-founders) - Frameworks for knowing when to persist vs. quit
+- [What is JSON-LD?](https://bridger.to/json-ld) - Structured data for search engines and AI systems
+- [Creating AI Systems](https://bridger.to/ai-systems) - Building flexible and testable AI systems
+- [The UI of AI](https://bridger.to/ui-of-ai) - Interface design for AI products
+- [The Simplification of UI](https://bridger.to/simplification-of-ui) - Modern UI design trends
+- [Code as Art](https://bridger.to/code-as-art) - The intersection of programming and creativity
+- [Lenis in Next.js](https://bridger.to/lenis-nextjs) - Smooth scrolling implementation
+- [Payload Localization](https://bridger.to/payload-localization) - Multi-language content with Payload CMS
+- [Payload R2](https://bridger.to/payload-r2) - Cloudflare R2 storage with Payload
+- [Mastra on Railway](https://bridger.to/mastra-railway) - Deploying Mastra agents
+- [Vercel MCP](https://bridger.to/vercel-mcp) - Model Context Protocol with Vercel
+
+## Stack
+
+- [Next.js](https://nextjs.org/) 16 with App Router
 - [Velite](https://velite.js.org/) for type-safe MDX content
-- Code highlighting with copy-to-clipboard
-- Dark mode with system preference detection
+- [Tailwind CSS](https://tailwindcss.com/) v4
 - [Shadcn/UI](https://ui.shadcn.com/) components
 - [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind](https://tailwindcss.com/)
 
-## Quick Start
+## Development
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-## Writing Content
-
-Create MDX files in the `content/` directory. The folder structure determines your URLs:
-
-```
-content/
-├── example.mdx              → /example
-├── blog/
-│   └── my-post.mdx         → /blog/my-post
-└── docs/
-    └── guide.mdx           → /docs/guide
-```
-
-### Example MDX File
-
-```mdx
----
-title: "My Post Title"
-description: "A brief description"
-date: "2025-01-09"
-author: "Your Name"
-tags: ["nextjs", "mdx"]
-published: true
----
-
-# Your content here
-
-Write markdown with React components!
-```
-
-### Frontmatter
-
-- `title` - Page title (required)
-- `description` - Page description (optional)
-- `date` - Publication date in ISO format (required)
-- `author` - Author name (optional)
-- `tags` - Array of tags (optional)
-- `published` - Show/hide post (default: true)
-
-## Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbrijr%2Fmdx)
-
 ## License
 
 MIT License
-
----
-
-Made by [Bridger](https://bridgertower.com)
