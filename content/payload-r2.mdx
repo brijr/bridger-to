@@ -19,7 +19,7 @@ This guide demonstrates how to integrate Cloudflare R2 with Payload CMS for effi
 
 - Cloudflare account with R2 access enabled
 - Payload CMS project (version 3.x or later)
-- Node.js 16.x or later
+- Node.js 18.x or later
 - Package manager (npm, yarn, or pnpm)
 
 ## Implementation Guide
@@ -65,7 +65,7 @@ R2_ENDPOINT=your-account-id.r2.cloudflarestorage.com
 Update your payload.config.ts:
 
 ```typescript
-import { buildConfig } from "payload/config";
+import { buildConfig } from "payload";
 import { s3Storage } from "@payloadcms/storage-s3";
 import path from "path";
 
@@ -172,18 +172,35 @@ export default {
 
 ### Custom Upload Handlers
 
+Use Payload's collection-level hooks to customize upload behavior:
+
 ```typescript
-s3Storage({
-  // ...other config
-  beforeUpload: async ({ req, file }) => {
-    // Customize file before upload
-    return file;
+// In your media collection definition
+{
+  slug: "media",
+  hooks: {
+    beforeOperation: [
+      async ({ operation, req }) => {
+        if (operation === "create" && req.file) {
+          // Customize filename or perform validation before upload
+          console.log(`Uploading file: ${req.file.name}`);
+        }
+      },
+    ],
+    afterChange: [
+      async ({ doc, operation }) => {
+        if (operation === "create") {
+          // Perform actions after successful upload
+          console.log(`File ${doc.filename} uploaded successfully`);
+        }
+      },
+    ],
   },
-  afterUpload: async ({ req, file, collection }) => {
-    // Perform actions after successful upload
-    console.log(`File ${file.filename} uploaded to ${collection.slug}`);
+  upload: {
+    // upload config...
   },
-});
+  fields: [],
+}
 ```
 
 ### Error Handling
