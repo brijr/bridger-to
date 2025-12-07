@@ -73,7 +73,7 @@ export function LenisProvider({
       touchMultiplier: 2,
       infinite: false,
       anchors: true,
-      smoothTouch: false, // Better mobile performance
+      syncTouch: false, // Better mobile performance
       ...optionsRef.current,
     });
 
@@ -191,22 +191,21 @@ const lenisOptions: LenisOptions = {
   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 
   // Direction and gesture
-  direction: "vertical", // 'vertical', 'horizontal'
-  gestureDirection: "vertical", // 'vertical', 'horizontal', 'both'
+  orientation: "vertical", // 'vertical', 'horizontal'
+  gestureOrientation: "vertical", // 'vertical', 'horizontal', 'both'
 
   // Smoothing
-  smooth: true,
-  smoothTouch: false, // Recommended: false for mobile performance
+  smoothWheel: true,
+  syncTouch: false, // Use syncTouch instead of smoothTouch
 
   // Multipliers
-  mouseMultiplier: 1,
-  touchMultiplier: 2,
+  wheelMultiplier: 1,
+  touchMultiplier: 1,
 
   // Advanced options
   infinite: false,
-  syncTouch: false, // New: sync touch events
-  syncTouchLerp: 0.075, // New: touch lerp value
-  touchInertiaMultiplier: 35, // New: touch inertia
+  syncTouchLerp: 0.075, // Lerp applied during syncTouch inertia
+  touchInertiaExponent: 1.7, // Manages syncTouch inertia strength
 
   // Anchor links support
   anchors: true, // New: automatic anchor link handling
@@ -218,10 +217,10 @@ const lenisOptions: LenisOptions = {
   eventsTarget: typeof window !== "undefined" ? window : undefined, // Events target
 
   // Overscroll behavior
-  overscroll: true, // New: CSS overscroll-behavior support
+  overscroll: true, // CSS overscroll-behavior support
 
-  // Modifiers
-  modifierKey: false, // New: modifier key requirement
+  // Virtual scroll modifier (customize events before consumption)
+  virtualScroll: (e) => true, // Return false to prevent smooth scrolling
 
   // Prevent smooth scrolling on specific elements
   prevent: (node: Element) => node.id === "modal", // Function to prevent scroll on specific elements
@@ -454,7 +453,7 @@ const getResponsiveLenisOptions = (): LenisOptions => {
 
   return {
     duration: prefersReducedMotion ? 0 : 1.2,
-    smooth: !prefersReducedMotion,
+    smoothWheel: !prefersReducedMotion,
     autoRaf: true,
   };
 };
@@ -503,7 +502,7 @@ export default function ConditionalLenisProvider({
 
 1. **Smooth scrolling not working**: Ensure `autoRaf: true` is set or implement manual RAF loop.
 
-2. **Performance issues on mobile**: Set `smoothTouch: false` for better mobile performance.
+2. **Performance issues on mobile**: Set `syncTouch: false` for better mobile performance.
 
 3. **Anchor links not working**: Set `anchors: true` in Lenis configuration or implement custom click handlers.
 
@@ -639,7 +638,7 @@ If upgrading from `@studio-freight/lenis`:
 1. **Use autoRaf**: Take advantage of the new `autoRaf` option for simpler setup
 2. **Enable anchor support**: Set `anchors: true` for better UX
 3. **Respect user preferences**: Check for [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
-4. **Optimize for mobile**: Use `smoothTouch: false` for better performance
+4. **Optimize for mobile**: Use `syncTouch: false` for better performance
 5. **Leverage React 19 features**: Take advantage of React 19's improvements in [Next.js 15.1+](https://nextjs.org/blog/next-15-1)
 6. **Use TypeScript**: Add proper type definitions for better DX
 7. **Implement proper error boundaries**: Handle cases where Lenis fails to initialize
