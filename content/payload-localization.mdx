@@ -21,7 +21,7 @@ Fortunately, Payload CMS 3 and Next.js 15 offer powerful localization features t
 First, you'll need to update your `payload.config.ts` file to support your desired languages:
 
 ```typescript
-import { buildConfig } from "payload/config";
+import { buildConfig } from "payload";
 
 export default buildConfig({
   localization: {
@@ -142,13 +142,15 @@ Your root layout can now access the current locale:
 
 ```typescript
 // app/[lang]/layout.tsx
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { lang },
-}: {
+  params,
+}: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
-}) {
+  params: Promise<{ lang: string }>;
+}>) {
+  const { lang } = await params;
+
   return (
     <html lang={lang}>
       <body>{children}</body>
@@ -166,6 +168,7 @@ In your pages, you can access the current language through the `params` prop:
 ```tsx
 // app/[lang]/page.tsx
 import { getPayload } from "payload";
+import config from "@payload-config";
 
 export default async function Page({
   params,
@@ -173,7 +176,7 @@ export default async function Page({
   params: Promise<{ lang: string }>;
 }>) {
   const lang = (await params).lang;
-  const payload = await getPayload();
+  const payload = await getPayload({ config });
   const {
     docs: [data],
   } = await payload.find({
@@ -297,12 +300,8 @@ export function LanguageSwitcher() {
 
   return (
     <div>
-      <Link href={pathnameWithoutLocale} locale={false}>
-        English
-      </Link>
-      <Link href={`/ja${pathnameWithoutLocale}`} locale={false}>
-        日本語
-      </Link>
+      <Link href={pathnameWithoutLocale}>English</Link>
+      <Link href={`/ja${pathnameWithoutLocale}`}>日本語</Link>
     </div>
   );
 }
@@ -316,27 +315,7 @@ Payload CMS has a handy feature: if a translation is missing for a specific fiel
 
 ### Language Switching
 
-To add a language switcher, you can use Next.js's `Link` component with the `locale` prop:
-
-```tsx
-import Link from "next/link";
-import { useRouter } from "next/router";
-
-export function LanguageSwitcher() {
-  const router = useRouter();
-
-  return (
-    <div>
-      <Link href={router.asPath} locale="en">
-        English
-      </Link>
-      <Link href={router.asPath} locale="ja">
-        日本語
-      </Link>
-    </div>
-  );
-}
-```
+The language switcher component shown above uses `usePathname` from `next/navigation` to get the current path and construct links to the same page in different languages. Since the App Router doesn't have a built-in `locale` prop on `Link`, you manually construct the localized URLs.
 
 ### Testing Your Setup
 
