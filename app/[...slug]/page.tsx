@@ -2,6 +2,7 @@ import { Section, Container, Prose } from "@/components/ds";
 import { MDXContent } from "@/components/markdown/mdx-content";
 import { Meta } from "@/components/markdown/meta";
 import { AnimatedContent } from "@/components/site/animated-content";
+import { EmailForm } from "@/components/email-form";
 
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { notFound } from "next/navigation";
@@ -70,6 +71,7 @@ export default async function Page(props: PageProps) {
           <Prose isArticle isSpaced>
             <MDXContent code={post.body} />
           </Prose>
+          <EmailForm label="Subscribe to my newsletter" />
         </AnimatedContent>
       </Container>
     </Section>

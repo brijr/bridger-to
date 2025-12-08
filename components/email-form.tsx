@@ -1,6 +1,5 @@
 "use client";
 
-// ! MAKE SURE TO CHANGE THE SOURCE AND USER GROUP
 const source = "https://bridger.to";
 const userGroup = "bridger.to";
 
@@ -8,7 +7,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence, MotionConfig } from "motion/react";
-import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 import useMeasure from "react-use-measure";
 import * as z from "zod";
@@ -29,7 +28,11 @@ const formSchema = z.object({
   }),
 });
 
-const transition = { type: "tween" as const, ease: "easeInOut" as const, duration: 0.4 };
+const transition = {
+  type: "tween" as const,
+  ease: "easeInOut" as const,
+  duration: 0.4,
+};
 
 export function EmailForm({ label }: { label?: string }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -95,65 +98,47 @@ export function EmailForm({ label }: { label?: string }) {
                 }}
               >
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-3"
+                  >
                     <FormField
                       control={form.control}
                       name="email"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{label}</FormLabel>
+                        <FormItem className="space-y-2">
+                          {label && (
+                            <FormLabel className="text-muted-foreground">
+                              {label}
+                            </FormLabel>
+                          )}
                           <FormControl>
                             <input
                               type="email"
-                              placeholder="ex. dieter.rams@gmail.com"
-                              className="focus:outline-none pb-2 bg-transparent w-full"
+                              placeholder="your@email.com"
+                              className="w-full bg-transparent border-b border-input pb-2 text-base focus:outline-none focus:border-foreground transition-colors duration-400 placeholder:text-muted-foreground/50"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription className="sr-only">
                             Enter your email address to subscribe.
                           </FormDescription>
-                          <FormMessage />
+                          <FormMessage className="text-sm text-destructive" />
                         </FormItem>
                       )}
                     />
-                    <motion.div
-                      initial={{ opacity: 1 }}
-                      animate={{ opacity: isLoading ? 0.5 : 1 }}
-                      transition={{ duration: 0.2 }}
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="group flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors duration-400 disabled:opacity-50"
                     >
-                      <button
-                        className={cn("w-[98.52px]")}
-                        type="submit"
-                        disabled={isLoading}
-                      >
-                        <motion.span
-                          initial={false}
-                          className="link -ml-2"
-                          animate={{
-                            opacity: isLoading ? 0 : 1,
-                            y: isLoading ? 10 : 0,
-                          }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          Subscribe
-                        </motion.span>
-                        <motion.span
-                          initial={false}
-                          animate={{
-                            opacity: isLoading ? 1 : 0,
-                            y: isLoading ? 0 : -10,
-                          }}
-                          transition={{ duration: 0.2 }}
-                          style={{
-                            position: "absolute",
-                            display: "inline-block",
-                          }}
-                        >
-                          •••
-                        </motion.span>
-                      </button>
-                    </motion.div>
+                      <ArrowRight
+                        strokeWidth={1.5}
+                        size={16}
+                        className="group-hover:translate-x-0.5 transition-transform duration-400"
+                      />
+                      <span>{isLoading ? "Subscribing..." : "Subscribe"}</span>
+                    </button>
                   </form>
                 </Form>
               </motion.div>

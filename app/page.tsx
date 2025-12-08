@@ -2,6 +2,7 @@ import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { Section, Container } from "@/components/ds";
 import { AnimatedContent } from "@/components/site/animated-content";
 import { FeatImage } from "@/components/site/feat-image";
+import { EmailForm } from "@/components/email-form";
 
 import Salt from "@/public/salt.webp";
 import Link from "next/link";
@@ -31,6 +32,7 @@ export default function HomePage() {
             src={Salt}
             alt="A photo I took at the Salt Flats in Utah"
           />
+          <EmailForm label="Subscribe to my newsletter" />
           <p className="text-muted-foreground">"I love to make websites"</p>
         </AnimatedContent>
       </Container>
