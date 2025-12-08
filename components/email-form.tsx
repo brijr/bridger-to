@@ -89,6 +89,7 @@ export function EmailForm({ label }: { label?: string }) {
             {!isSubmitted ? (
               <motion.div
                 key="form"
+                className="bg-muted/30 p-3 border rounded"
                 initial={{ opacity: 1 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -116,21 +117,21 @@ export function EmailForm({ label }: { label?: string }) {
                             <input
                               type="email"
                               placeholder="your@email.com"
-                              className="w-full bg-transparent border-b border-input pb-2 text-base focus:outline-none focus:border-foreground transition-colors duration-400 placeholder:text-muted-foreground/50"
+                              className="w-full bg-transparent border-b border-input pt-3 pb-1 focus:outline-none focus:border-foreground transition-colors duration-400 placeholder:text-muted-foreground/50"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription className="sr-only">
                             Enter your email address to subscribe.
                           </FormDescription>
-                          <FormMessage className="text-sm text-destructive" />
+                          <FormMessage className="text-destructive" />
                         </FormItem>
                       )}
                     />
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="group flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors duration-400 disabled:opacity-50"
+                      className="group flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors duration-400 disabled:opacity-50 hover:cursor-pointer"
                     >
                       <ArrowRight
                         strokeWidth={1.5}
