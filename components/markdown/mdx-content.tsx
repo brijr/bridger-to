@@ -4,6 +4,7 @@ import * as runtime from "react/jsx-runtime";
 
 import { Bookmark } from "@/components/markdown/bookmark";
 import { YouTube } from "@/components/markdown/youtube";
+import { Tweet } from "@/components/markdown/tweet";
 import { Media } from "@/components/markdown/media";
 import { Code } from "./code";
 
@@ -91,6 +92,9 @@ const sharedComponents = {
   },
   Bookmark: ({ url, className }: { url: string; className?: string }) => {
     return <Bookmark url={url} className={className} />;
+  },
+  Tweet: ({ id, className }: { id: string; className?: string }) => {
+    return <Tweet id={id} className={className} />;
   },
   Media: ({
     src,
