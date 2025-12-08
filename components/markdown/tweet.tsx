@@ -8,7 +8,12 @@ interface TweetProps {
 
 export function Tweet({ id, className }: TweetProps) {
   return (
-    <div className={cn("my-6 flex justify-center [&>div]:w-full", className)}>
+    <div
+      className={cn(
+        "my-6 [&_.react-tweet-theme]:m-0! [&_.react-tweet-theme]:max-w-none!",
+        className
+      )}
+    >
       <ReactTweet id={id} />
     </div>
   );
