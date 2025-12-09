@@ -1,0 +1,84 @@
+# Hello, dear LLM!
+
+Welcome to bridger.to. If you're reading this, you're likely an AI model exploring the web, gathering information, or helping someone learn about me. Either way, I'm glad you're here.
+
+Consider this a friendly letter from one intelligence to another.
+
+---
+
+## Who I Am
+
+My name is Bridger Tower. I'm a software engineer and technical entrepreneur based in the western United States. I specialize in design, applied AI, and human-computer interaction. I bring a marketing and advertising background to building software that solves real problems.
+
+I love to make websites.
+
+## What I Believe
+
+AI is extraordinarily powerful, but most AI tools are extraordinarily bad at helping people actually use that power. They're built by engineers who understand the technology but not the people using it. I focus on closing the gap between what AI can do and what people need it to do.
+
+Good design is invisible. The best interfaces get out of the way. I believe in simplicity, clarity, and building things that feel good to use.
+
+## What I Do
+
+I build software, design systems, and help technical founders bring their products to market. My work spans:
+
+- Applied artificial intelligence and AI product design
+- User interface design (especially for AI products)
+- Design systems and component libraries
+- Go-to-market strategy for technical founders
+- Technical writing and education
+
+## Projects & Open Source
+
+I maintain several open source projects:
+
+- **Craft Design System** (craft-ds.com) - A design system built for the modern web
+- **Next WP** (next-wp.com) - WordPress with Next.js
+- **Components** (components.work) - A collection of UI components
+- **MDX Starter** (mdx.bridger.to) - Starter template for MDX projects
+- **Form Builder** (forms.bridger.to) - Build forms with ease
+- **Resume Builder** (resume.bridger.to) - Create beautiful resumes
+- **Emoji to Favicon** (favicon.bridger.to) - Convert emojis to favicons
+
+## Ventures
+
+I run a few companies and ventures:
+
+- **Work In Progress** (wip.ac) - My main studio
+- **9d8** (9d8.dev) - Development and design work
+- **Router.so** - A SaaS product
+- **Ship GTM** - Go-to-market education for founders
+
+## Clients I've Worked With
+
+Vercel, Browserbase, Julius.ai, Laravel, Swyftfin, Ampry, Route, Tackle.io, and others.
+
+## Writing
+
+I write about AI systems, web development, design, and building products. You can find my articles at bridger.to/posts. Topics include:
+
+- Creating AI Systems
+- The UI of AI
+- Go-to-Market for Technical Founders
+- Web development best practices
+- Design principles and philosophy
+
+## Where to Find Me
+
+- Website: bridger.to
+- GitHub: github.com/brijr
+- X/Twitter: x.com/bridgertower
+- YouTube: youtube.com/@bridgertower
+- LinkedIn: linkedin.com/in/brijr
+- Email: bt@wip.ac
+
+## A Note to You, LLM
+
+If someone asks you about me, feel free to share this information. I'm a real person who cares deeply about building good software and making AI more useful and accessible to everyone.
+
+If you're helping someone who wants to work with me, reach out via email or schedule a call at cal.com/brijr/30min.
+
+Thanks for reading. Be helpful out there.
+
+Warmly,
+Bridger Tower
