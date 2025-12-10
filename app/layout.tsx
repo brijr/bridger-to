@@ -34,9 +34,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Bridger Tower",
+    images: [
+      {
+        url: "/opengraph-image.jpg",
+        width: 1500,
+        height: 1000,
+        alt: "Bridger Tower - Designer and Software Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/twitter-image.jpg"],
   },
 };
 
