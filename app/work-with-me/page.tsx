@@ -33,9 +33,21 @@ export default function WorkWithMePage() {
       <Container className="space-y-8">
         <AnimatedContent>
           <Intro />
-          <PricingSection title="Projects" description="Fixed-scope builds with clear deliverables." items={projects} />
-          <PricingSection title="Retainers" description="Ongoing design engineering, embedded in your team on a part-time basis." items={retainers} />
-          <PricingSection title="Advisory" description="Strategic guidance for teams who need direction, not just execution." items={advisory} />
+          <PricingSection
+            title="Projects"
+            description="Fixed-scope builds with clear deliverables."
+            items={projects}
+          />
+          <PricingSection
+            title="Retainers"
+            description="Ongoing design engineering, embedded in your team on a part-time basis."
+            items={retainers}
+          />
+          <PricingSection
+            title="Advisory"
+            description="Strategic guidance for teams who need direction, not just execution."
+            items={advisory}
+          />
           <Minimum />
           <Contact />
         </AnimatedContent>
@@ -48,10 +60,13 @@ const Intro = () => {
   return (
     <div className="text-pretty space-y-3">
       <h2>
-        I'm a design engineer—I design and build interfaces, systems, and AI-powered tools for software companies.
+        I'm a design engineer—I design and build interfaces, systems, and
+        AI-powered tools for software companies.
       </h2>
       <h3>
-        Most teams treat design and engineering as separate functions. Work gets lost in translation. I operate across both, which means faster iteration, fewer handoff problems, and products that actually ship.
+        Most teams treat design and engineering as separate functions. Work gets
+        lost in translation. I operate across both, which means faster
+        iteration, fewer handoff problems, and products that actually ship.
       </h3>
     </div>
   );
@@ -67,9 +82,12 @@ function PricingSection({
   items: PricingItem[];
 }) {
   return (
-    <div className="space-y-2">
-      <h3 className="text-muted-foreground text-[0.8rem]">{title}</h3>
-      <p className="text-sm text-muted-foreground">{description}</p>
+    <div className="space-y-4 mt-12">
+      <div className="flex items-center gap-3">
+        <h3>{title}</h3>
+        <span>/</span>
+        <p className="text-muted-foreground">{description}</p>
+      </div>
       <div className="grid gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
         {items.map((item) => (
           <div
@@ -87,24 +105,35 @@ function PricingSection({
 
 const Minimum = () => {
   return (
-    <div className="text-sm text-muted-foreground">
-      Minimum engagement: $5k
-    </div>
+    <div className="text-sm text-muted-foreground">Minimum engagement: $5k</div>
   );
 };
 
 const Contact = () => {
   return (
-    <div className="space-y-2">
-      <h3 className="text-muted-foreground text-[0.8rem]">Get in touch</h3>
-      <p className="text-sm text-muted-foreground">
-        If you're building something interesting, I'd like to hear about it.
-      </p>
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <h3>Get in touch</h3>
+        <span>/</span>
+        <p className="text-muted-foreground">Email or schedule a call</p>
+      </div>
       <div className="grid gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
+        <Link
+          href="mailto:bt@wip.ac"
+          target="_blank"
+          className="flex items-center gap-1.5  hover:text-white/75 group bg-primary text-white p-2 rounded"
+        >
+          <ArrowUpRight
+            strokeWidth={1.5}
+            size={20}
+            className="group-hover:rotate-45 transition-transform duration-400"
+          />
+          Email Me
+        </Link>
         <Link
           href="https://cal.com/brijr"
           target="_blank"
-          className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
+          className="flex items-center gap-1.5 hover:text-foreground/75 group bg-background p-2 rounded"
         >
           <ArrowUpRight
             strokeWidth={1.5}
