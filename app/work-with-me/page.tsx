@@ -17,9 +17,9 @@ const projects: PricingItem[] = [
 ];
 
 const retainers: PricingItem[] = [
-  { type: "1 day/week", range: "$5k" },
-  { type: "2 days/week", range: "$9k" },
-  { type: "3 days/week", range: "$12k" },
+  { type: "1 day/week", range: "$5k/mo" },
+  { type: "2 days/week", range: "$9k/mo" },
+  { type: "3 days/week", range: "$12k/mo" },
 ];
 
 const advisory: PricingItem[] = [
