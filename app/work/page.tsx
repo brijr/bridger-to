@@ -14,7 +14,7 @@ type WorkItem = {
 
 const openSourceProjects: WorkItem[] = [
   {
-    href: "https://next-wp.com",
+    href: "https://github.com/9d8dev/next-wp",
     label: "Next WP",
     github: "https://github.com/9d8dev/next-wp",
   },
