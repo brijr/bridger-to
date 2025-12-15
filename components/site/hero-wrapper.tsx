@@ -9,6 +9,7 @@ const routeMap: Record<string, { label: string; href: string }> = {
   "/contact": { label: "Contact", href: "/contact" },
   "/posts": { label: "Posts", href: "/posts" },
   "/work": { label: "Work", href: "/work" },
+  "/work-with-me": { label: "Work with me", href: "/work-with-me" },
 };
 
 export function HeroWrapper() {
