@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Logo } from "@/components/site/logo";
 import { HeroWrapper } from "@/components/site/hero-wrapper";
+import { WorkWithMeCta } from "@/components/site/work-with-me-cta";
 
 import type { Metadata } from "next";
 
@@ -75,6 +76,7 @@ export default function RootLayout({
               {children}
             </Main>
             <ThemeToggle className="fixed bottom-6 right-6" />
+            <WorkWithMeCta />
             <Footer />
             <Toaster position="top-center" />
           </LenisProvider>
