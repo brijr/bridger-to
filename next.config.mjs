@@ -40,6 +40,11 @@ const nextConfig = {
         destination: "https://craft-ds.com",
         permanent: true,
       },
+      {
+        source: "/strava",
+        destination: "https://strava.app.link/PuEPNGFusZb",
+        permanent: true,
+      },
     ];
   },
 };
