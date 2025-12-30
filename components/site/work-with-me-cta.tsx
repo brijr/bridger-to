@@ -15,7 +15,7 @@ export function WorkWithMeCta() {
   return (
     <Link
       href="/work-with-me"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:bg-primary/90 transition-all duration-300 hover:scale-105"
+      className="fixed bottom-6 left-6 sm:left-1/2 sm:-translate-x-1/2 z-50 flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:bg-primary/90 transition-all duration-300 hover:scale-105"
     >
       Work with me
       <ArrowUpRight strokeWidth={2} size={16} />

@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Logo } from "@/components/site/logo";
+import { LiveClock } from "@/components/site/live-clock";
 import { HeroWrapper } from "@/components/site/hero-wrapper";
 import { WorkWithMeCta } from "@/components/site/work-with-me-cta";
 
@@ -89,8 +90,8 @@ export default function RootLayout({
 
 const Footer = () => {
   return (
-    <footer className="fixed bottom-6 left-6 text-muted-foreground text-sm">
-      &copy; {new Date().getFullYear()}
+    <footer className="hidden sm:block fixed bottom-6 left-6 text-muted-foreground text-sm">
+      &copy; <LiveClock />
     </footer>
   );
 };
