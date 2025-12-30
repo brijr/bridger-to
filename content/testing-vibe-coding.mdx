@@ -1,0 +1,232 @@
+---
+title: "Testing while vibe coding"
+description: "TDD becomes more valuable with AI tools, not less. Tests provide constraints that dramatically improve AI-generated code quality."
+date: "2025-12-30"
+published: true
+---
+
+AI-assisted development is changing how we build software, but testing remains the gap most developers ignore. Here's the counterintuitive truth I've learned: **TDD becomes more valuable with AI tools, not less**.
+
+Tests provide constraints that dramatically improve AI-generated code quality. They catch the hallucinated APIs and subtle bugs that Cursor and Claude Code confidently introduce. The winning formula? Vitest for fast component tests, Playwright for async Server Components, and structured prompting that treats tests as specifications rather than afterthoughts.
+
+## The Stack That Actually Works
+
+The Next.js ecosystem has consolidated around a clear testing hierarchy. [Vitest](https://vitest.dev/) has emerged as the preferred choice for unit and integration tests—[according to Vitest's benchmarks](https://vitest.dev/guide/comparisons.html), it can offer up to 4x faster cold starts compared to Jest, though real-world results vary depending on your setup.
+
+| Layer | Tool | Use Case |
+|-------|------|----------|
+| Unit/Integration | [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) | Client components, sync Server Components, utilities |
+| E2E | [Playwright](https://playwright.dev/) | Async Server Components, server actions, critical flows |
+| API Routes | [`next-test-api-route-handler`](https://github.com/Xunnamius/next-test-api-route-handler) | Route handler testing without spinning up servers |
+
+[Next.js now includes first-class Vitest support](https://nextjs.org/docs/app/guides/testing/vitest). You can scaffold a new project with `npx create-next-app@latest --example with-vitest`. For async Server Components—which most modern Next.js apps use—[the docs are explicit](https://nextjs.org/docs/app/guides/testing/vitest): use E2E testing because Jest and Vitest can't render them directly.
+
+Here's a minimal Vitest config:
+
+```typescript
+// vitest.config.mts
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
+export default defineConfig({
+  plugins: [tsconfigPaths(), react()],
+  test: { environment: 'jsdom' },
+})
+```
+
+And [Playwright](https://playwright.dev/docs/intro) configured to auto-start your dev server:
+
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+})
+```
+
+## Why TDD Works Better With AI
+
+Test-first development produces dramatically better results than test-after when working with AI tools. When you write a test first, you're encoding requirements and expected behavior. The AI then has a concrete specification to implement against, with immediate feedback when it hallucinates APIs or misunderstands the problem.
+
+When AI generates tests after writing code, it merely confirms what the code does—including bugs—rather than what it *should* do.
+
+The adapted TDD loop for AI development:
+
+```
+1. Write the test (you define expected behavior)
+2. Prompt AI with test as context ("make this test pass")
+3. AI generates implementation
+4. Review generated code critically
+5. Refactor with tests as safety net
+```
+
+This is where Cursor's auto-run mode shines. It automatically runs tests after each code generation, creating a tight feedback loop where the AI iterates until tests pass without manual intervention.
+
+## How Auto-Run Mode Works
+
+Auto-run mode (previously called "YOLO mode"—found in Cursor Settings > Features) lets the AI [run terminal commands automatically](https://www.builder.io/blog/cursor-tips) without asking for permission each time. You configure an allowlist of safe commands—things like `npm test`, `vitest`, `tsc`, `mkdir`.
+
+The workflow looks like this: you prompt Cursor to build a feature, it generates code, runs your tests, sees failures, fixes them, and keeps iterating until everything passes. All while you grab coffee.
+
+A solid auto-run allowlist prompt:
+
+```
+any kind of tests are always allowed like vitest, npm test, etc.
+also basic build commands like build, tsc, etc.
+creating files and making directories (like touch, mkdir, etc) is always ok too
+```
+
+The key insight: when you have a solid test suite, you can let the AI work in its own loop more confidently. Good guardrails enable freedom. When the AI can't break anything important (because tests catch problems), you can step back and let it iterate.
+
+One caveat—you do need to babysit these sessions. It's common to need to hit stop and say "wait, you're off track here, reset and try a different approach." But for the 80% of cases where it stays on track, it's a massive productivity boost. (Note: [be cautious with auto-run in production environments](https://www.theregister.com/2025/07/21/cursor_ai_safeguards_easily_bypassed/)—the safeguards have known limitations.)
+
+## Prompting for Better Tests
+
+Generic prompts like "write tests for this component" produce generic, brittle tests. Effective prompts specify the framework, patterns to follow, scenarios to cover, and what to mock (or not).
+
+A template that works:
+
+```markdown
+Write integration tests for [component/feature] using Vitest + React Testing Library.
+
+Requirements:
+- Follow AAA pattern (Arrange-Act-Assert)
+- Test these specific scenarios:
+  - Happy path: [describe expected successful flow]
+  - Error case: [describe specific failure mode]
+  - Edge case: [describe boundary condition]
+- Do NOT mock [database/API calls you want to test real integration]
+- DO mock [external services/authentication]
+- Assert on user-visible behavior, not implementation details
+- Use semantic locators (getByRole, getByText) not CSS selectors
+```
+
+For [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview), create reusable commands in `.claude/commands/test.md` that encode your team's conventions. This ensures consistency and reduces prompt engineering overhead.
+
+## Testing Server Components
+
+The App Router introduces challenges the ecosystem is still solving. Async Server Components cannot be unit tested with Jest or Vitest directly. [React Testing Library is tracking this limitation](https://github.com/testing-library/react-testing-library/issues/1209), but native support doesn't exist yet. Three workarounds exist:
+
+**Suspense wrapper** (for simpler components):
+
+```typescript
+import { Suspense } from 'react'
+import { render, screen } from '@testing-library/react'
+import Page from './page'
+
+test('Server Component renders data', async () => {
+  render(
+    <Suspense>
+      <Page />
+    </Suspense>
+  )
+  expect(await screen.findByRole('heading')).toHaveTextContent('Expected Title')
+})
+```
+
+**Direct invocation** (treats component as async function):
+
+```typescript
+test('RSC Page renders pokemon', async () => {
+  render(await Page())
+  expect(await screen.findByText('bulbasaur')).toBeDefined()
+})
+```
+
+**Server-side string rendering** (validates HTML without DOM):
+
+```typescript
+/** @jest-environment node */
+import { renderToString } from 'react-dom/server'
+import RSC from './RSC'
+
+test('renders expected content', () => {
+  const html = renderToString(<RSC />)
+  expect(html).toContain('expected-content')
+})
+```
+
+For server actions, many teams wrap them in API route handlers specifically for testability, then [test those routes](https://blog.arcjet.com/testing-next-js-app-router-api-routes/) with `next-test-api-route-handler`:
+
+```typescript
+import { testApiHandler } from "next-test-api-route-handler"
+import * as appHandler from "./route"
+
+it("returns user data for authenticated requests", async () => {
+  await testApiHandler({
+    appHandler,
+    test: async ({ fetch }) => {
+      const response = await fetch({
+        method: "GET",
+        headers: { Authorization: "Bearer valid-token" }
+      })
+      expect(response.status).toBe(200)
+      const data = await response.json()
+      expect(data).toHaveProperty('user')
+    },
+  })
+})
+```
+
+## The Inverted Testing Pyramid
+
+Traditional testing pyramids emphasize many unit tests with fewer integration and E2E tests. For vibe coding, this inverts. Integration tests provide the highest value because they verify actual system behavior rather than isolated units that AI might have implemented against hallucinated contracts.
+
+The practical distribution for vibe-coded apps:
+
+- **40% Integration tests**: Component interactions, API routes with database, form submissions
+- **35% E2E tests**: Critical user journeys, async Server Components, auth flows
+- **25% Unit tests**: Utility functions, hooks, pure business logic
+
+AI-generated code often has correct internal logic but incorrect integration boundaries. Unit tests pass while the system fails because the AI hallucinated an API contract or misunderstood how components communicate.
+
+## What Goes Wrong With AI-Generated Tests
+
+Research paints a sobering picture. [A Microsoft study found](https://dev.to/dev_tips/copilot-is-gaslighting-developers-and-were-all-pretending-its-fine-51j9) that developers reviewing AI-generated code missed 40% more bugs than those reviewing human-written code. Why? Because AI code "looks clean"—and clean code is seductive. [An Uplevel study](https://uplevelteam.com/blog/ai-for-developer-productivity) found that developers using Copilot introduced 41% more bugs despite no change in PR throughput.
+
+The most dangerous pattern is tautological testing—tests that verify the AI's assumptions rather than business requirements:
+
+```javascript
+// AI generated this after seeing the implementation
+test('calculate discount', () => {
+  const result = calculateDiscount(100, 0.1)
+  expect(result).toBe(90)  // Confirms what code does, not what it should do
+})
+```
+
+If the discount calculation was wrong, this test would pass. The AI observed `100 * (1 - 0.1) = 90` and encoded that, not the business rule that might specify different behavior.
+
+Pre-merge checklist for AI-generated tests:
+
+- Does this test verify requirements, not just current code behavior?
+- Would this test fail if the bug it's supposed to catch existed?
+- Are all referenced functions and APIs real?
+- Are error cases and boundary conditions covered?
+- Is the test name descriptive of business behavior?
+
+## The Workflow
+
+The most effective pattern I've seen:
+
+```
+1. Generate spec (define what to build)
+2. Create implementation plan with test requirements
+3. For each feature: write test → AI implements → verify → commit
+4. Pre-commit hooks run linting, type checking, tests automatically
+```
+
+Pre-commit hook enforcement is critical. Every commit triggers validation, catching AI hallucinations before they propagate. This transforms testing from a separate phase into a continuous verification layer.
+
+For rapid prototyping where tests would slow you down too much, skip them—but add comprehensive tests before the codebase grows complex. Small steps with frequent commits remain essential. AI changes can have unexpected ripple effects.
+
+## The Bottom Line
+
+Tests serve a dual purpose in the vibe coding era. They validate correctness as always, but they also communicate requirements to AI tools. Well-written tests become the specification language that guides AI implementation.
+
+The human role becomes defining expected behavior through tests. AI handles implementation details. Integration tests gain importance because they catch the boundary failures that AI tools commonly introduce.
+
+Invest in learning your testing tools deeply, develop prompting patterns that encode your standards, and treat AI-generated tests as drafts requiring critical review. The teams achieving highest velocity are those who've mastered this pattern—clear human specification, AI implementation, continuous automated verification.
