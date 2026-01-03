@@ -56,7 +56,7 @@ When AI generates tests after writing code, it merely confirms what the code doe
 
 The adapted TDD loop for AI development:
 
-```
+```text
 1. Write the test (you define expected behavior)
 2. Prompt AI with test as context ("make this test pass")
 3. AI generates implementation
@@ -74,7 +74,7 @@ The workflow looks like this: you prompt Cursor to build a feature, it generates
 
 A solid auto-run allowlist prompt:
 
-```
+```text
 any kind of tests are always allowed like vitest, npm test, etc.
 also basic build commands like build, tsc, etc.
 creating files and making directories (like touch, mkdir, etc) is always ok too
@@ -212,7 +212,7 @@ Pre-merge checklist for AI-generated tests:
 
 The most effective pattern I've seen:
 
-```
+```text
 1. Generate spec (define what to build)
 2. Create implementation plan with test requirements
 3. For each feature: write test → AI implements → verify → commit
