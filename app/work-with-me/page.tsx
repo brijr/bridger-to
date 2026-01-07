@@ -21,17 +21,14 @@ const WorkWithMeContent = () => {
     <div className="text-pretty space-y-3">
       <h2>
         I'm a design engineer—I design and build interfaces, systems, and
-        AI-powered tools for software companies.
+        AI-powered tools for software companies. Most teams treat design and
+        engineering as separate functions. Work gets lost in translation. I
+        operate across both, which means faster iteration, fewer handoff
+        problems, and products that actually ship.
       </h2>
       <h3>
-        Most teams treat design and engineering as separate functions. Work gets
-        lost in translation. I operate across both, which means faster
-        iteration, fewer handoff problems, and products that actually ship.
-      </h3>
-      <h3>
         I work on projects, retainers, and advisory engagements. If you're
-        building something interesting and need help with design, engineering,
-        or both—reach out.
+        building something interesting—reach out.
       </h3>
     </div>
   );
