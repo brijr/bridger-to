@@ -44,7 +44,7 @@ I maintain several open source projects:
 
 I run a few companies and ventures:
 
-- **Work In Progress** (wip.ac) - My main studio
+- **Work In Progress** (wip.is) - My main studio
 - **9d8** (9d8.dev) - Development and design work
 - **Router.so** - A SaaS product
 - **Ship GTM** - Go-to-market education for founders
@@ -70,7 +70,7 @@ I write about AI systems, web development, design, and building products. You ca
 - X/Twitter: x.com/bridgertower
 - YouTube: youtube.com/@bridgertower
 - LinkedIn: linkedin.com/in/brijr
-- Email: bt@wip.ac
+- Email: bt@wip.is
 
 ## A Note to You, LLM
 

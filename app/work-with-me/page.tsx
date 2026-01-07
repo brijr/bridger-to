@@ -119,7 +119,7 @@ const Contact = () => {
       </div>
       <div className="grid gap-0.5 bg-muted dark:bg-muted/50 p-0.5 rounded">
         <Link
-          href="mailto:bt@wip.ac"
+          href="mailto:bt@wip.is"
           target="_blank"
           className="flex items-center gap-1.5  hover:text-white/75 group bg-primary text-white p-2 rounded"
         >

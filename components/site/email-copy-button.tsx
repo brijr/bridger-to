@@ -7,7 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-const EMAIL = "bt@wip.ac";
+const EMAIL = "bt@wip.is";
 
 export function EmailCopyButton({ className }: { className?: string }) {
   const [copied, setCopied] = useState(false);
