@@ -108,7 +108,7 @@ const websites: WorkItem[] = [
 
 const ventures: WorkItem[] = [
   {
-    href: "https://wip.ac",
+    href: "https://wip.is",
     label: "Work In Progress",
     github: "https://github.com/brijr/wip",
   },
