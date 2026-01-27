@@ -60,7 +60,7 @@ export default function RootLayout({
     <Layout>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased w-screen flex flex-col leading-tight",
+          "min-h-screen bg-background font-sans antialiased flex flex-col leading-tight overflow-x-hidden",
           fontSans.variable,
         )}
       >
