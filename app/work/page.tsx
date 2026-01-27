@@ -68,6 +68,7 @@ const previousClients: WorkItem[] = [
 
 const software: WorkItem[] = [
   { href: "https://filelogic.ai", label: "File Logic", wip: true },
+  { href: "https://outr.ai", label: "Outr", wip: true },
   { href: "https://offerarc.com", label: "Offer Arc", wip: true },
   { href: "https://flysuper.com", label: "Fly Super", wip: true },
   {
@@ -80,7 +81,6 @@ const software: WorkItem[] = [
     label: "Wrk.so",
     github: "https://github.com/9d8dev/wrk-so",
   },
-  { href: "https://oat.club", label: "Oat", wip: true },
 ];
 
 const websites: WorkItem[] = [
