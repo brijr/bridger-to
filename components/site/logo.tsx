@@ -16,7 +16,7 @@ export const Logo = ({
   className?: string;
 }) => {
   return (
-    <Link href={href} className={`relative z-50 ${className ?? ""}`}>
+    <Link href={href} className={`z-50 ${className ?? ""}`}>
       <div className="relative">
         <Image
           width={width}
