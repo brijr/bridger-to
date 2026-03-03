@@ -14,10 +14,10 @@ published: true
 - Smooth momentum-based scrolling
 - Touch device support
 - Horizontal scrolling capabilities
-- Scroll snapping support
+- Scroll snapping support via `lenis/snap`
 - Performance optimization
 - Easy integration with animation libraries
-- Lightweight (~2Kb gzipped)
+- Small bundle size (check current package stats for exact numbers)
 
 ## Installation
 
@@ -344,6 +344,8 @@ const lenis = new Lenis(lenisConfig);
 
 The recommended [GSAP ScrollTrigger](https://greensock.com/scrolltrigger/) integration has been updated for the latest versions:
 
+When driving Lenis from GSAP's ticker, configure Lenis with `autoRaf: false` so there is only one RAF loop.
+
 ```tsx
 // components/ScrollAnimations.tsx
 "use client";
@@ -363,24 +365,23 @@ export default function ScrollAnimations({ children }: ScrollAnimationsProps) {
   const lenis = useLenis();
 
   useEffect(() => {
-    if (lenis) {
-      // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-      lenis.on("scroll", ScrollTrigger.update);
+    if (!lenis) return;
 
-      // Add Lenis's requestAnimationFrame method to GSAP's ticker
-      gsap.ticker.add((time: number) => {
-        lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-      });
+    // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+    lenis.on("scroll", ScrollTrigger.update);
 
-      // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-      gsap.ticker.lagSmoothing(0);
-    }
+    // Drive Lenis from GSAP's ticker
+    const update = (time: number) => {
+      lenis.raf(time * 1000); // GSAP gives seconds, Lenis expects milliseconds
+    };
+    gsap.ticker.add(update);
+
+    // Disable lag smoothing in GSAP to prevent delayed scroll animations
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      if (lenis) {
-        lenis.off("scroll", ScrollTrigger.update);
-        gsap.ticker.remove(lenis.raf);
-      }
+      lenis.off("scroll", ScrollTrigger.update);
+      gsap.ticker.remove(update);
     };
   }, [lenis]);
 
