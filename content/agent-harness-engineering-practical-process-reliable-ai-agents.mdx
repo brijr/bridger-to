@@ -1,0 +1,202 @@
+---
+title: "Agent Harness Engineering: A Practical Process for Reliable AI Agents"
+description: "A practical 10-step process to improve agent reliability by engineering the harness around the model."
+date: "2026-03-03"
+published: true
+tags:
+  - ai
+  - agents
+  - engineering
+---
+
+The biggest gains in agent reliability are not coming from model swaps. They are coming from better harnesses - the loop, tools, context staging, and error handling that wrap around the model. Anthropic, Cursor, Manus, and LangChain have all converged on this insight independently, and their published findings paint a clear picture of what works.
+
+This article distills those findings into a repeatable engineering process. If you are building agents that need to hold up on long, multi-step tasks, this is the playbook.
+
+## The Core Principle
+
+Keep the agent loop simple. Make the harness do the hard work.
+
+```ts
+while (true) {
+  const response = await model(messages, availableTools);
+  if (!response.toolCalls?.length) break;
+
+  for (const call of response.toolCalls) {
+    const result = await executeTool(call);
+    messages.push(toolResultToMessage(call, result));
+    messages.push(systemReminderMessage()); // optional reinforcement
+  }
+}
+```
+
+This is the skeleton. Production wins come from everything around it - better tooling, smarter context staging, and recovery logic that keeps the model on track when things go sideways.
+
+## Step 1: Define Target Tasks and Ground Truth
+
+Before touching the harness, freeze your evaluation set. Pick 10-30 representative tasks with expected outputs. Include short, medium, and long-horizon tasks. Log success/failure reason codes, not just pass/fail.
+
+LangChain's recent work on Terminal Bench 2.0 demonstrates this perfectly. They improved their coding agent from Top 30 to Top 5 by only changing the harness - the model stayed fixed. That kind of isolated measurement is only possible with a stable eval set.
+
+**Deliverable:** A task spec file (YAML, JSON, whatever) with deterministic task definitions, frozen before you start changing things.
+
+## Step 2: Baseline the Current Harness
+
+Run your fixed task set against the current harness. Capture everything: success rate, tokens consumed, latency, tool calls, retries, and failure modes.
+
+Split failures into categories that actually tell you what to fix:
+
+- **Missing context** - the model did not have the information it needed
+- **Wrong tool choice** - the model picked the wrong tool for the job
+- **Tool execution failure** - the tool itself broke or returned garbage
+- **Plan drift** - the model lost track of the goal mid-task
+- **Hallucinated state** - the model acted on information that does not exist
+
+This taxonomy matters. "The agent failed" tells you nothing. "The agent hallucinated state on 40% of long-horizon tasks" tells you exactly where to invest.
+
+**Deliverable:** A baseline report with per-task traces.
+
+## Step 3: Minimize the Tool Surface
+
+Start with primitive tools: shell, file read/write/edit, grep/search. Remove redundant and overlapping tools. Group tools by capability family. Keep tool names and schemas consistent to reduce selection errors.
+
+Manus learned this the hard way. As their agent accumulated more tools, it actually got dumber - wrong tool selection increased and paths became less efficient. Their solution was to keep the full tool list visible at all times but use logit masking to constrain which tools are available at each step, rather than dynamically adding or removing tools mid-iteration. Changing tool definitions mid-run invalidates the KV-cache and destabilizes the model's behavior.
+
+Cursor took a complementary approach with dynamic context discovery. Instead of loading all MCP tool descriptions upfront, they sync tool descriptions to files and let the agent look them up on demand. In an A/B test, this reduced total agent tokens by 46.9% on runs that called an MCP tool.
+
+**Guardrails:**
+
+- Hard cap active tools per step
+- Prefer composable primitives over specialized one-off tools
+- Use consistent naming prefixes (e.g., `browser_*`, `shell_*`) to enable constraint by tool family
+
+## Step 4: Add Progressive Disclosure for Context
+
+Do not preload full repos or full corpora. This is perhaps the most universally agreed-upon lesson across every team publishing on this topic.
+
+Load only what is needed at each step:
+
+- Policy and system constraints
+- Current task goal
+- Minimal working set (top-k files or chunks)
+
+Expand context only when the model asks or when retrieval confidence requires it. Keep retrieval references reversible (`path`, `url`, `doc_id`) so detail can be reloaded on demand.
+
+The pattern that works:
+
+1. **Bootstrap** with the task definition and a minimal map of the environment
+2. **Let the model discover** missing context via tools
+3. **Promote** newly relevant artifacts into the active window
+4. **Compress** stale artifacts to summaries with references
+
+Cursor's semantic search work showed that combining grep with trained embedding-based search yields about 12.5% higher accuracy in answering codebase questions versus grep alone - and code retention increases by 2.6% on large codebases with 1,000+ files.
+
+Anthropic's long-running agent harness takes a different angle on the same problem. Their initializer agent sets up the environment with a progress file and feature list, then a coding agent works incrementally - one feature per session - updating progress and committing clean code. The `claude-progress.txt` file becomes the bridge between context windows.
+
+## Step 5: Add State Anchors to Prevent Drift
+
+Add a planning/progress anchor - a `todo` tool, a structured progress object, or a progress file. Require explicit next-step updates after tool failures and major branching. Store anchor state outside ephemeral model context when possible.
+
+Manus uses a `todo.md` file that the agent constantly rewrites, biasing the model's attention toward its global plan. This directly addresses the "lost in the middle" problem identified by Liu et al. - models perform best when relevant information appears at the beginning or end of the context, and degrade when critical information is buried in the middle.
+
+**Minimum anchor schema:**
+
+- `goal` - what are we trying to accomplish
+- `completed_steps` - what is done
+- `current_step` - what we are working on now
+- `blocked_on` - what is preventing progress
+- `next_step` - what comes after this
+
+## Step 6: Make Error Handling Model-Visible and Actionable
+
+Return raw tool errors to the model with structured fields:
+
+- `error_type` - what category of error occurred
+- `command_or_tool` - what was being attempted
+- `stderr_or_reason` - the actual error output
+- `retryable` - whether the model should try again
+
+Avoid silently swallowing errors. Add bounded retries with backoff only for retryable classes.
+
+Manus found that leaving failed actions and observations in the context actually helps - the model sees its own mistakes and updates its internal beliefs, reducing the chance of repeating the same error. Cleaning up failures removes signal.
+
+## Step 7: Enforce Syntactic and Semantic Gates
+
+Add lightweight pre-commit style gates for generated edits:
+
+- Syntax and lint checks
+- Schema validation
+- Compile or test smoke checks
+
+Reject invalid edits early and loop back with explicit error context.
+
+LangChain's `PreCompletionChecklistMiddleware` is a good example - it intercepts the agent before it exits and forces a verification pass against the task spec. They also use a `LoopDetectionMiddleware` that tracks per-file edit counts and injects nudges like "consider reconsidering your approach" after N edits to the same file. These are design heuristics for today's models - they may become unnecessary as models improve, but they demonstrably help agents execute correctly right now.
+
+## Step 8: Instrument the Harness
+
+Track at each step:
+
+- Prompt token count and completion token count
+- Tool chosen and latency
+- Retrieval hits/misses
+- Context growth over turns
+- KV-cache hit ratio
+- Final task outcome
+
+Manus argues that KV-cache hit rate is the single most important metric for a production agent. It directly affects both latency and cost. With Claude Sonnet, cached input tokens cost 10x less than uncached ones. Keep your prompt prefix stable, make interactions append-only, and ensure deterministic serialization - even JSON key ordering matters.
+
+**Required artifact:** A trace log per run with a stable run ID.
+
+## Step 9: Run Ablations One Variable at a Time
+
+For every proposed change, isolate a single variable:
+
+- Tool count reduction only
+- Lazy tool description loading only
+- Retrieval ranking change only
+- Compression strategy change only
+
+**Decision rule:** Promote only if success improves and token/latency does not regress materially - or regressions are clearly justified by other gains.
+
+This discipline is what separates harness engineering from prompt fiddling. LangChain's 13.7-point improvement on Terminal Bench 2.0 came from iterative, traced changes to one variable at a time.
+
+## Step 10: Set Production Acceptance Gates
+
+Before rollout, require:
+
+- Success rate >= baseline + target lift
+- p95 latency within SLO
+- Token budget within cost ceiling
+- No increase in critical failure classes
+
+Roll out via canary by task class or tenant slice. Automated rollback if gates fail.
+
+## Progressive Disclosure Checklist
+
+Use this as a sanity check before shipping any harness change:
+
+- Is static preload under 20-40% of effective context budget?
+- Can every large artifact be referenced and reloaded later?
+- Are old observations compressed, not duplicated?
+- Is high-salience information appended near the latest turns?
+- Are unused tool descriptions excluded from active context?
+
+## Practical Defaults
+
+These are the patterns that keep showing up across every team publishing on this topic:
+
+- **One primary execution loop.** Do not over-architect the orchestration.
+- **Intentionally small tool catalog.** More tools = more confusion, not more capability.
+- **Filesystem as external memory.** Write things to files. Read them back when needed.
+- **Reversible compression over irreversible truncation.** Always keep references.
+- **Optimize the harness first, model choice second.** The harness is where the leverage is.
+
+## Sources
+
+1. Anthropic. "[Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)." Anthropic Engineering, 2025.
+2. Cursor. "[Dynamic Context Discovery](https://cursor.com/blog/dynamic-context-discovery)." Cursor Blog, January 2026.
+3. Cursor. "[Improving Agent with Semantic Search](https://cursor.com/blog/semsearch)." Cursor Blog, November 2025.
+4. LangChain. "[Improving Deep Agents with Harness Engineering](https://blog.langchain.com/improving-deep-agents-with-harness-engineering/)." LangChain Blog, February 2026.
+5. Ji, Yichao "Peak." "[Context Engineering for AI Agents: Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus)." Manus Blog, July 2025.
+6. Yang, John, Carlos E. Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik Narasimhan, and Ofir Press. "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." *Advances in Neural Information Processing Systems* 37 (NeurIPS 2024).
+7. Liu, Nelson F., Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, and Percy Liang. "Lost in the Middle: How Language Models Use Long Contexts." *Transactions of the Association for Computational Linguistics* 12 (2024): 157-173.
