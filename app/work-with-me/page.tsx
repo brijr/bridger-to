@@ -48,18 +48,6 @@ const ContactLinks = () => {
         />
         Email Me
       </Link>
-      <Link
-        href="https://t.me/wipis"
-        target="_blank"
-        className="flex items-center gap-1.5 hover:text-foreground/75 group bg-muted px-4 py-2 rounded"
-      >
-        <ArrowUpRight
-          strokeWidth={1.5}
-          size={20}
-          className="group-hover:rotate-45 transition-transform duration-400"
-        />
-        Telegram
-      </Link>
     </div>
   );
 };
