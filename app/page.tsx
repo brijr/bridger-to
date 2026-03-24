@@ -51,7 +51,8 @@ const Info = () => {
       <h3>
         My focus is on closing the gap between what AI can do and what people
         need it to do. Designing systems that feel intuitive while leveraging
-        sophisticated technology under the hood.
+        sophisticated technology under the hood. See more of what I am doing at{" "}
+        <a href="https://gestalt.xyz">Gestalt Lab</a>.
       </h3>
     </div>
   );
