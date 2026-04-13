@@ -54,9 +54,9 @@ const Info = () => {
         sophisticated technology under the hood. See more of what I am doing at{" "}
         <a
           className="text-primary underline underline-offset-2"
-          href="https://gestalt.xyz"
+          href="https://wip.is"
         >
-          Gestalt Lab
+          wip
         </a>
         .
       </h3>
