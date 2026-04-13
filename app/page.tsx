@@ -56,7 +56,7 @@ const Info = () => {
           className="text-primary underline underline-offset-2"
           href="https://wip.is"
         >
-          WIP.is
+          wip
         </a>
         .
       </h3>
