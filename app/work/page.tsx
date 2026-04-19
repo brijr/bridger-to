@@ -61,6 +61,7 @@ const previousClients: WorkItem[] = [
   { href: "https://julius.ai", label: "Julius" },
   { href: "https://laravel.com", label: "Laravel" },
   { href: "https://swyftfin.com", label: "Swyftfin" },
+  { href: "https://advocatemedia.com", label: "Advocate Media" },
   { href: "https://ampry.com", label: "Ampry" },
   { href: "https://route.com", label: "Route" },
   { href: "https://tackle.io", label: "Tackle.io" },
@@ -68,6 +69,7 @@ const previousClients: WorkItem[] = [
 
 const software: WorkItem[] = [
   { href: "https://filelogic.ai", label: "File Logic" },
+  { href: "https://matter-os.com", label: "MatterOS" },
   { href: "https://outr.ai", label: "Outr" },
   { href: "https://offerarc.com", label: "Offer Arc" },
   { href: "https://flysuper.com", label: "Fly Super", wip: true },
