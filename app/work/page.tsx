@@ -22,7 +22,7 @@ const previousClients: WorkItem[] = [
   { href: "https://matter-os.com", label: "MatterOS" },
   { href: "https://filelogic.ai", label: "File Logic" },
   { href: "https://tackle.io", label: "Tackle.io" },
-  { href: "https://flysuper.com", label: "Fly Super" },
+  { href: "https://outr.ai", label: "Outr" },
 ];
 
 const openSourceProjects: WorkItem[] = [
@@ -69,8 +69,6 @@ const openSourceProjects: WorkItem[] = [
 ];
 
 const software: WorkItem[] = [
-  { href: "https://outr.ai", label: "Outr" },
-  { href: "https://offerarc.com", label: "Offer Arc" },
   {
     href: "https://router.so",
     label: "Router.so",
