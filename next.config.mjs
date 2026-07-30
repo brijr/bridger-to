@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Pin the workspace root so Turbopack doesn't infer it from the
+  // multiple lockfiles sitting in this directory.
+  turbopack: {
+    root: import.meta.dirname,
+  },
   async redirects() {
     return [
       {

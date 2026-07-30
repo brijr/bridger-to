@@ -51,6 +51,7 @@ export const Layout = ({ children, className, style }: DSProps) => (
   <html
     lang="en"
     suppressHydrationWarning
+    data-scroll-behavior="smooth"
     className={cn("scroll-smooth antialiased focus:scroll-auto", className)}
     style={style}
   >

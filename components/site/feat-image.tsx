@@ -13,6 +13,7 @@ export const FeatImage = ({
         src={src}
         alt={alt}
         fill
+        sizes="(min-width: 672px) 624px, 100vw"
         className="object-cover"
         placeholder="blur"
       />
