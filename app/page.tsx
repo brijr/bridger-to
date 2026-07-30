@@ -44,22 +44,11 @@ const Info = () => {
   return (
     <div className="text-pretty space-y-3">
       <h2>
-        Software engineer and technical entrepreneur specializing in design,
-        applied AI, and human-computer interaction. I bring a marketing and
-        advertising background to building software that solves real problems.
+        Designer and software engineer focused on how design shapes product, AI,
+        marketing, and human-computer interaction. I bring a background in
+        marketing and branding to building thoughtful software that solves real
+        problems and helps products grow.
       </h2>
-      <h3>
-        My focus is on closing the gap between what AI can do and what people
-        need it to do. Designing systems that feel intuitive while leveraging
-        sophisticated technology under the hood. See more of what I am doing at{" "}
-        <a
-          className="text-primary underline underline-offset-2"
-          href="https://wip.is"
-        >
-          Work In Progress
-        </a>
-        .
-      </h3>
     </div>
   );
 };
