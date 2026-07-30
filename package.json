@@ -15,7 +15,7 @@
     "personal",
     "website"
   ],
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.34.5",
   "imports": {
     "#site/content": "./.velite/index.js"
   },
