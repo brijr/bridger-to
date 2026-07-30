@@ -12,6 +12,19 @@ type WorkItem = {
   wip?: boolean;
 };
 
+const previousClients: WorkItem[] = [
+  { href: "https://vercel.com", label: "Vercel" },
+  { href: "https://browserbase.com", label: "Browserbase" },
+  { href: "https://supermetal.io", label: "Supermetal" },
+  { href: "https://julius.ai", label: "Julius" },
+  { href: "https://laravel.com", label: "Laravel" },
+  { href: "https://route.com", label: "Route" },
+  { href: "https://matter-os.com", label: "MatterOS" },
+  { href: "https://filelogic.ai", label: "File Logic" },
+  { href: "https://tackle.io", label: "Tackle.io" },
+  { href: "https://flysuper.com", label: "Fly Super" },
+];
+
 const openSourceProjects: WorkItem[] = [
   {
     href: "https://github.com/9d8dev/next-wp",
@@ -55,22 +68,9 @@ const openSourceProjects: WorkItem[] = [
   },
 ];
 
-const previousClients: WorkItem[] = [
-  { href: "https://vercel.com", label: "Vercel" },
-  { href: "https://browserbase.com", label: "Browserbase" },
-  { href: "https://julius.ai", label: "Julius" },
-  { href: "https://laravel.com", label: "Laravel" },
-  { href: "https://swyftfin.com", label: "Swyftfin" },
-  { href: "https://ampry.com", label: "Ampry" },
-  { href: "https://route.com", label: "Route" },
-  { href: "https://tackle.io", label: "Tackle.io" },
-];
-
 const software: WorkItem[] = [
-  { href: "https://filelogic.ai", label: "File Logic" },
   { href: "https://outr.ai", label: "Outr" },
   { href: "https://offerarc.com", label: "Offer Arc" },
-  { href: "https://flysuper.com", label: "Fly Super", wip: true },
   {
     href: "https://router.so",
     label: "Router.so",
