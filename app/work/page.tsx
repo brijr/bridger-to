@@ -82,7 +82,7 @@ const software: WorkItem[] = [
   {
     href: "https://wrk.so",
     label: "Wrk.so",
-    github: "https://github.com/9d8dev/wrk-so",
+    github: "https://github.com/9d8dev/wrk",
   },
 ];
 
