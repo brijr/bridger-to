@@ -71,9 +71,6 @@ const openSourceProjects: WorkItem[] = [
     label: "Resume Builder",
     github: "https://github.com/brijr/resume",
   },
-];
-
-const software: WorkItem[] = [
   {
     href: "https://router.so",
     label: "Router.so",
@@ -135,7 +132,6 @@ export default function WorkPage() {
           <WorkSection title="Clients" items={previousClients} />
           <WorkSection title="Open Source" items={openSourceProjects} />
           <WorkSection title="Content" items={content} />
-          <WorkSection title="Software" items={software} />
           <WorkSection title="Websites" items={websites} />
           <WorkSection title="Ventures" items={ventures} />
         </AnimatedContent>
