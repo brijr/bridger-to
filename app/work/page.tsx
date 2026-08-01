@@ -32,6 +32,11 @@ const openSourceProjects: WorkItem[] = [
     github: "https://github.com/brijr/meta-mcp",
   },
   {
+    href: "https://github.com/brijr/skills",
+    label: "Skills",
+    github: "https://github.com/brijr/skills",
+  },
+  {
     href: "https://github.com/9d8dev/next-wp",
     label: "Next WP",
     github: "https://github.com/9d8dev/next-wp",
