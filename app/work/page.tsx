@@ -27,6 +27,11 @@ const previousClients: WorkItem[] = [
 
 const openSourceProjects: WorkItem[] = [
   {
+    href: "https://meta-mcp.com",
+    label: "Meta MCP",
+    github: "https://github.com/brijr/meta-mcp",
+  },
+  {
     href: "https://github.com/9d8dev/next-wp",
     label: "Next WP",
     github: "https://github.com/9d8dev/next-wp",
