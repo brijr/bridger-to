@@ -27,6 +27,16 @@ const previousClients: WorkItem[] = [
 
 const openSourceProjects: WorkItem[] = [
   {
+    href: "https://design-shots.com",
+    label: "Design Shots",
+    github: "https://github.com/brijr/design-tools/tree/main/apps/shots",
+  },
+  {
+    href: "https://designbooks.org",
+    label: "Design Books",
+    github: "https://github.com/brijr/design-sites/tree/main/apps/design-books",
+  },
+  {
     href: "https://meta-mcp.com",
     label: "Meta MCP",
     github: "https://github.com/brijr/meta-mcp",
@@ -89,11 +99,6 @@ const openSourceProjects: WorkItem[] = [
 ];
 
 const websites: WorkItem[] = [
-  {
-    href: "https://designbooks.org",
-    label: "Design Books",
-    github: "https://github.com/brijr/designbooks",
-  },
   {
     href: "https://studiomojave.com/",
     label: "Studio Mojave",
