@@ -98,24 +98,6 @@ const openSourceProjects: WorkItem[] = [
   },
 ];
 
-const websites: WorkItem[] = [
-  {
-    href: "https://studiomojave.com/",
-    label: "Studio Mojave",
-    github: "https://github.com/brijr/mojave",
-  },
-  {
-    href: "https://www.zion.surf/",
-    label: "Zion",
-    github: "https://github.com/brijr/zion",
-  },
-  {
-    href: "https://alpinecodex.com",
-    label: "Alpine Codex",
-    github: "https://github.com/alpinecodex/home",
-  },
-];
-
 const ventures: WorkItem[] = [
   {
     href: "https://wip.is",
@@ -142,7 +124,6 @@ export default function WorkPage() {
           <WorkSection title="Work" items={previousClients} />
           <WorkSection title="Open Source" items={openSourceProjects} />
           <WorkSection title="Content" items={content} />
-          <WorkSection title="Websites" items={websites} />
           <WorkSection title="Ventures" items={ventures} />
         </AnimatedContent>
       </Container>
