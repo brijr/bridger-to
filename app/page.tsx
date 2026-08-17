@@ -63,10 +63,15 @@ const Links = () => {
             href={link.href}
             className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
           >
+            <ArrowUpRight
+              strokeWidth={1.5}
+              size={20}
+              className="sm:hidden group-hover:rotate-45 transition-transform duration-400"
+            />
             <ArrowDownRight
               strokeWidth={1.5}
               size={20}
-              className="group-hover:-rotate-45 transition-transform duration-400"
+              className="hidden sm:block group-hover:-rotate-45 transition-transform duration-400"
             />
             {link.label}
           </Link>
