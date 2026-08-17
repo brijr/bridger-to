@@ -51,7 +51,7 @@ const openSourceProjects: WorkItem[] = [
     github: "https://github.com/brijr/skills",
   },
   {
-    href: "https://github.com/9d8dev/next-wp",
+    href: "https://next-wp.com",
     label: "Next WP",
     github: "https://github.com/9d8dev/next-wp",
   },
