@@ -33,7 +33,6 @@ export default function HomePage() {
             alt="A photo I took at the Salt Flats in Utah"
           />
           <EmailForm label="Subscribe to my newsletter" />
-          <p className="text-muted-foreground">"I love to make websites"</p>
         </AnimatedContent>
       </Container>
     </Section>
