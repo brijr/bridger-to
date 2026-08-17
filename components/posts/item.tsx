@@ -26,7 +26,7 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
     <Link
       href={`/${slug}`}
       className={cn(
-        "flex min-w-0 items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded",
+        "flex min-w-0 items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded-md",
         className,
       )}
     >
@@ -41,7 +41,10 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
           size={20}
           className="hidden shrink-0 sm:block group-hover:-rotate-45 transition-transform duration-400"
         />
-        <span className="min-w-0 truncate sm:overflow-visible sm:whitespace-normal">
+        <span
+          className="min-w-0 truncate sm:overflow-visible sm:whitespace-normal"
+          title={title}
+        >
           {title}
         </span>
       </h3>

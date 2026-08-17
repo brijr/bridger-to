@@ -69,16 +69,16 @@ export const Main = ({ children, className, id, style }: DSProps) => (
 const proseBaseClasses = "antialiased text-base leading-7";
 
 const proseHeadingClasses = [
-  "[&_h1]:font-medium [&_h1]:tracking-tight [&_h1]:text-balance",
-  "[&_h2]:font-medium [&_h2]:tracking-tight [&_h2]:text-balance",
-  "[&_h3]:font-medium [&_h3]:tracking-tight [&_h3]:text-balance",
-  "[&_h4]:tracking-tight [&_h4]:text-balance",
-  "[&_h5]:tracking-tight [&_h5]:text-balance",
-  "sm:[&_h6]:text-lg [&_h6]:tracking-tight [&_h6]:text-balance",
+  "[&_h1]:font-medium [&_h1]:tracking-tight [&_h1]:text-balance [&_h1]:scroll-mt-24",
+  "[&_h2]:font-medium [&_h2]:tracking-tight [&_h2]:text-balance [&_h2]:scroll-mt-24",
+  "[&_h3]:font-medium [&_h3]:tracking-tight [&_h3]:text-balance [&_h3]:scroll-mt-24",
+  "[&_h4]:tracking-tight [&_h4]:text-balance [&_h4]:scroll-mt-24",
+  "[&_h5]:tracking-tight [&_h5]:text-balance [&_h5]:scroll-mt-24",
+  "sm:[&_h6]:text-lg [&_h6]:tracking-tight [&_h6]:text-balance [&_h6]:scroll-mt-24",
 ];
 
 const proseTextClasses = [
-  "[&_p]:text-pretty [&_p]:text-base [&_p:not(:last-child)]:mb-4",
+  "[&_p]:text-pretty [&_p]:text-base [&_p]:break-words [&_p:not(:last-child)]:mb-4",
   "[&_strong]:font-semibold",
   "[&_muted]:text-muted-foreground",
   "[&_em]:italic",

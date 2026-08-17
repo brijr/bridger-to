@@ -156,7 +156,7 @@ function WorkSection({ title, items }: { title: string; items: WorkItem[] }) {
               <Link
                 href={item.href}
                 target="_blank"
-                className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded flex-1"
+                className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded-md flex-1"
               >
                 <ArrowUpRight
                   strokeWidth={1.5}
@@ -174,7 +174,7 @@ function WorkSection({ title, items }: { title: string; items: WorkItem[] }) {
                 <Link
                   href={item.github}
                   target="_blank"
-                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2.5 rounded aspect-square transition-colors duration-400"
+                  className="flex items-center justify-center text-muted-foreground hover:text-primary group bg-background p-2.5 rounded-md aspect-square"
                   aria-label={`${item.label} GitHub`}
                 >
                   <Github strokeWidth={1.75} size={16} />

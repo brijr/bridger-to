@@ -27,7 +27,7 @@ const overlayClasses = cn(
 const contentClasses = cn(
   "fixed left-1/2 top-1/2 z-50 w-full max-w-7xl",
   "-translate-x-1/2 -translate-y-1/2 p-4",
-  "transition-all duration-300 ease-out",
+  "transition-[opacity,transform] duration-300 ease-out",
   "starting:opacity-0 starting:scale-[0.96]",
   "data-[state=open]:opacity-100 data-[state=open]:scale-100",
   "data-[state=closed]:opacity-0 data-[state=closed]:scale-[0.96]"
@@ -36,7 +36,7 @@ const contentClasses = cn(
 const closeButtonClasses = cn(
   "absolute -right-2 -top-2 z-10",
   "rounded-full bg-background p-2 shadow-lg",
-  "transition-all duration-200 ease-out",
+  "transition-[opacity,transform,background-color] duration-200 ease-out",
   "hover:bg-accent",
   "starting:opacity-0 starting:scale-90",
   "data-[state=open]:opacity-100 data-[state=open]:scale-100",
@@ -70,8 +70,8 @@ export function Media({ src, alt = "", className, fill = false }: MediaProps) {
           type="button"
           className={cn(
             "relative cursor-zoom-in overflow-hidden rounded-lg",
-            "transition-opacity hover:opacity-90",
-            "border",
+            "transition-opacity duration-200 ease-out hover:opacity-90",
+            "outline outline-1 -outline-offset-1 outline-black/8 dark:outline-white/8",
             "block w-full",
             (fill || (!isStaticImport && !imageWidth && !imageHeight)) &&
               "aspect-4/3 my-4",

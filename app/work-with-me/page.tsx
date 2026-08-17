@@ -39,7 +39,7 @@ const ContactLinks = () => {
     <div className="flex flex-wrap gap-3">
       <Link
         href="mailto:bt@wip.is"
-        className="flex items-center gap-1.5 hover:text-white/75 group bg-primary text-white px-4 py-2 rounded"
+        className="flex items-center gap-1.5 hover:text-white/75 group bg-primary text-white px-4 py-2 rounded-md transition-[color,scale] duration-200 ease-out active:scale-[0.97]"
       >
         <ArrowUpRight
           strokeWidth={1.5}
