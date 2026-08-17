@@ -22,5 +22,5 @@ export const LiveClock = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return <span>{dateTime}</span>;
+  return <span className="tabular-nums">{dateTime}</span>;
 };

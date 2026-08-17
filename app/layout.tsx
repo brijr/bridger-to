@@ -66,9 +66,15 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <LenisProvider>
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-background focus:px-3 focus:py-2 focus:rounded"
+            >
+              Skip to content
+            </a>
             <Logo className="block fixed top-6 left-6" />
             <EmailCopyButton className="fixed top-6 right-6" />
-            <Main className="flex-1">
+            <Main id="main" className="flex-1 scroll-mt-24">
               <Section>
                 <Container className="space-y-8">
                   <HeroWrapper />

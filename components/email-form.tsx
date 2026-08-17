@@ -116,8 +116,10 @@ export function EmailForm({ label }: { label?: string }) {
                           <FormControl>
                             <input
                               type="email"
+                              inputMode="email"
+                              autoComplete="email"
                               placeholder="your@email.com"
-                              className="w-full bg-transparent border-b border-input pt-3 pb-1 focus:outline-none focus:border-foreground transition-colors duration-400 placeholder:text-muted-foreground/50"
+                              className="w-full bg-transparent border-b border-input pt-3 pb-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:border-foreground transition-[border-color] duration-200 placeholder:text-muted-foreground/50"
                               {...field}
                             />
                           </FormControl>
@@ -131,7 +133,7 @@ export function EmailForm({ label }: { label?: string }) {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="group flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors duration-400 disabled:opacity-50 hover:cursor-pointer"
+                      className="group flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-[color,scale] duration-200 ease-out active:scale-[0.97] disabled:opacity-50 hover:cursor-pointer"
                     >
                       <ArrowRight
                         strokeWidth={1.5}
@@ -154,7 +156,7 @@ export function EmailForm({ label }: { label?: string }) {
                   delay: transition.duration / 2,
                 }}
               >
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground" role="status">
                   Thank you for subscribing.
                 </p>
               </motion.div>

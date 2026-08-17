@@ -2,6 +2,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant hover {
+    @media (hover: hover) {
+        &:hover {
+            @slot;
+        }
+    }
+}
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
@@ -114,71 +122,64 @@
         @apply border-border outline-ring/50;
     }
 
-    /* Apply transitions to all elements for smooth theme changes */
-    * {
-        transition:
-            background-color 400ms ease,
-            border-color 400ms ease;
+    body {
+        text-underline-position: from-font;
+        text-decoration-skip-ink: auto;
     }
 
-    /* Apply transitions to pseudo-elements (bullets, markers, etc.) */
-    *::before,
-    *::after,
-    *::marker {
-        transition:
-            background-color 400ms ease,
-            border-color 400ms ease;
+    a:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
     }
 
-    /* Blur entrance animation matching subtitle */
-    @keyframes blur-entrance {
-        from {
+    .theme-switching,
+    .theme-switching *,
+    .theme-switching *::before,
+    .theme-switching *::after {
+        transition: none !important;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        @keyframes blur-entrance {
+            from {
+                filter: blur(3px);
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                filter: blur(0px);
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blur-entrance {
             filter: blur(3px);
             opacity: 0;
             transform: translateY(-8px);
+            animation: blur-entrance 1.2s ease-in-out forwards;
         }
 
-        to {
-            filter: blur(0px);
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes blur-entrance-content {
+            from {
+                filter: blur(3px);
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                filter: blur(0px);
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-    }
 
-    .blur-entrance {
-        filter: blur(3px);
-        opacity: 0;
-        transform: translateY(-8px);
-        animation: blur-entrance 1.2s ease-in-out forwards;
-    }
-
-    /* Blur entrance animation for content items (smaller y offset) */
-    @keyframes blur-entrance-content {
-        from {
+        .blur-entrance-content {
             filter: blur(3px);
             opacity: 0;
             transform: translateY(-8px);
-        }
-
-        to {
-            filter: blur(0px);
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .blur-entrance-content {
-        filter: blur(3px);
-        opacity: 0;
-        transform: translateY(-8px);
-        animation: blur-entrance-content 1.2s ease-in-out forwards;
-    }
-
-    /* Respect reduced motion preference */
-    @media (prefers-reduced-motion: reduce) {
-        * {
-            transition: none !important;
-            animation: none !important;
+            animation: blur-entrance-content 1.2s ease-in-out forwards;
         }
     }
 }

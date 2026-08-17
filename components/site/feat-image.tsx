@@ -17,6 +17,10 @@ export const FeatImage = ({
         className="object-cover"
         placeholder="blur"
       />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded ring-1 ring-inset ring-black/8 dark:ring-white/8"
+      />
     </div>
   );
 };

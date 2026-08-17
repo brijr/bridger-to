@@ -41,7 +41,10 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
           size={20}
           className="hidden shrink-0 sm:block group-hover:-rotate-45 transition-transform duration-400"
         />
-        <span className="min-w-0 truncate sm:overflow-visible sm:whitespace-normal">
+        <span
+          className="min-w-0 truncate sm:overflow-visible sm:whitespace-normal"
+          title={title}
+        >
           {title}
         </span>
       </h3>
