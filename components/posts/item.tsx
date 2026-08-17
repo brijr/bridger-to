@@ -26,22 +26,24 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
     <Link
       href={`/${slug}`}
       className={cn(
-        "flex items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded",
+        "flex min-w-0 items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded",
         className,
       )}
     >
-      <h3 className="flex items-center gap-1.5">
+      <h3 className="flex min-w-0 flex-1 items-center gap-1.5">
         <ArrowUpRight
           strokeWidth={1.5}
           size={20}
-          className="sm:hidden group-hover:rotate-45 transition-transform duration-400"
+          className="shrink-0 sm:hidden group-hover:rotate-45 transition-transform duration-400"
         />
         <ArrowDownRight
           strokeWidth={1.5}
           size={20}
-          className="hidden sm:block group-hover:-rotate-45 transition-transform duration-400"
+          className="hidden shrink-0 sm:block group-hover:-rotate-45 transition-transform duration-400"
         />
-        {title}
+        <span className="min-w-0 truncate sm:overflow-visible sm:whitespace-normal">
+          {title}
+        </span>
       </h3>
 
       <PostDate date={date} />
