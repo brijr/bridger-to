@@ -52,7 +52,7 @@ const Links = () => {
           key={link.href}
           href={link.href}
           target="_blank"
-          className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded-md"
+          className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
         >
           <ArrowUpRight
             strokeWidth={1.5}

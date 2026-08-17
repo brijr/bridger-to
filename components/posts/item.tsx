@@ -26,7 +26,7 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
     <Link
       href={`/${slug}`}
       className={cn(
-        "flex min-w-0 items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded-md",
+        "flex min-w-0 items-center justify-between gap-2 hover:text-primary group bg-background p-2 rounded",
         className,
       )}
     >
