@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowDownRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { formatDate } from "@/lib/mdx";
 import { cn } from "@/lib/utils";
 
@@ -31,10 +31,15 @@ export const Item = ({ slug, title, date, className }: PostItemProps) => {
       )}
     >
       <h3 className="flex items-center gap-1.5">
+        <ArrowUpRight
+          strokeWidth={1.5}
+          size={20}
+          className="sm:hidden group-hover:rotate-45 transition-transform duration-400"
+        />
         <ArrowDownRight
           strokeWidth={1.5}
           size={20}
-          className="group-hover:-rotate-45 transition-transform duration-400 line-clamp-1"
+          className="hidden sm:block group-hover:-rotate-45 transition-transform duration-400"
         />
         {title}
       </h3>
