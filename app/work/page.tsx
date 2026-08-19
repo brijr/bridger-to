@@ -31,6 +31,16 @@ const previousClients: WorkItem[] = [
 
 const openSourceProjects: WorkItem[] = [
   {
+    href: "https://cite.brijr.dev",
+    label: "Cite",
+    github: "https://github.com/brijr/cite",
+  },
+  {
+    href: "https://x.com/bridgertower/status/2090060723779211660",
+    label: "Iris",
+    github: "https://github.com/brijr/iris",
+  },
+  {
     href: "https://design-shots.com",
     label: "Design Shots",
     github: "https://github.com/brijr/design-tools/tree/main/apps/shots",
