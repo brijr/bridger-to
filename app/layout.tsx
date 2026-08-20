@@ -12,6 +12,7 @@ import { Logo } from "@/components/site/logo";
 import { LiveClock } from "@/components/site/live-clock";
 import { HeroWrapper } from "@/components/site/hero-wrapper";
 import { WorkWithMeCta } from "@/components/site/work-with-me-cta";
+import { WebMcp } from "@/components/site/webmcp";
 
 import type { Metadata } from "next";
 
@@ -58,6 +59,17 @@ export default function RootLayout({
 }) {
   return (
     <Layout>
+      <head>
+        <link rel="api-catalog" href="/.well-known/api-catalog" />
+        <link
+          rel="service-desc"
+          href="/openapi.json"
+          type="application/json"
+        />
+        <link rel="service-doc" href="/docs/api" type="text/markdown" />
+        <link rel="describedby" href="/llms.txt" type="text/plain" />
+        <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col leading-tight overflow-x-hidden",
@@ -65,6 +77,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <WebMcp />
           <LenisProvider>
             <a
               href="#main"
