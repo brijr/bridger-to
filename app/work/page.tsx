@@ -26,7 +26,9 @@ const previousClients: WorkItem[] = [
   { href: "https://payve.vercel.app/", label: "Payve" },
   { href: "https://www.confettirecruiting.com/", label: "Confetti" },
   { href: "https://advocatemedia.com/", label: "Advocate Media" },
-  { href: "https://veteran.org/", label: "Veteran.org" },
+  { href: "https://shapefs.com", label: "Shape FS" },
+  { href: "https://strivepharmacy.com", label: "Strive" },
+  { href: "https://rxvortex.com", label: "RxVortex" },
 ];
 
 const openSourceProjects: WorkItem[] = [
