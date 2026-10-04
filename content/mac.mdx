@@ -1,15 +1,15 @@
 ---
 title: "Mac for Web Development (2026)"
 description: "A very opinionated guide on setting up a mac for web development, design, and AI-assisted work in 2026."
-date: "2026-09-01"
+date: "2026-10-04"
 published: true
 ---
 
-A curated, opinionated checklist for spinning up a fresh macOS machine in 2026. This is the actual setup I run on my daily driver, not a theoretical list.
+A curated, opinionated checklist for spinning up a fresh macOS machine in 2026. This is the actual setup I run on my current Mac, built from the commands I ran on it, not a theoretical list.
 
-**Goal**: Be fully productive (coding, design, comms) in ~30 minutes with repeatable commands and sensible defaults.
+**Goal**: Be productive (coding, agents, comms) in ~30 minutes with repeatable commands and sensible defaults.
 
-**What changed since last year**: the terminal is now the primary interface for AI, not the editor. Half of this guide is about coding agents that didn't exist eighteen months ago. Docker Desktop is gone, replaced by OrbStack. Shottr gave way to CleanShot X. And Node moved to 24 LTS.
+**What changed since last year**: the terminal is now the primary interface for AI, not the editor. Half of this guide is about coding agents that didn't exist eighteen months ago. I also started from a clean machine this time, so the list is shorter. If I haven't needed an app yet, it isn't here.
 
 ---
 
@@ -17,7 +17,7 @@ A curated, opinionated checklist for spinning up a fresh macOS machine in 2026. 
 
 ### 1. Update macOS
 
-Ensures the latest security patches, Xcode SDKs, and firmware. macOS 26 (Tahoe) is the current release.
+Ensures the latest security patches, Xcode SDKs, and firmware.
 
 1. Open **System Settings → General → Software Update**.
 2. Install any pending updates, then reboot before continuing.
@@ -33,122 +33,78 @@ eval "$(/opt/homebrew/bin/brew shellenv)"   # add to ~/.zprofile
 
 ### 3. System Apps
 
-Core utilities that shape the desktop experience.
-
 ```bash
-brew install --cask ghostty raycast cleanshot rectangle maccy monitorcontrol
+brew install --cask ghostty raycast google-chrome
 ```
 
-- **Ghostty** — minimal GPU-accelerated terminal, the fastest text rendering on macOS
+- **Ghostty** — minimal GPU-accelerated terminal with fast text rendering
 - **Raycast** — Spotlight replacement with extensions, clipboard history, and window management
-- **CleanShot X** — screenshot and screen recording with instant markup, scrolling capture, and pinned overlays. Replaced Shottr for me because the recording and annotation tools are better
-- **Rectangle** — window manager for quick ⌥⌘→ tiling, multi-display aware
-- **Maccy** — clipboard manager with plain-text history synced across apps
-- **MonitorControl** — brightness and volume for external displays from the keyboard
+- **Chrome** — default dev target, DevTools, Lighthouse. Safari is already installed, and you must test in it
 
-Ghostty config lives at `~/.config/ghostty/config` (or `~/Library/Application Support/com.mitchellh.ghostty/config`). Note that it is a plain key/value file, not TOML:
+Ghostty works out of the box. The only config I keep is to load shell integration from `~/.zshrc` myself, because auto-injection wasn't reporting the working directory. Config lives at `~/.config/ghostty/config`:
 
 ```txt
-font-family=Menlo
-theme=Flexoki Dark
-font-size=14
-window-padding-balance=true
-window-padding-x=8
-window-padding-y=8
-
-keybind = cmd+left=goto_split:left
-keybind = cmd+down=goto_split:down
-keybind = cmd+up=goto_split:up
-keybind = cmd+right=goto_split:right
-keybind = cmd+k=unbind
-keybind = global:cmd+grave_accent=toggle_quick_terminal
-
-quick-terminal-position = right
+shell-integration = none
+shell-integration-features = cursor,title,path
 ```
 
-The `cmd+grave_accent` quick terminal is the single best keybinding here — a global drop-down terminal from anywhere in the OS. `cmd+k` is unbound so it passes through to whatever agent is running in the terminal.
+And the matching snippet at the bottom of `~/.zshrc`:
 
-### 4. Browsers
-
-You need more than one for testing, and each has a job.
-
-```bash
-brew install --cask google-chrome chromium firefox@developer-edition thebrowsercompany-dia
+```txt
+if [[ -n $GHOSTTY_RESOURCES_DIR && -f $GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration ]]; then
+  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+fi
 ```
-
-- **Chrome** — default dev target, DevTools, Lighthouse
-- **Chromium** — clean profile for testing without extensions or a signed-in account
-- **Firefox Developer Edition** — catches layout bugs Chrome forgives
-- **Dia** — AI-native browser, worth keeping around for research
-- **Safari** — already installed, and you must test in it
 
 ---
 
 ### Development Environment
 
-### 5. Developer Tooling
+### 4. Developer Tooling
 
 ```bash
 xcode-select --install
-brew install gh wget neovim ripgrep fzf zoxide btop tmux tree nmap ffmpeg yt-dlp
+brew install gh ripgrep fzf btop neovim
+gh auth login
 ```
 
 - **gh** — GitHub CLI for PRs, issues, and git credential auth
 - **ripgrep** — the search tool every coding agent shells out to; install it even if you never type `rg`
 - **fzf** — fuzzy finder for shell history and file pickers
-- **zoxide** — `cd` that learns your habits
 - **btop** — resource monitor, useful when a build or a local model eats the machine
-- **tmux** — persistent sessions, essential once you run long agent jobs
-- **neovim** — for quick edits over SSH and in tmux panes
+- **neovim** — for quick edits over SSH and in the terminal
 
 Note that `git` comes from the Xcode Command Line Tools, so you don't need the Homebrew formula.
 
-Platform CLIs, install the ones you actually deploy to:
-
-```bash
-brew install supabase/tap/supabase stripe/stripe-cli/stripe railway flyctl
-npm i -g vercel wrangler turbo
-```
-
-### 6. Node, pnpm, Bun, Deno
-
-Node 24 is the current LTS.
+### 5. Node, pnpm, Bun
 
 ```bash
 brew install node nvm          # nvm for per-project version pinning
-npm install -g pnpm@latest-10
-brew install oven-sh/bun/bun
-brew install deno
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+curl -fsSL https://bun.sh/install | bash
 ```
 
-- **pnpm 10** — my default package manager for app work
-- **Bun 1.3** — scripts, one-off tooling, and anything where install speed matters most
-- **Deno 2** — sandboxed scripts and edge-shaped work
+This machine is on Node 26, pnpm 12, and Bun 1.4. If you use nvm, add this to `~/.zshrc` and run `mkdir ~/.nvm`:
 
-### 7. Editors
+```txt
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+```
+
+- **Bun** — my default for this site and most projects: install, dev, build, and updates
+- **pnpm** — for projects that are already pnpm-first
+
+### 6. Editors
 
 ```bash
-brew install --cask cursor zed visual-studio-code
+brew install --cask cursor zed
 ```
 
 - **Cursor** — primary editor, the AI features are still the most complete
-- **Zed** — fastest editor on the machine, with a genuinely good built-in agent panel. What I open for a single file
-- **VS Code** — the fallback that always works, and the one with every extension
+- **Zed** — fastest editor on the machine. What I open for a single file
 
-My Zed config worth stealing (`~/.config/zed/settings.json`):
-
-```json
-{
-  "buffer_font_family": "Menlo",
-  "buffer_font_size": 13,
-  "autosave": "on_focus_change",
-  "format_on_save": "on",
-  "agent": { "dock": "right", "default_profile": "write" },
-  "project_panel": { "dock": "left" }
-}
-```
-
-### 8. Oh My Zsh (+ Plugins)
+### 7. Oh My Zsh (+ Plugins)
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -166,9 +122,9 @@ ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 ```
 
-One warning for 2026: every agent installer wants to append a `PATH` line to your `.zshrc`. Mine has picked up a dozen of them. Read what you paste, keep secrets in a `.env` or the keychain rather than exported inline, and audit the file every few months.
+One warning for 2026: every agent installer wants to append a `PATH` line to your `.zshrc`. Mine already has Claude Code, Grok, OpenCode, pnpm, and Bun in there. Read what you paste, keep secrets in a `.env` or the keychain rather than exported inline, and audit the file every few months.
 
-### 9. Handy Aliases
+### 8. Handy Aliases
 
 ```txt
 # pnpm
@@ -180,7 +136,8 @@ alias pd='pnpm dev'
 alias b='bun'
 alias bi='bun install'
 alias bd='bun dev'
-alias bu='bun upgrade'
+alias bu='bun update'
+alias bb='bun run build'
 
 # Git
 alias gs='git send'
@@ -191,7 +148,7 @@ alias lfg='claude --dangerously-skip-permissions'
 
 That last one is a loaded gun. It skips every permission prompt, so only point it at a repo you can throw away or a worktree you're willing to lose.
 
-### 10. Global Git Config
+### 9. Global Git Config
 
 ```txt
 [alias]
@@ -208,9 +165,9 @@ That last one is a loaded gun. It skips every permission prompt, so only point i
     helper = !/opt/homebrew/bin/gh auth git-credential
 ```
 
-`git send` used to push too. I dropped the push after one too many agent-authored commits landed on a remote before I'd read them.
+`git send` stages everything and commits with the message you pass (or `wip`). It doesn't push. I dropped the push after one too many agent-authored commits landed on a remote before I'd read them.
 
-### 11. Neovim
+### 10. Neovim
 
 ```bash
 git clone https://github.com/nvim-lua/kickstart.nvim.git \
@@ -223,113 +180,77 @@ git clone https://github.com/nvim-lua/kickstart.nvim.git \
 
 This is the section that didn't exist in the 2025 guide, and it's now the part I'd set up first. The terminal agents matter more than the editor.
 
-### 12. Terminal Agents
+### 11. Terminal Agents
 
 ```bash
 # Claude Code — my default
 curl -fsSL https://claude.ai/install.sh | bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 # OpenAI Codex
-npm i -g @openai/codex
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
 
 # OpenCode — open source, model agnostic
-brew install anomalyco/tap/opencode
+curl -fsSL https://opencode.ai/v2/install | bash
 
-# Cursor Agent — Cursor's model in the terminal
-curl https://cursor.com/install -fsS | bash
+# Grok CLI
+curl -fsSL https://x.ai/cli/install.sh | bash
+
+# Pi
+curl -fsSL https://pi.dev/install.sh | sh
+
+# Muse — Meta's coding agent
+curl https://dev.meta.ai/install.sh | bash
 ```
 
 - **Claude Code** — the one I live in. Skills, subagents, MCP servers, and hooks make it the most configurable
 - **Codex** — strong second opinion, especially on long refactors
 - **OpenCode** — model agnostic, good when you want to point an agent at a local or cheap model
-- **Cursor Agent** — the same model as the editor, useful when you're already in a Cursor project
+- **Muse** — Meta's terminal agent, run with `muse`
+- **Grok CLI** and **Pi** — installed to try, not part of my daily loop
 
-Also worth trying: [Factory's droid](https://factory.ai) and [Grok CLI](https://x.ai). Running two agents against the same repo in separate git worktrees is the single biggest workflow change of the last year.
+Running two agents against the same repo in separate git worktrees is the single biggest workflow change of the last year.
 
-### 13. Desktop AI Apps
-
-```bash
-brew install --cask claude chatgpt granola wispr-flow macwhisper
-```
-
-- **Claude** and **ChatGPT** — desktop apps for the non-coding half of the work
-- **Granola** — meeting notes that actually get used, because it transcribes in the background and never joins the call
-- **Wispr Flow** — voice-to-text everywhere in the OS. Talking to an agent is faster than typing at it
-- **MacWhisper** — local transcription for files you don't want going to a server
-
-### 14. Local Models
+### 12. Desktop AI Apps
 
 ```bash
-brew install ollama
-brew install --cask lm-studio
+brew install --cask claude chatgpt
 ```
 
-- **Ollama** — CLI and API for local models, good for scripting and offline work
-- **LM Studio** — GUI for browsing, downloading, and testing models before you commit to one
-
-Point OpenCode at Ollama and you have a fully local coding agent, which is genuinely useful on a plane or against a codebase you can't send anywhere.
+**Claude** and **ChatGPT** — desktop apps for the non-coding half of the work.
 
 ---
 
 ### Productivity & Collaboration
 
-### 15. Messaging
+### 13. Messaging
 
 ```bash
-brew install --cask slack discord whatsapp telegram microsoft-teams zoom
+brew install --cask slack discord microsoft-teams
 ```
 
-### 16. Productivity Apps
+---
+
+### Always-On Mac (Optional)
+
+I use this Mac as a machine I can reach from anywhere, so it never sleeps and I can get into it remotely.
 
 ```bash
-brew install --cask notion notion-calendar obsidian todoist-app craft spotify
+brew install --cask tailscale-app
+echo 'alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"' >> ~/.zshrc
+
+# Never sleep, restart after power loss, wake on network access
+sudo pmset -a sleep 0 disksleep 0 autorestart 1 womp 1
+
+# SSH and screen sharing
+sudo systemsetup -setremotelogin on
+tailscale set --ssh
+sudo launchctl enable system/com.apple.screensharing
+sudo launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensharing.plist
 ```
 
-- **Notion** — team wiki and project tracking
-- **Notion Calendar** — the best calendar client on macOS, and it's free
-- **Obsidian** — local markdown vault, which doubles as a context directory agents can read
-- **Todoist** — tasks, with a CLI (`brew install todoist`) if you want to capture from the terminal
-- **Craft** — documents that need to look good
-
-### 17. Screen Recording & Demos
-
-```bash
-brew install --cask screen-studio obs
-```
-
-- **Screen Studio** — automatic zoom and smooth cursor motion. Every product demo I ship comes out of this
-- **OBS** — streaming and multi-source recording when you need real control
-
-### 18. Design Apps
-
-```bash
-brew install --cask figma adobe-creative-cloud affinity eagle imageoptim
-```
-
-- **Figma** — where the work happens
-- **Affinity** — the whole suite is free now, and it's a real Adobe alternative
-- **Eagle** — visual asset and reference library, better than a folder of screenshots
-- **ImageOptim** — drag images in before they hit a repo
-
-### 19. Infrastructure & Data
-
-```bash
-brew install --cask orbstack tableplus proxyman tailscale-app
-brew install postgresql@15
-```
-
-- **OrbStack** — Docker and Linux VMs, dramatically faster and lighter than Docker Desktop. I stopped opening Docker Desktop entirely
-- **TablePlus** — database GUI for Postgres, MySQL, and SQLite
-- **Proxyman** — HTTP debugging, essential for webhook and API work
-- **Tailscale** — private network across your machines, plus easy access to a home server
-
-TablePlus, Proxyman, and a handful of others come with [Setapp](https://setapp.com) if you'd rather pay one subscription than five.
-
-#### Other apps to install from the Mac App Store
-
-- **Bear** — markdown notes
-- **Things 3** — if you prefer it to Todoist
-- **DaVinci Resolve** — video editing
+- **Tailscale** — private network across your machines. With `tailscale set --ssh` you get SSH without opening any ports
+- **FileVault** — I turned it off on this machine so it can reboot unattended after a power cut. That trades disk encryption for convenience, and I wouldn't do it on a laptop
 
 ---
 
@@ -385,4 +306,4 @@ These defaults help streamline Finder, boost typing responsiveness, and reduce d
 
 ### The Short Version
 
-If you only install six things: **Ghostty**, **Raycast**, **Claude Code**, **Cursor**, **CleanShot X**, and **OrbStack**. Everything else is a preference. Those six changed how the machine feels.
+If you only install four things: **Ghostty**, **Raycast**, **Claude Code**, and **Cursor**. Everything else is a preference. Those four changed how the machine feels.
