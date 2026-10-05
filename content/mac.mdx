@@ -34,11 +34,13 @@ eval "$(/opt/homebrew/bin/brew shellenv)"   # add to ~/.zprofile
 ### 3. System Apps
 
 ```bash
-brew install --cask ghostty raycast google-chrome logi-options+
+brew install --cask ghostty raycast google-chrome cleanshot 1password logi-options+
 ```
 
 - **Ghostty** — minimal GPU-accelerated terminal with fast text rendering
 - **Raycast** — Spotlight replacement with extensions, clipboard history, and window management
+- **CleanShot X** — screenshots and screen recording with instant markup, scrolling capture, and pinned overlays
+- **1Password** — passwords, passkeys, and SSH keys in one place
 - **Logi Options+** — button and gesture mapping for Logitech mice and keyboards
 - **Chrome** — default dev target, DevTools, Lighthouse. Safari is already installed, and you must test in it
 
@@ -65,16 +67,24 @@ fi
 
 ```bash
 xcode-select --install
-brew install gh ripgrep fzf btop neovim
-brew install --cask miniconda
+brew install gh ripgrep fzf zoxide btop tmux herdr ffmpeg neovim
+brew install stripe/stripe-cli/stripe
+brew install --cask miniconda orbstack tableplus
 gh auth login
 ```
 
 - **gh** — GitHub CLI for PRs, issues, and git credential auth
 - **ripgrep** — the search tool every coding agent shells out to; install it even if you never type `rg`
 - **fzf** — fuzzy finder for shell history and file pickers
+- **zoxide** — `cd` that learns your habits. Add `eval "$(zoxide init zsh)"` to `~/.zshrc`
 - **btop** — resource monitor, useful when a build or a local model eats the machine
+- **tmux** — persistent sessions, essential once you run long agent jobs
+- **herdr** — an agent multiplexer that lives in your terminal, for running several agents side by side
+- **ffmpeg** — convert, trim, and compress video and audio from the command line
+- **Stripe CLI** — forward webhooks to localhost and trigger test events
 - **neovim** — for quick edits over SSH and in the terminal
+- **OrbStack** — Docker and Linux VMs, much faster and lighter than Docker Desktop
+- **TablePlus** — database GUI for Postgres, MySQL, and SQLite
 - **Miniconda** — minimal conda installer for Python environments, mostly for ML and data tooling
 
 Note that `git` comes from the Xcode Command Line Tools, so you don't need the Homebrew formula. If you install the full Xcode from the App Store, point the tools at it:
@@ -148,6 +158,7 @@ alias bb='bun run build'
 
 # Git
 alias gs='git send'
+alias gp='git push'
 
 # Claude Code, no interruptions
 alias lfg='claude --dangerously-skip-permissions'
@@ -240,10 +251,11 @@ brew install --cask slack discord microsoft-teams
 ### 14. Productivity Apps
 
 ```bash
-brew install --cask notion
+brew install --cask notion figma
 ```
 
 - **Notion** — team wiki and project tracking
+- **Figma** — where the design work happens
 
 ---
 
