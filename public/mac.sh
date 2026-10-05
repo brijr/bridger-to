@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Bridger's Mac setup. Mirrors https://bridger.to/posts/mac
+# Bridger's Mac setup. Mirrors https://bridger.to/mac
 #
 #   curl -fsSL https://bridger.to/mac.sh | bash
 #   curl -fsSL https://bridger.to/mac.sh | bash -s -- --always-on
@@ -121,7 +121,7 @@ cat <<EOF
 ${BOLD}
    ╭──────────────────────────────────────╮
    │   🛠  Bridger's Mac setup             │
-   │   bridger.to/posts/mac               │
+   │   bridger.to/mac                     │
    ╰──────────────────────────────────────╯${RESET}
 ${DIM}Already-installed things get skipped. Nothing here stops on an error.
 Full log: ${LOG}${RESET}
