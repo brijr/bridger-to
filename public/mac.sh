@@ -18,6 +18,9 @@
 
 set -uo pipefail
 
+# Everything lives in main() so bash reads the whole script before running any of it.
+# Otherwise, under `curl | bash`, a command that reads stdin (brew does) eats the rest of the script.
+main() {
 ALWAYS_ON=0
 AGENTS=1
 APPS=1
@@ -69,7 +72,7 @@ step() {
   local label="$1"; shift
   if [[ $DRY_RUN -eq 1 ]]; then dry "$label"; return 0; fi
   printf "  %s…%s %s\r" "$DIM" "$RESET" "$label"
-  if "$@" >>"$LOG" 2>&1; then
+  if "$@" >>"$LOG" 2>&1 </dev/null; then
     printf "\033[2K"; ok "$label"; INSTALLED=$((INSTALLED + 1))
   else
     printf "\033[2K"; fail "$label"; FAILED+=("$label")
@@ -87,7 +90,7 @@ mark_skipped() { skip "$1"; SKIPPED=$((SKIPPED + 1)); }
 brew_formula() {
   local f
   for f in "$@"; do
-    if [[ $DRY_RUN -eq 0 ]] && brew list --formula "$f" >/dev/null 2>&1; then
+    if [[ $DRY_RUN -eq 0 ]] && brew list --formula "$f" >/dev/null 2>&1 </dev/null; then
       mark_skipped "$f"
     else
       step "$f" brew install "$f"
@@ -100,15 +103,15 @@ brew_cask() {
   local c app
   for c in "$@"; do
     if [[ $DRY_RUN -eq 1 ]]; then dry "$c"; continue; fi
-    if brew list --cask "$c" >/dev/null 2>&1; then mark_skipped "$c"; continue; fi
+    if brew list --cask "$c" >/dev/null 2>&1 </dev/null; then mark_skipped "$c"; continue; fi
     # Ask brew which .app the cask installs, then see if it is already on disk.
-    app=$(brew info --cask "$c" 2>/dev/null | grep -oE '[^/]+\.app' | head -1)
+    app=$(brew info --cask "$c" 2>/dev/null </dev/null | grep -oE '[^/]+\.app' | head -1)
     if [[ -n "$app" && ( -d "/Applications/$app" || -d "$HOME/Applications/$app" ) ]]; then
       mark_skipped "$c ($app)"; continue
     fi
     # Last resort: if brew says an app is already in the way, that counts as installed.
     local out
-    out=$(brew install --cask "$c" 2>&1); local rc=$?
+    out=$(brew install --cask "$c" 2>&1 </dev/null); local rc=$?
     printf "%s\n" "$out" >>"$LOG"
     if [[ $rc -eq 0 ]]; then ok "$c"; INSTALLED=$((INSTALLED + 1))
     elif grep -q "already an App" <<<"$out"; then mark_skipped "$c"
@@ -382,3 +385,6 @@ ${BOLD}Next steps${RESET}
 
 Happy building. 🚀
 EOF
+}
+
+main "$@"
