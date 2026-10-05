@@ -9,7 +9,7 @@ A curated, opinionated checklist for spinning up a fresh macOS machine in 2026. 
 
 **Goal**: Be productive (coding, agents, comms) in ~30 minutes with repeatable commands and sensible defaults.
 
-**What changed since last year**: the terminal is now the primary interface for AI, not the editor. Half of this guide is about coding agents that didn't exist eighteen months ago. I also started from a clean machine this time, so the list is shorter. If I haven't needed an app yet, it isn't here.
+**What changed since last year**: the terminal is now the primary interface for AI, not the editor. Half of this guide is about coding agents that didn't exist eighteen months ago. I also started from a clean machine this time, so the list is shorter. If I haven't needed an app yet, it isn't here. New this year: herdr and tmux for running several agents at once, OrbStack in place of Docker Desktop, and Cloudflare and Vercel tooling for deploys.
 
 ---
 
@@ -76,7 +76,7 @@ gh auth login
 - **gh** — GitHub CLI for PRs, issues, and git credential auth
 - **ripgrep** — the search tool every coding agent shells out to; install it even if you never type `rg`
 - **fzf** — fuzzy finder for shell history and file pickers
-- **zoxide** — `cd` that learns your habits. Add `eval "$(zoxide init zsh)"` to `~/.zshrc`
+- **zoxide** — `cd` that learns your habits. The init line is in the `.zshrc` snippet below
 - **btop** — resource monitor, useful when a build or a local model eats the machine
 - **tmux** — persistent sessions, essential once you run long agent jobs
 - **herdr** — an agent multiplexer that lives in your terminal, for running several agents side by side
@@ -137,6 +137,8 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting \
 ```txt
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
+eval "$(zoxide init zsh)"
 ```
 
 One warning for 2026: every agent installer wants to append a `PATH` line to your `.zshrc`. Mine already has Claude Code, Grok, OpenCode, pnpm, and Bun in there. Read what you paste, keep secrets in a `.env` or the keychain rather than exported inline, and audit the file every few months.
@@ -245,16 +247,20 @@ brew install --cask claude chatgpt grok-bot
 ### 13. Messaging
 
 ```bash
-brew install --cask slack discord microsoft-teams
+brew install --cask slack discord microsoft-teams zoom
 ```
+
+- **Slack** and **Discord** — team chat and communities
+- **Microsoft Teams** and **Zoom** — for clients who send those links
 
 ### 14. Productivity Apps
 
 ```bash
-brew install --cask notion figma
+brew install --cask notion notion-calendar figma
 ```
 
 - **Notion** — team wiki and project tracking
+- **Notion Calendar** — the best calendar client on macOS, and it's free
 - **Figma** — where the design work happens
 
 ---
@@ -302,6 +308,16 @@ sudo launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensh
 - **Firewall** — turn it on and allow signed apps, since this machine now accepts remote connections
 - **Tailscale** — private network across your machines. With `tailscale set --ssh` you get SSH without opening any ports
 - **FileVault** — I turned it off on this machine so it can reboot unattended after a power cut. That trades disk encryption for convenience, and I wouldn't do it on a laptop
+
+---
+
+### Backups
+
+A fresh setup guide is only useful if you never need it, so turn on a backup before anything else matters.
+
+1. Plug in an external drive, then open **System Settings → General → Time Machine**.
+2. Add the drive as a backup disk and let the first backup run.
+3. Keep code in GitHub and secrets in 1Password, so the machine itself holds nothing you can't recreate.
 
 ---
 
@@ -357,4 +373,4 @@ These defaults help streamline Finder, boost typing responsiveness, and reduce d
 
 ### The Short Version
 
-If you only install four things: **Ghostty**, **Raycast**, **Claude Code**, and **Cursor**. Everything else is a preference. Those four changed how the machine feels.
+If you only install six things: **Ghostty**, **Raycast**, **Claude Code**, **Cursor**, **CleanShot X**, and **OrbStack**. Everything else is a preference. Those six changed how the machine feels.
