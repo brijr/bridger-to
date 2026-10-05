@@ -5,6 +5,7 @@
 #   curl -fsSL https://bridger.to/mac.sh | bash
 #   curl -fsSL https://bridger.to/mac.sh | bash -s -- --always-on
 #   curl -fsSL https://bridger.to/mac.sh | bash -s -- --dry-run
+#   GIT_NAME="Your Name" GIT_EMAIL=you@example.com bash -c "$(curl -fsSL https://bridger.to/mac.sh)"
 #
 # Flags:
 #   --always-on   also configure never-sleep, SSH, screen sharing, firewall (uses sudo)
@@ -131,6 +132,18 @@ Full log: ${LOG}${RESET}
 EOF
 [[ $DRY_RUN -eq 1 ]] && printf "\n%s🧪 Dry run: nothing will be changed.%s\n" "$YELLOW" "$RESET"
 
+# Some apps (Teams, Zoom, WARP) ship pkg installers that need your password.
+# Ask once up front and keep it alive, instead of failing halfway through.
+if [[ $DRY_RUN -eq 0 && $APPS -eq 1 ]]; then
+  if sudo -v </dev/tty 2>>"$LOG"; then
+    ( while true; do sudo -n true 2>/dev/null; sleep 50; kill -0 "$$" 2>/dev/null || exit; done ) &
+    SUDO_KEEPALIVE=$!
+    trap 'kill "$SUDO_KEEPALIVE" 2>/dev/null' EXIT
+  else
+    note "No password entered. Apps with pkg installers (Teams, Zoom, WARP) may fail; re-run to retry."
+  fi
+fi
+
 # ---------------------------------------------------------------------------
 section "🔨" "Xcode Command Line Tools"
 if xcode-select -p >/dev/null 2>&1; then
@@ -252,9 +265,27 @@ section "🌿" "Git config"
 step "alias: git send" git config --global alias.send '!f() { git add . && git commit -m "${1:-wip}"; }; f'
 step "default branch: main" git config --global init.defaultBranch main
 step "GitHub credentials via gh" bash -c "git config --global --replace-all credential.https://github.com.helper '' && git config --global --add credential.https://github.com.helper '!/opt/homebrew/bin/gh auth git-credential'"
-note "Not setting user.name / user.email. Set your own:"
-note "  git config --global user.name \"Your Name\""
-note "  git config --global user.email \"you@example.com\""
+# Identity: keep what's already set, else use GIT_NAME / GIT_EMAIL, else ask.
+for kv in "name:GIT_NAME:Your name" "email:GIT_EMAIL:Your email"; do
+  key="${kv%%:*}"; rest="${kv#*:}"; var="${rest%%:*}"; prompt="${rest#*:}"
+  current=$(git config --global "user.$key" 2>/dev/null || true)
+  if [[ -n "$current" ]]; then
+    mark_skipped "user.$key ($current)"
+  elif [[ $DRY_RUN -eq 1 ]]; then
+    dry "set user.$key from \$$var or a prompt"
+  else
+    value="${!var:-}"
+    if [[ -z "$value" ]] && { : </dev/tty; } 2>/dev/null; then
+      printf "  %s? %s:%s " "$CYAN" "$prompt" "$RESET" >/dev/tty
+      read -r value </dev/tty || value=""
+    fi
+    if [[ -n "$value" ]]; then
+      step "user.$key" git config --global "user.$key" "$value"
+    else
+      note "Skipped user.$key. Set it later: git config --global user.$key \"...\""
+    fi
+  fi
+done
 
 # ---------------------------------------------------------------------------
 section "🧩" "Shell config"
@@ -311,15 +342,43 @@ else
   printf "\n%s\n" "$ZSHRC_BLOCK" >> "$ZSHRC" && ok "~/.zshrc (backup saved next to it)" && INSTALLED=$((INSTALLED + 1))
 fi
 
-GHOSTTY_CONFIG="$HOME/.config/ghostty/config"
+# Ghostty reads both of these. Only written when missing, so your own config is never overwritten.
+GHOSTTY_DIR="$HOME/Library/Application Support/com.mitchellh.ghostty"
+GHOSTTY_LOOK="$GHOSTTY_DIR/config.ghostty"
+GHOSTTY_SHELL="$HOME/.config/ghostty/config"
 if [[ $DRY_RUN -eq 1 ]]; then
-  dry "write $GHOSTTY_CONFIG if missing"
-elif [[ -f "$GHOSTTY_CONFIG" ]]; then
-  mark_skipped "Ghostty config"
+  dry "write Ghostty config (font, theme, keybinds, quick terminal) if missing"
 else
-  mkdir -p "$(dirname "$GHOSTTY_CONFIG")"
-  printf 'shell-integration = none\nshell-integration-features = cursor,title,path\n' > "$GHOSTTY_CONFIG" \
-    && ok "Ghostty config" && INSTALLED=$((INSTALLED + 1))
+  if [[ -f "$GHOSTTY_LOOK" ]]; then
+    mark_skipped "Ghostty config"
+  else
+    mkdir -p "$GHOSTTY_DIR"
+    cat > "$GHOSTTY_LOOK" <<'EOF'
+font-family=Menlo
+theme=Flexoki Dark
+font-size=14
+window-padding-balance=true
+window-padding-x=8
+window-padding-y=8
+
+keybind = cmd+left=goto_split:left
+keybind = cmd+down=goto_split:down
+keybind = cmd+up=goto_split:up
+keybind = cmd+right=goto_split:right
+keybind = cmd+k=unbind
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+quick-terminal-position = right
+EOF
+    [[ $? -eq 0 ]] && ok "Ghostty config (font, theme, keybinds)" && INSTALLED=$((INSTALLED + 1))
+  fi
+  if [[ -f "$GHOSTTY_SHELL" ]]; then
+    mark_skipped "Ghostty shell integration config"
+  else
+    mkdir -p "$(dirname "$GHOSTTY_SHELL")"
+    printf 'shell-integration = none\nshell-integration-features = cursor,title,path\n' > "$GHOSTTY_SHELL" \
+      && ok "Ghostty shell integration config" && INSTALLED=$((INSTALLED + 1))
+  fi
 fi
 
 # ---------------------------------------------------------------------------
@@ -380,8 +439,7 @@ ${BOLD}Next steps${RESET}
   2. gh auth login
   3. vercel login && wrangler login
   4. claude ${DIM}(sign in)${RESET}
-  5. Set git user.name and user.email
-  6. Turn on Time Machine ${DIM}(System Settings → General → Time Machine)${RESET}
+  5. Turn on Time Machine ${DIM}(System Settings → General → Time Machine)${RESET}
 
 Happy building. 🚀
 EOF
