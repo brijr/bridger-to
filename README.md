@@ -27,8 +27,8 @@ Personal website of Bridger Tower. Built with Next.js, Velite, and Tailwind CSS.
 ## Development
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun dev
 ```
 
 ## License
