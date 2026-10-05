@@ -199,6 +199,9 @@ if [[ $APPS -eq 1 ]]; then
   section "🎨" "Productivity & design"
   brew_cask notion notion-calendar figma
 
+  section "🎙 " "Voice, meetings & demos"
+  brew_cask wispr-flow granola screen-studio
+
   section "☁️ " "Cloudflare"
   brew_cask cloudflare-warp
 fi
@@ -258,6 +261,27 @@ if [[ $AGENTS -eq 1 ]]; then
   agent "Grok CLI"    grok     'curl -fsSL https://x.ai/cli/install.sh | bash'
   agent "Pi"          pi       'curl -fsSL https://pi.dev/install.sh | sh'
   agent "Muse"        muse     'curl https://dev.meta.ai/install.sh | bash'
+fi
+
+# Claude Code settings: only written when missing, so an existing config is never touched
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+if [[ $AGENTS -eq 1 ]]; then
+  if [[ $DRY_RUN -eq 1 ]]; then
+    dry "write Claude Code settings if missing"
+  elif [[ -f "$CLAUDE_SETTINGS" ]]; then
+    mark_skipped "Claude Code settings"
+  else
+    mkdir -p "$(dirname "$CLAUDE_SETTINGS")"
+    cat > "$CLAUDE_SETTINGS" <<'EOF'
+{
+  "model": "sonnet",
+  "tui": "fullscreen",
+  "theme": "dark",
+  "agentPushNotifEnabled": true
+}
+EOF
+    [[ $? -eq 0 ]] && ok "Claude Code settings" && INSTALLED=$((INSTALLED + 1))
+  fi
 fi
 
 # ---------------------------------------------------------------------------
@@ -379,6 +403,35 @@ EOF
     printf 'shell-integration = none\nshell-integration-features = cursor,title,path\n' > "$GHOSTTY_SHELL" \
       && ok "Ghostty shell integration config" && INSTALLED=$((INSTALLED + 1))
   fi
+fi
+
+# Zed: only written when missing
+ZED_CONFIG="$HOME/.config/zed/settings.json"
+if [[ $DRY_RUN -eq 1 ]]; then
+  dry "write Zed settings if missing"
+elif [[ -f "$ZED_CONFIG" ]]; then
+  mark_skipped "Zed settings"
+else
+  mkdir -p "$(dirname "$ZED_CONFIG")"
+  cat > "$ZED_CONFIG" <<'EOF'
+{
+  "buffer_font_family": "Menlo",
+  "buffer_font_size": 13,
+  "autosave": "on_focus_change",
+  "format_on_save": "on",
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "theme": "Flexoki Dark",
+  "auto_install_extensions": { "flexoki": true },
+  "terminal": { "font_family": "Menlo" },
+  "telemetry": { "diagnostics": false, "metrics": false },
+  "git": { "inline_blame": { "enabled": false } },
+  "minimap": { "show": "never" },
+  "agent": { "dock": "right", "default_profile": "write" },
+  "project_panel": { "dock": "left" }
+}
+EOF
+  [[ $? -eq 0 ]] && ok "Zed settings" && INSTALLED=$((INSTALLED + 1))
 fi
 
 # ---------------------------------------------------------------------------

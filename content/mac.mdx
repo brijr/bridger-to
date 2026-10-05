@@ -151,6 +151,27 @@ brew install --cask cursor zed
 - **Cursor** — primary editor, the AI features are still the most complete
 - **Zed** — fastest editor on the machine. What I open for a single file
 
+My Zed config (`~/.config/zed/settings.json`):
+
+```json
+{
+  "buffer_font_family": "Menlo",
+  "buffer_font_size": 13,
+  "autosave": "on_focus_change",
+  "format_on_save": "on",
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "theme": "Flexoki Dark",
+  "auto_install_extensions": { "flexoki": true },
+  "terminal": { "font_family": "Menlo" },
+  "telemetry": { "diagnostics": false, "metrics": false },
+  "git": { "inline_blame": { "enabled": false } },
+  "minimap": { "show": "never" },
+  "agent": { "dock": "right", "default_profile": "write" },
+  "project_panel": { "dock": "left" }
+}
+```
+
 ### 7. Oh My Zsh (+ Plugins)
 
 ```bash
@@ -259,6 +280,19 @@ curl https://dev.meta.ai/install.sh | bash
 - **Muse** — Meta's terminal agent, run with `muse`
 - **Grok CLI** and **Pi** — installed to try, not part of my daily loop
 
+My Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "model": "sonnet",
+  "tui": "fullscreen",
+  "theme": "dark",
+  "agentPushNotifEnabled": true
+}
+```
+
+Connectors like Notion, Figma, Gmail, and Google Calendar come from your Claude account, so signing in is all the setup they need.
+
 Running two agents against the same repo in separate git worktrees is the single biggest workflow change of the last year.
 
 ### 12. Desktop AI Apps
@@ -292,6 +326,16 @@ brew install --cask notion notion-calendar figma
 - **Notion** — team wiki and project tracking
 - **Notion Calendar** — the best calendar client on macOS, and it's free
 - **Figma** — where the design work happens
+
+### 15. Voice, Meetings & Demos
+
+```bash
+brew install --cask wispr-flow granola screen-studio
+```
+
+- **Wispr Flow** — voice-to-text everywhere in the OS. Talking to an agent is faster than typing at it
+- **Granola** — meeting notes that actually get used, because it transcribes in the background and never joins the call
+- **Screen Studio** — automatic zoom and smooth cursor motion for product demos
 
 ---
 
