@@ -34,11 +34,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"   # add to ~/.zprofile
 ### 3. System Apps
 
 ```bash
-brew install --cask ghostty raycast google-chrome
+brew install --cask ghostty raycast google-chrome logi-options+
 ```
 
 - **Ghostty** — minimal GPU-accelerated terminal with fast text rendering
 - **Raycast** — Spotlight replacement with extensions, clipboard history, and window management
+- **Logi Options+** — button and gesture mapping for Logitech mice and keyboards
 - **Chrome** — default dev target, DevTools, Lighthouse. Safari is already installed, and you must test in it
 
 Ghostty works out of the box. The only config I keep is to load shell integration from `~/.zshrc` myself, because auto-injection wasn't reporting the working directory. Config lives at `~/.config/ghostty/config`:
@@ -74,7 +75,11 @@ gh auth login
 - **btop** — resource monitor, useful when a build or a local model eats the machine
 - **neovim** — for quick edits over SSH and in the terminal
 
-Note that `git` comes from the Xcode Command Line Tools, so you don't need the Homebrew formula.
+Note that `git` comes from the Xcode Command Line Tools, so you don't need the Homebrew formula. If you install the full Xcode from the App Store, point the tools at it:
+
+```bash
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+```
 
 ### 5. Node, pnpm, Bun
 
@@ -165,7 +170,7 @@ That last one is a loaded gun. It skips every permission prompt, so only point i
     helper = !/opt/homebrew/bin/gh auth git-credential
 ```
 
-`git send` stages everything and commits with the message you pass (or `wip`). It doesn't push. I dropped the push after one too many agent-authored commits landed on a remote before I'd read them.
+`git send` stages everything and commits with the message you pass (or `wip`). It doesn't push. I push by hand with `gp`, the Oh My Zsh alias for `git push`. I dropped the push after one too many agent-authored commits landed on a remote before I'd read them.
 
 ### 10. Neovim
 
@@ -209,15 +214,22 @@ curl https://dev.meta.ai/install.sh | bash
 - **Muse** — Meta's terminal agent, run with `muse`
 - **Grok CLI** and **Pi** — installed to try, not part of my daily loop
 
+Claude Code can talk to MCP servers. I add them at user scope so they work in every project, for example:
+
+```bash
+claude mcp add --transport http --scope user shape https://shapefs.app/mcp
+```
+
 Running two agents against the same repo in separate git worktrees is the single biggest workflow change of the last year.
 
 ### 12. Desktop AI Apps
 
 ```bash
-brew install --cask claude chatgpt
+brew install --cask claude chatgpt grok-bot
 ```
 
-**Claude** and **ChatGPT** — desktop apps for the non-coding half of the work.
+- **Claude** and **ChatGPT** — desktop apps for the non-coding half of the work
+- **Grok Bot** — xAI's AI teammates that work across your apps and tools
 
 ---
 
@@ -242,6 +254,11 @@ echo 'alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"' >>
 # Never sleep, restart after power loss, wake on network access
 sudo pmset -a sleep 0 disksleep 0 autorestart 1 womp 1
 
+# Firewall on, signed apps allowed
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp on
+
 # SSH and screen sharing
 sudo systemsetup -setremotelogin on
 tailscale set --ssh
@@ -249,6 +266,7 @@ sudo launchctl enable system/com.apple.screensharing
 sudo launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensharing.plist
 ```
 
+- **Firewall** — turn it on and allow signed apps, since this machine now accepts remote connections
 - **Tailscale** — private network across your machines. With `tailscale set --ssh` you get SSH without opening any ports
 - **FileVault** — I turned it off on this machine so it can reboot unattended after a power cut. That trades disk encryption for convenience, and I wouldn't do it on a laptop
 
