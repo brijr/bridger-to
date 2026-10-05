@@ -199,9 +199,6 @@ if [[ $APPS -eq 1 ]]; then
   section "🎨" "Productivity & design"
   brew_cask notion notion-calendar figma
 
-  section "🎙 " "Voice, meetings & demos"
-  brew_cask wispr-flow granola screen-studio
-
   section "☁️ " "Cloudflare"
   brew_cask cloudflare-warp
 fi
