@@ -393,8 +393,15 @@ defaults write com.apple.screencapture type -string "png"
 # Copy screenshots to the clipboard as well as saving them
 defaults write com.apple.screencapture target -string "clipboard"
 
-# Restart Finder to apply changes
+# Dock: auto-hide, medium icons, on the left, no recent apps
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock tilesize -int 49
+defaults write com.apple.dock orientation -string "left"
+defaults write com.apple.dock show-recents -bool false
+
+# Restart Finder and Dock to apply changes
 killall Finder
+killall Dock
 ```
 
 These defaults help streamline Finder, boost typing responsiveness, and reduce distractions. The `KeyRepeat -int 1` setting is the one you'll notice most — it's faster than the System Settings slider allows.

@@ -400,8 +400,13 @@ else
     defaults write com.apple.screencapture location "$HOME/Desktop/Screenshots"
     defaults write com.apple.screencapture type -string "png"
     defaults write com.apple.screencapture target -string "clipboard"
-  } >>"$LOG" 2>&1 && ok "Finder, keyboard & screenshots tuned" || { fail "macOS defaults"; FAILED+=("macOS defaults"); }
+    defaults write com.apple.dock autohide -bool true
+    defaults write com.apple.dock tilesize -int 49
+    defaults write com.apple.dock orientation -string "left"
+    defaults write com.apple.dock show-recents -bool false
+  } >>"$LOG" 2>&1 && ok "Finder, Dock, keyboard & screenshots tuned" || { fail "macOS defaults"; FAILED+=("macOS defaults"); }
   killall Finder >>"$LOG" 2>&1 || true
+  killall Dock >>"$LOG" 2>&1 || true
 fi
 
 # ---------------------------------------------------------------------------
