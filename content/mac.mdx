@@ -66,6 +66,7 @@ fi
 ```bash
 xcode-select --install
 brew install gh ripgrep fzf btop neovim
+brew install --cask miniconda
 gh auth login
 ```
 
@@ -74,6 +75,7 @@ gh auth login
 - **fzf** — fuzzy finder for shell history and file pickers
 - **btop** — resource monitor, useful when a build or a local model eats the machine
 - **neovim** — for quick edits over SSH and in the terminal
+- **Miniconda** — minimal conda installer for Python environments, mostly for ML and data tooling
 
 Note that `git` comes from the Xcode Command Line Tools, so you don't need the Homebrew formula. If you install the full Xcode from the App Store, point the tools at it:
 
@@ -214,12 +216,6 @@ curl https://dev.meta.ai/install.sh | bash
 - **Muse** — Meta's terminal agent, run with `muse`
 - **Grok CLI** and **Pi** — installed to try, not part of my daily loop
 
-Claude Code can talk to MCP servers. I add them at user scope so they work in every project, for example:
-
-```bash
-claude mcp add --transport http --scope user shape https://shapefs.app/mcp
-```
-
 Running two agents against the same repo in separate git worktrees is the single biggest workflow change of the last year.
 
 ### 12. Desktop AI Apps
@@ -240,6 +236,31 @@ brew install --cask claude chatgpt grok-bot
 ```bash
 brew install --cask slack discord microsoft-teams
 ```
+
+### 14. Productivity Apps
+
+```bash
+brew install --cask notion
+```
+
+- **Notion** — team wiki and project tracking
+
+---
+
+### Deploy & Hosting
+
+```bash
+npm i -g vercel wrangler
+brew install cloudflared
+brew install --cask cloudflare-warp
+vercel login
+wrangler login
+```
+
+- **Vercel** — the CLI for deploying, pulling env vars, and managing projects
+- **Wrangler** — the CLI for Workers, Pages, R2, D1, and Queues. Deploys and local dev for anything on Cloudflare
+- **cloudflared** — runs Cloudflare Tunnels, so you can expose a local server without opening ports
+- **WARP** — Cloudflare's free VPN-style client for a safer connection on untrusted networks
 
 ---
 
