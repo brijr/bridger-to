@@ -31,10 +31,10 @@ export function EmailCopyButton({ className }: { className?: string }) {
       aria-label="Copy email address"
       className={cn(className, "z-50")}
     >
-      <span className="relative size-[1.2rem]">
+      <span className="relative size-4">
         <Mail
           className={cn(
-            "absolute inset-0 size-[1.2rem] transition-[opacity,transform,filter] duration-200 ease-out",
+            "absolute inset-0 transition-[opacity,transform,filter] duration-200 ease-out",
             copied
               ? "scale-[0.25] opacity-0 blur-[4px]"
               : "scale-100 opacity-100 blur-0",
@@ -42,7 +42,7 @@ export function EmailCopyButton({ className }: { className?: string }) {
         />
         <Check
           className={cn(
-            "absolute inset-0 size-[1.2rem] transition-[opacity,transform,filter] duration-200 ease-out",
+            "absolute inset-0 transition-[opacity,transform,filter] duration-200 ease-out",
             copied
               ? "scale-100 opacity-100 blur-0"
               : "scale-[0.25] opacity-0 blur-[4px]",
