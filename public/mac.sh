@@ -462,19 +462,42 @@ fi
 # ---------------------------------------------------------------------------
 if [[ $ALWAYS_ON -eq 1 ]]; then
   section "🌙" "Always-on Mac (needs sudo)"
-  brew_cask tailscale-app
   if [[ $DRY_RUN -eq 0 ]]; then
     note "You may be asked for your password."
-    sudo -v >>"$LOG" 2>&1 || note "sudo unavailable, the steps below will be reported as failed."
+    sudo -v </dev/tty 2>>"$LOG" || note "sudo unavailable, the steps below will be reported as failed."
   fi
   step "never sleep, auto-restart" sudo pmset -a sleep 0 disksleep 0 autorestart 1 womp 1
   step "firewall on" bash -c 'sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on && sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned on && sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp on'
   step "remote login (SSH)" sudo systemsetup -setremotelogin on
   step "screen sharing" bash -c 'sudo launchctl enable system/com.apple.screensharing; sudo launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensharing.plist 2>/dev/null || true'
-  if [[ $DRY_RUN -eq 0 ]] && ! grep -qs 'alias tailscale=' "$HOME/.zshrc" 2>/dev/null; then
-    echo 'alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"' >> "$HOME/.zshrc"
+
+  # Tailscale: the open-source tailscaled from Homebrew, not the app. The App Store and
+  # standalone apps are sandboxed and can't run the Tailscale SSH server.
+  if [[ -d /Applications/Tailscale.app ]]; then
+    note "The Tailscale app is installed. It can't run Tailscale SSH and conflicts with tailscaled:"
+    note "quit it and move it to the Trash, then re-run with --always-on."
+  else
+    brew_formula tailscale
+    if pgrep -xq tailscaled; then
+      mark_skipped "tailscaled service"
+    else
+      step "tailscaled service (starts at boot)" sudo brew services start tailscale
+    fi
+    if [[ $DRY_RUN -eq 1 ]]; then
+      dry "sudo tailscale up --ssh"
+    elif sudo tailscale status >/dev/null 2>&1; then
+      step "Tailscale SSH" sudo tailscale set --ssh
+    else
+      note "Open the link below to add this Mac to your tailnet:"
+      sleep 2
+      if sudo tailscale up --ssh </dev/null; then
+        ok "Tailscale SSH"; INSTALLED=$((INSTALLED + 1))
+      else
+        fail "Tailscale sign-in"; FAILED+=("Tailscale sign-in (run: sudo tailscale up --ssh)")
+      fi
+    fi
   fi
-  note "Sign in to Tailscale, then run: tailscale set --ssh"
+  note "In the Tailscale admin console, disable key expiry for this Mac so it stays signed in."
   note "FileVault is left on. Turn it off yourself only if you accept the trade-off."
 fi
 

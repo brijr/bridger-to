@@ -351,8 +351,10 @@ wrangler login
 I use this Mac as a machine I can reach from anywhere, so it never sleeps and I can get into it remotely.
 
 ```bash
-brew install --cask tailscale-app
-echo 'alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"' >> ~/.zshrc
+# Tailscale: the open-source daemon, runs at boot before anyone logs in
+brew install tailscale
+sudo brew services start tailscale
+sudo tailscale up --ssh
 
 # Never sleep, restart after power loss, wake on network access
 sudo pmset -a sleep 0 disksleep 0 autorestart 1 womp 1
@@ -364,13 +366,12 @@ sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp on
 
 # SSH and screen sharing
 sudo systemsetup -setremotelogin on
-tailscale set --ssh
 sudo launchctl enable system/com.apple.screensharing
 sudo launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensharing.plist
 ```
 
 - **Firewall** — turn it on and allow signed apps, since this machine now accepts remote connections
-- **Tailscale** — private network across your machines. With `tailscale set --ssh` you get SSH without opening any ports
+- **Tailscale** — private network across your machines. `--ssh` lets you SSH in with your Tailscale login, with no keys, passwords or open ports. Use the Homebrew `tailscale` formula, not the app: the App Store and standalone apps are sandboxed and [can't run the SSH server](https://tailscale.com/kb/1065/macos-variants). Then disable key expiry for the machine in the admin console so it doesn't sign itself out after 180 days
 - **FileVault** — I turned it off on this machine so it can reboot unattended after a power cut. That trades disk encryption for convenience, and I wouldn't do it on a laptop
 
 ---
