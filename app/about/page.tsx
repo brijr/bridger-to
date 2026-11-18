@@ -4,6 +4,14 @@ import { FeatImage } from "@/components/site/feat-image";
 
 import Dolomite from "@/public/dolomite.webp";
 
+import type { Metadata } from "next";
+
+import { pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/about"),
+};
+
 export default function AboutPage() {
   return (
     <Section>
@@ -24,8 +32,8 @@ const AboutContent = () => {
   return (
     <div className="text-pretty space-y-3">
       <h2>
-        I'm a software engineer and technical entrepreneur who builds at the
-        intersection of design, AI, and human-computer interaction.
+        I'm a designer and software engineer who builds at the intersection of
+        design, AI, and human-computer interaction.
       </h2>
       <h3>
         Here's what I believe: AI is extraordinarily powerful, but most AI tools

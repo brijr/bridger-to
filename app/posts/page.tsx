@@ -5,6 +5,14 @@ import { List } from "@/components/posts/list";
 
 import { getAllPosts } from "@/lib/posts";
 
+import type { Metadata } from "next";
+
+import { pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/posts"),
+};
+
 export default function PostsPage() {
   const posts = getAllPosts();
 
