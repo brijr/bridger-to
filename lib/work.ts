@@ -1,5 +1,5 @@
 // Source of truth for the /work page. lib/agent/markdown.ts renders the
-// same data for agents, so the HTML and markdown copies stay in sync.
+// same projects for agents, with full descriptions where available.
 
 export type WorkItem = {
   href: string;
@@ -30,7 +30,6 @@ export const clients: WorkItem[] = [
   { href: "https://supermetal.io", label: "Supermetal" },
   { href: "https://julius.ai", label: "Julius" },
   { href: "https://laravel.com", label: "Laravel" },
-  { href: "https://route.com", label: "Route" },
   { href: "https://matter-os.com", label: "MatterOS" },
   { href: "https://filelogic.ai", label: "File Logic" },
   { href: "https://tackle.io", label: "Tackle.io" },
