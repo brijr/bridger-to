@@ -30,7 +30,7 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-const defaultTitle = `${SITE_NAME} / ${SITE_TAGLINE}`;
+const defaultTitle = `${SITE_NAME} — ${SITE_TAGLINE}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.jpg",
         width: 1500,
         height: 1000,
-        alt: `${SITE_NAME} - ${SITE_TAGLINE}`,
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
       },
     ],
   },

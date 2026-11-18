@@ -7,7 +7,7 @@ export const SITE_VERSION = "0.1.0";
 export const CONTACT_EMAIL = "bt@wip.is";
 
 // Short positioning line, used wherever a one-line descriptor appears.
-export const SITE_TAGLINE = "applied design ✴︎ applied AI";
+export const SITE_TAGLINE = "Applied AI and Design";
 
 // Long version: the home page bio.
 export const SITE_BIO =
@@ -28,7 +28,7 @@ export const SOCIAL_PROFILES = [
   "https://wip.is",
 ] as const;
 
-export const FEED_TITLE = `${SITE_NAME} / Posts`;
+export const FEED_TITLE = `${SITE_NAME} — Posts`;
 
 export const paths = {
   home: "/",
