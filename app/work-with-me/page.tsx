@@ -3,6 +3,14 @@ import { AnimatedContent } from "@/components/site/animated-content";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
+import type { Metadata } from "next";
+
+import { pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/work-with-me"),
+};
+
 export default function WorkWithMePage() {
   return (
     <Section>
@@ -20,11 +28,11 @@ const WorkWithMeContent = () => {
   return (
     <div className="text-pretty space-y-3">
       <h2>
-        I'm a design engineer. I design and build interfaces, systems, and
-        AI-powered tools for software companies. Most teams treat design and
-        engineering as separate functions. Work gets lost in translation. I
-        operate across both, which means faster iteration, fewer handoff
-        problems, and products that actually ship.
+        I'm a designer and software engineer. I design and build interfaces,
+        systems, and AI-powered tools for software companies. Most teams treat
+        design and engineering as separate functions. Work gets lost in
+        translation. I operate across both, which means faster iteration, fewer
+        handoff problems, and products that actually ship.
       </h2>
       <h3>
         I work on projects, retainers, and advisory engagements. If you're

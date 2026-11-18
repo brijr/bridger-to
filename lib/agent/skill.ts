@@ -10,7 +10,7 @@ description: ${SKILL_DESCRIPTION}
 
 # Bridger Tower (bridger.to)
 
-Bridger Tower is a design engineer writing about applied AI, interface design, and human-computer interaction.
+Bridger Tower is a designer and software engineer writing about applied AI, interface design, and human-computer interaction.
 
 ## Site map
 
@@ -30,6 +30,7 @@ Bridger Tower is a design engineer writing about applied AI, interface design, a
 - MCP server card: https://bridger.to/.well-known/mcp/server-card.json
 - Agent catalog: https://bridger.to/.well-known/ai-catalog.json
 - llms.txt: https://bridger.to/llms.txt
+- RSS feed: https://bridger.to/rss.xml
 
 ## Contact
 

@@ -3,6 +3,7 @@ import { join } from "node:path";
 
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { CONTACT_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
+import { workSections } from "@/lib/work";
 
 async function readLlmsTxt(): Promise<string> {
   return readFile(join(process.cwd(), "public/llms.txt"), "utf8");
@@ -25,12 +26,38 @@ ${items}
 `;
 }
 
+function workMarkdown(): string {
+  const sections = workSections
+    .map(({ title, items }) => {
+      const lines = items
+        .map((item) => {
+          const status = item.archived ? " (archived)" : "";
+          const description = item.description ? ` — ${item.description}` : "";
+          const source =
+            item.github && item.github !== item.href
+              ? ` Source: ${item.github}`
+              : "";
+          return `- [${item.label}](${item.href})${status}${description}${source}`;
+        })
+        .join("\n");
+      return `## ${title}\n\n${lines}`;
+    })
+    .join("\n\n");
+
+  return `# Work
+
+Selected work from ${SITE_NAME}.
+
+${sections}
+`;
+}
+
 function staticPageMarkdown(path: string): string | null {
   switch (path) {
     case "/about":
       return `# About ${SITE_NAME}
 
-I'm a software engineer and technical entrepreneur who builds at the intersection of design, AI, and human-computer interaction.
+I'm a designer and software engineer who builds at the intersection of design, AI, and human-computer interaction.
 
 AI is extraordinarily powerful, but most AI tools are extraordinarily bad at helping people actually use that power. I focus on closing the gap between what AI can do and what people need it to do.
 
@@ -47,20 +74,11 @@ If you're working on applied AI, marketing technology, design engineering, or hu
 - Schedule: https://cal.com/brijr/30min
 `;
     case "/work":
-      return `# Work
-
-Selected clients and open source from ${SITE_NAME}.
-
-Clients include Vercel, Browserbase, Julius.ai, Laravel, Route, Tackle.io, and others.
-
-Open source includes Craft Design System, Cite, Design Books, Next WP, and related tools.
-
-See the HTML page at ${SITE_URL}/work for the full list.
-`;
+      return workMarkdown();
     case "/work-with-me":
       return `# Work with me
 
-I'm a design engineer. I design and build interfaces, systems, and AI-powered tools for software companies.
+I'm a designer and software engineer. I design and build interfaces, systems, and AI-powered tools for software companies.
 
 I work on projects, retainers, and advisory engagements.
 

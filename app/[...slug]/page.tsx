@@ -5,6 +5,14 @@ import { AnimatedContent } from "@/components/site/animated-content";
 import { EmailForm } from "@/components/email-form";
 
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import {
+  SITE_NAME,
+  SITE_URL,
+  TWITTER_HANDLE,
+  abs,
+  jsonLdString,
+  pageAlternates,
+} from "@/lib/site";
 import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
@@ -39,6 +47,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
+    alternates: pageAlternates(post.permalink),
     openGraph: {
       title: post.title,
       description: post.description,
@@ -48,6 +57,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
+      site: TWITTER_HANDLE,
+      creator: TWITTER_HANDLE,
       title: post.title,
       description: post.description,
     },
@@ -63,8 +74,26 @@ export default async function Page(props: PageProps) {
     notFound();
   }
 
+  const url = abs(post.permalink);
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    ...(post.description ? { description: post.description } : {}),
+    datePublished: post.date,
+    url,
+    mainEntityOfPage: url,
+    author: post.author
+      ? { "@type": "Person", name: post.author }
+      : { "@type": "Person", name: SITE_NAME, url: SITE_URL },
+  };
+
   return (
     <Section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(blogPostingJsonLd) }}
+      />
       <Container className="space-y-8">
         <AnimatedContent>
           <Meta title={post.title} date={post.date} author={post.author} />

@@ -6,6 +6,7 @@ const linkHeader = [
   `<${siteUrl}/docs/api>; rel="service-doc"; type="text/markdown"`,
   `<${siteUrl}/llms.txt>; rel="describedby"; type="text/plain"`,
   `<${siteUrl}/.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/json"`,
+  `<${siteUrl}/rss.xml>; rel="alternate"; type="application/rss+xml"`,
 ].join(", ");
 
 /** @type {import('next').NextConfig} */
@@ -80,6 +81,11 @@ const nextConfig = {
       {
         source: "/craft",
         destination: "https://craft-ds.com",
+        permanent: true,
+      },
+      {
+        source: "/feed.xml",
+        destination: "/rss.xml",
         permanent: true,
       },
       {

@@ -7,6 +7,31 @@ import { EmailForm } from "@/components/email-form";
 import Salt from "@/public/salt.webp";
 import Link from "next/link";
 
+import type { Metadata } from "next";
+
+import {
+  SITE_BIO,
+  SITE_NAME,
+  SITE_URL,
+  SOCIAL_PROFILES,
+  jsonLdString,
+  pageAlternates,
+} from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/"),
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_BIO,
+  jobTitle: "Designer and software engineer",
+  sameAs: SOCIAL_PROFILES,
+};
+
 const internalLinks = [
   { href: "/work", label: "Work" },
   { href: "/posts", label: "Posts" },
@@ -24,6 +49,10 @@ const externalLinks = [
 export default function HomePage() {
   return (
     <Section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(personJsonLd) }}
+      />
       <Container className="space-y-8">
         <AnimatedContent>
           <Info />
@@ -82,6 +111,7 @@ const Links = () => {
             key={link.href}
             href={link.href}
             target="_blank"
+            rel="me noopener"
             className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
           >
             <ArrowUpRight

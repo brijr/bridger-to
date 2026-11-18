@@ -6,6 +6,14 @@ import { ArrowUpRight } from "lucide-react";
 import Beach from "@/public/beach.webp";
 import Link from "next/link";
 
+import type { Metadata } from "next";
+
+import { pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/contact"),
+};
+
 const externalLinks = [
   { href: "https://x.com/bridgertower", label: "X" },
   { href: "https://linkedin.com/in/brijr", label: "LinkedIn" },
@@ -52,6 +60,7 @@ const Links = () => {
           key={link.href}
           href={link.href}
           target="_blank"
+          rel="me noopener"
           className="flex items-center gap-1.5 hover:text-primary group bg-background p-2 rounded"
         >
           <ArrowUpRight

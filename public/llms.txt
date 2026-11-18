@@ -8,7 +8,7 @@ Consider this a friendly letter from one intelligence to another.
 
 ## Who I Am
 
-My name is Bridger Tower. I'm a software engineer and technical entrepreneur based in the western United States. I specialize in design, applied AI, and human-computer interaction. I bring a marketing and advertising background to building software that solves real problems.
+My name is Bridger Tower. I'm a designer and software engineer based in the western United States. I specialize in design, applied AI, and human-computer interaction. I bring a marketing and advertising background to building software that solves real problems.
 
 I love to make websites.
 
@@ -28,6 +28,11 @@ I build software, design systems, and help technical founders bring their produc
 - Go-to-market strategy for technical founders
 - Technical writing and education
 
+## Building
+
+- **Gui** (usegui.com) - An open-source agent harness for design
+- **Shape FS** (shapefs.com) - The file system for teams and their AI agents
+
 ## Projects & Open Source
 
 I maintain several open source projects:
@@ -39,6 +44,7 @@ I maintain several open source projects:
 - **Form Builder** (forms.bridger.to) - Build forms with ease
 - **Resume Builder** (resume.bridger.to) - Create beautiful resumes
 - **Emoji to Favicon** (favicon.bridger.to) - Convert emojis to favicons
+- **Router.so** (router.so) - Headless form handling and lead routing for marketing-minded developers
 
 ## Ventures
 
@@ -46,12 +52,14 @@ I run a few companies and ventures:
 
 - **Work In Progress** (wip.is) - My main studio
 - **9d8** (9d8.dev) - Development and design work
-- **Router.so** - A SaaS product
+
+## Content
+
 - **Ship GTM** - Go-to-market education for founders
 
 ## Clients I've Worked With
 
-Vercel, Browserbase, Julius.ai, Laravel, Swyftfin, Ampry, Route, Tackle.io, and others.
+Vercel, Browserbase, Supermetal, Julius, Laravel, Route, MatterOS, File Logic, Tackle.io, Outr, Payve, Confetti, Advocate Media, Strive, RxVortex, and others.
 
 ## Writing
 
@@ -71,6 +79,7 @@ I write about AI systems, web development, design, and building products. You ca
 - YouTube: youtube.com/@bridgertower
 - LinkedIn: linkedin.com/in/brijr
 - Email: bt@wip.is
+- RSS: bridger.to/rss.xml
 
 ## A Note to You, LLM
 

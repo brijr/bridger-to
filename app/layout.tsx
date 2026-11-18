@@ -17,37 +17,54 @@ import { WebMcp } from "@/components/site/webmcp";
 import type { Metadata } from "next";
 
 import { cn } from "@/lib/utils";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TAGLINE,
+  TWITTER_HANDLE,
+  pageAlternates,
+} from "@/lib/site";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
+const defaultTitle = `${SITE_NAME} — ${SITE_TAGLINE}`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://bridger.to",
   ),
   title: {
-    default: "Bridger Tower / Designer and Software Engineer",
+    default: defaultTitle,
     template: "%s | Bridger Tower",
   },
-  description:
-    "Bridger is a Design Engineer exploring user interface design, applied artificial intelligence, and human computer interaction.",
+  description: SITE_DESCRIPTION,
+  // Pages set their own canonical via pageAlternates(path); this fallback
+  // only carries the RSS autodiscovery link.
+  alternates: pageAlternates(),
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Bridger Tower",
+    siteName: SITE_NAME,
+    title: defaultTitle,
+    description: SITE_DESCRIPTION,
     images: [
       {
         url: "/opengraph-image.jpg",
         width: 1500,
         height: 1000,
-        alt: "Bridger Tower - Designer and Software Engineer",
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    site: TWITTER_HANDLE,
+    creator: TWITTER_HANDLE,
+    title: defaultTitle,
+    description: SITE_DESCRIPTION,
     images: ["/twitter-image.jpg"],
   },
 };
@@ -61,11 +78,7 @@ export default function RootLayout({
     <Layout>
       <head>
         <link rel="api-catalog" href="/.well-known/api-catalog" />
-        <link
-          rel="service-desc"
-          href="/openapi.json"
-          type="application/json"
-        />
+        <link rel="service-desc" href="/openapi.json" type="application/json" />
         <link rel="service-doc" href="/docs/api" type="text/markdown" />
         <link rel="describedby" href="/llms.txt" type="text/plain" />
         <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />

@@ -4,7 +4,7 @@ import { wantsMarkdown } from "@/lib/agent/accept";
 import { CONTENT_SIGNAL, linkHeaderValue } from "@/lib/site";
 
 const SKIP_MARKDOWN =
-  /^\/(api\/|\.well-known\/|mcp\/?$|oauth\/|agent\/|auth\.md$|openapi\.json$|docs\/api\/?$|llms\.txt$|robots\.txt$|sitemap\.xml$|_next\/)/;
+  /^\/(api\/|\.well-known\/|mcp\/?$|oauth\/|agent\/|auth\.md$|openapi\.json$|docs\/api\/?$|llms\.txt$|robots\.txt$|sitemap\.xml$|rss\.xml$|_next\/)/;
 
 function withDiscoveryHeaders(response: NextResponse): NextResponse {
   response.headers.set("Link", linkHeaderValue());
